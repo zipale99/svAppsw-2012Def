@@ -55,7 +55,7 @@ public class User extends AbstractUser{
 	 * chiama il metodo che recupera tutti gli itinerari presenti nel DB
 	 */	
 	public void searchItinerary(String sl,String el,int d,String nome,String cat) {
-		this.itineraryList = ServiceDB.searchItinerary(this,sl,el,d,nome,cat);
+		this.itineraryList = ServiceDB.searchItinerary(sl,el,d,nome,cat);
 	}
 
 	@Override
