@@ -31,7 +31,7 @@ public class SearchController {
 	 * @param endLoc
 	 * @return
 	 */
-	public static void searchItinerary(User user,String sl,String el,int dur,String nome,String cat) {
+	public static void searchItinerary(User user,String sl,String el,Integer dur,String nome,String cat) {
 		user.searchItinerary(sl,el,dur,nome,cat);
 	}
 	

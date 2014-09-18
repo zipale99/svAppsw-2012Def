@@ -119,7 +119,7 @@ public static ElencoAttivitaBean riempiAttDaDB() {
      * @param 
      */
     
-    public static ArrayList<Itinerary> searchItinerary(User user,String sl,String el,int d,String nome,String cat) {
+    public static ArrayList<Itinerary> searchItinerary(String sl,String el,int d,String nome,String cat) {
         
     	Connection connessione = DBconnection.getConnection();
     	
@@ -129,8 +129,8 @@ public static ElencoAttivitaBean riempiAttDaDB() {
         try {
             Statement st = connessione.createStatement();
 
-            String sql = "SELECT * FROM itinerario where startloc='"+sl+"' and endloc='"+el+"' and durata='"+d+
-            		"' and itname='"+nome+"' and categoria='"+cat+"'";
+            String sql = "SELECT * FROM itinerario where startloc='"+sl+"' or endloc='"+el+"' or durata='"+d+
+            		"' or itname='"+nome+"' or categoria='"+cat+"'";
 
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {

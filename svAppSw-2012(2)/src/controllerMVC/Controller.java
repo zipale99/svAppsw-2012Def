@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import controller.SearchController;
+//import controller.SearchController;
 
 /**
  * Servlet implementation class Controller
@@ -153,7 +153,10 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/configureStayParameter.jsp");
         }
         
+        
+        
         //Mostra itinerari dell'utente
+        
         if(operazione.equals("elencoItinerari")) {
         	System.out.println("utente: " + proxy.getUser().getUsername());
         	//SearchController.searchMyItinerary(proxy.getUser());
@@ -161,7 +164,6 @@ public class Controller extends HttpServlet {
         	session.setAttribute("proxy", proxy);
         	forward(request, response, "/viewElencoItinerari.jsp");
         }
-        
         
         
 
