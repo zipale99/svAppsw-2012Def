@@ -10,10 +10,16 @@ public class TestDB {
 		// TODO Auto-generated method stub
 		
 		User utente = new User("filomena", "", "");
+		/*
 		utente.recuperaMyItinerary();
 		System.out.println(utente.getItineraryList().get(0).getStartLoc());
+		*/
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
+		
+		
+		utente.searchItinerary("torino", "roma", 3, "to-rm", null);
+		System.out.println(utente.getItineraryList().get(0).getStartLoc());
 		
 	}
 

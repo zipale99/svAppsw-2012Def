@@ -1,11 +1,7 @@
 package controller;
 
-import java.util.ArrayList;
-import decorator.*;
-
 import decorator.User;
-import composite.*;
-import resources.*;
+
 
 public class SearchController {
 
@@ -30,10 +26,6 @@ public class SearchController {
 	 * @param endLoc
 	 * @return
 	 */
-
-	public static void searchItinerary(User user) {
-		user.searchItinerary();
-
 	public static void searchItinerary(User user,String sl,String el,int dur,String nome,String cat) {
 		user.searchItinerary(sl,el,dur,nome,cat);
 

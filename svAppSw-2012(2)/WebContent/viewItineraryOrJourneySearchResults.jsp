@@ -35,9 +35,6 @@ ProxyUser pu = (ProxyUser)session.getAttribute("proxy");
 					<td> 
 						<%= it.toString() %>					
 					</td>
-					<td>  
-						<button onclick="location.href='Controller?operazione=modificaItinerario&idItinerario=<%= it.getId() %>'">Modifica</button> 
-					</td>
 				</tr>
 <%
 }

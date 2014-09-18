@@ -125,9 +125,13 @@ public class Controller extends HttpServlet {
         if(operazione.equals("searchItineraryOrJourney")) {
         	String startLoc = request.getParameter("startLoc");
         	String endLoc = request.getParameter("endLoc");
-        	int durata = Integer.parseInt(request.getParameter("durata"));
+        	int durata = 0;
+        	if (request.getParameter("durata") != "") 
+        		durata = Integer.parseInt(request.getParameter("durata"));
         	String nome = request.getParameter("nome");
-        	String cat = request.getParameter("categoria");
+        	String cat = null;
+        	if (request.getParameter("categoria") != "") 
+        		cat = request.getParameter("categoria");
         	SearchController.searchItinerary(proxy.getUser(), startLoc, endLoc, durata, nome, cat);
         	session.setAttribute("proxy", proxy);
         	forward(request, response, "/viewItineraryOrJourneySearchResults.jsp");

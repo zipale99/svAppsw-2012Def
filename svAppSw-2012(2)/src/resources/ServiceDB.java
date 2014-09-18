@@ -119,7 +119,7 @@ public static ElencoAttivitaBean riempiAttDaDB() {
      * @param 
      */
     
-    public static ArrayList<Itinerary> searchItinerary(User user,String sl,String el,int d,String nome,String cat) {
+    public static ArrayList<Itinerary> searchItinerary(User user,String sl,String el, int d,String nome,String cat) {
         
     	Connection connessione = DBconnection.getConnection();
     	
