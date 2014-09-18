@@ -75,6 +75,12 @@ public static ElencoAttivitaBean riempiAttDaDB() {
             	it.setId(rs.getInt("iditinerario"));
             	listaIt.add(it);
      */
+
+	/**
+	 * 
+	 * @param user utente per il quale cercare gli itinerari
+	 * @return ArrayList che rappresenta un elenco di itinerari dell'utente
+	 */
     
     public static ArrayList<Itinerary> riempiItDaDB(User user) {
         
@@ -110,10 +116,10 @@ public static ElencoAttivitaBean riempiAttDaDB() {
     
     
     /**
-     * @param elenco per gli itinerari
+     * @param 
      */
     
-    public static ArrayList<Itinerary> searchItinerary() {
+    public static ArrayList<Itinerary> searchItinerary(User user,String sl,String el,int d,String nome,String cat) {
         
     	Connection connessione = DBconnection.getConnection();
     	
@@ -123,7 +129,8 @@ public static ElencoAttivitaBean riempiAttDaDB() {
         try {
             Statement st = connessione.createStatement();
 
-            String sql = "SELECT * FROM itinerario";
+            String sql = "SELECT * FROM itinerario where startloc='"+sl+"' and endloc='"+el+"' and durata='"+d+
+            		"' and itname='"+nome+"' and categoria='"+cat+"'";
 
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {

@@ -1,11 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
-import decorator.*;
+//import java.util.ArrayList;
+//import decorator.*;
 
 import decorator.User;
-import composite.*;
-import resources.*;
+//import composite.*;
+//import resources.*;
 
 public class SearchController {
 
@@ -18,8 +18,6 @@ public class SearchController {
 	
 	/**
 	 * riempie un ArrayList contenente tutti gli itinerari presenti nel DB aventi lo stesso username
-	 * @param startLoc
-	 * @param endLoc
 	 * @return
 	 */
 	public static void searchMyItinerary(User user) {
@@ -28,13 +26,13 @@ public class SearchController {
 	}
 	
 	/**
-	 * riempie un ArrayList contenente tutti gli itinerari presenti nel DB aventi lo stesso username
+	 * riempie un ArrayList contenente tutti gli itinerari presenti nel DB
 	 * @param startLoc
 	 * @param endLoc
 	 * @return
 	 */
-	public static ArrayList<Itinerary> searchItinerary() {
-		return ServiceDB.searchItinerary();
+	public static void searchItinerary(User user,String sl,String el,int dur,String nome,String cat) {
+		user.searchItinerary(sl,el,dur,nome,cat);
 	}
 	
 	/**

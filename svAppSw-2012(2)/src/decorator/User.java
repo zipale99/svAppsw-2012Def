@@ -9,7 +9,6 @@ package decorator;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import resources.ServiceDB;
 import composite.Itinerary;
 
@@ -44,13 +43,19 @@ public class User extends AbstractUser{
 	public void setItineraryList(List<Itinerary> itineraryList) {
 		this.itineraryList = itineraryList;
 	}
-	
+
+	/**
+	 * chiama il metodo che recupera gli itinerari per un determinato utente
+	 */
 	public void recuperaMyItinerary() {
 		this.itineraryList = ServiceDB.riempiItDaDB(this);
 	}
 	
-	public void searchItinerary() {
-		this.itineraryList = ServiceDB.searchItinerary();
+	/**
+	 * chiama il metodo che recupera tutti gli itinerari presenti nel DB
+	 */	
+	public void searchItinerary(String sl,String el,int d,String nome,String cat) {
+		this.itineraryList = ServiceDB.searchItinerary(this,sl,el,d,nome,cat);
 	}
 
 	@Override
