@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="composite.*"%>
+    pageEncoding="UTF-8" import="composite.*, decorator.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<jsp:useBean id="itinerario" class="composite.Itinerary" scope="session"/>
-
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,13 +18,18 @@
 		<div class = "content">
 			<h3>Create Itinerary</h3>
 			
-			<p><b>Creatore:</b> <%= itinerario.getUser() %> </p>
-			<p><b>Nome:</b> <%= itinerario.getNome() %> </p>
-			<p><b>Descrizione:</b> <%= itinerario.getDesc() %> </p>
-			<p><b>Categoria:</b> <%= itinerario.getCategoria() %> </p>
+<%
+DecoratorUser du = (DecoratorUser)session.getAttribute("utenteDecorato");
+Itinerary myIt = du.getItinerary();
+%>			
+			
+			<p><b>Creatore:</b> <%= myIt.getUser() %> </p>
+			<p><b>Nome:</b> <%= myIt.getNome() %> </p>
+			<p><b>Descrizione:</b> <%= myIt.getDesc() %> </p>
+			<p><b>Categoria:</b> <%= myIt.getCategoria() %> </p>
 
 <%
-int size = itinerario.getSize();
+int size = myIt.getSize();
 if (size != 0) {
 %>			
 			
@@ -42,7 +45,7 @@ if (size != 0) {
 %>
 	
 				<tr>
-					<td> <%= itinerario.getStayTemplate(i) %> </td>
+					<td> <%= myIt.getStayTemplate(i) %> </td>
 					<td>  
 						<button onclick="location.href='Controller?operazione=configureStayParameter&idTappa=<%= i %>'">ConfigureStayParameter</button> 
 							<form action="Controller" method="POST" >
@@ -64,7 +67,7 @@ if (size != 0) {
 			
 			
 				<form action="Controller" method="POST" >
-					<input type="hidden" name="operazione" value="addItineraryStay">
+					<input type="hidden" name="operazione" value="searchtStayTemplate">
 					<input type="submit" value="Aggiungi Tappa"/>
 				</form>
 				

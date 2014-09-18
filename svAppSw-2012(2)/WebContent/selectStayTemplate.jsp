@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="composite.*"%>
+    pageEncoding="UTF-8" import="composite.*, decorator.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean id="elencoTappe" class="composite.StayTemplateComposite" scope="session"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Search Stay</title>
+<title>selectStayTemplate</title>
 <link rel="stylesheet" type="text/css" href="stile.css"/>
 </head>
 <body>
@@ -17,46 +17,44 @@
 	
 	<div class = "main">
 		<div class = "content">
-			<h3>SearchStayTemplate</h3>
+			<h3>SelectStayTemplate</h3>
 			
-Seleziona una tappa da aggiungere all'itinerario che stai configurando
-
 <%
-int size = elencoTappe.getSize();
-if (size != 0) {
+DecoratorUser du = (DecoratorUser)session.getAttribute("utenteDecorato");
+StayTemplateComposite stay = du.getStay();
 %>			
-			
+
+Seleziona uno StayTemplate da personalizzare e aggiungere all'itinerario:			
+
 			<table>
 				<tr>
 					<th>StayTemplate</th>
-					<th></th>
+					<th>Gestione Tappa</th>
 				</tr>
 <%
-
-	int i = 0;
-	while(size > 0) {
+int size = stay.getSize();
+int i = 0;
+while(size > 0) {
 %>
 	
 				<tr>
-					<td> <%= elencoTappe.getStayTemplate(i).toString() %> </td>
+					<td> <%= stay.getStayTemplate(i).toString() %> </td>
 					<td>  
-						<button onclick="location.href='Controller?operazione=addStayTemplate&idTappa=<%= i %>'">Aggiungi Template</button> 
-							<form action="Controller" method="POST" >
-								<input type="hidden" name="operazione" value="viewStayTemplate">
-								<input type="hidden" name="idTappa" value='<%= i %>'>
-								<input type="submit" value="Visualizza Template" onClick="return(confirm('Sei sicuro di voler procedere?'))"/>
-							</form>
+						<form action="Controller" method="POST" >
+							<input type="hidden" name="operazione" value="configureStayParameter">
+							<input type="hidden" name="id" value='<%= i %>'>
+							<input type="submit" value="ConfigureStayParameter"/>
+						</form> 
 					</td>
 				</tr>
 <%
-	size--;
-	i++;
-	}
-
+size--;
+i++;
 }
 %>	
-		</table>	
-				
+	
+			</table>			
+			
 		</div>
 		
 		<div class = "sidenav">

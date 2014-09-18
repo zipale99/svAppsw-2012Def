@@ -7,7 +7,6 @@
  */
 package composite;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,12 +52,7 @@ public class StayTemplateComposite extends StayTemplate {
 	
 	@Override
 	public String toString() { 
-		String result = "";
-		Iterator<StayTemplate> it = tree.iterator();
-		while(it.hasNext()) {
-			result = result + it.next().toString();
-		}
-		return result;
+		return super.toString();
 	}
 	
 	

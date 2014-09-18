@@ -23,6 +23,7 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	protected User user; //Riferimento al user
 	private Itinerary itinerary;
+	private StayTemplateComposite stay;
 	
 	private static DecoratorUser instance = null; //Riferimento a un istanza di se stessa
 	
@@ -50,10 +51,17 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		 itinerary = new Itinerary();
 	 }
 	 
-
-	
-	
+	 public void createItinerary(String nome, String descrizione, String categoria){
+		 itinerary = new Itinerary();
+		 itinerary.setNome(nome);
+		 itinerary.setDesc(descrizione);
+		 itinerary.setCategoria(categoria);
+	 }
 	 
+	 public void searchStayTemplate() {
+		 stay = new StayTemplateComposite();
+		 this.stay = ServiceDB.searchStayTemplate();
+	 }
 	
 	
 	public String getRuolo() {
@@ -78,6 +86,14 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 
 	public void setItinerary(Itinerary itinerary) {
 		this.itinerary = itinerary;
+	}
+	
+	public StayTemplateComposite getStay() {
+		return stay;
+	}
+
+	public void setStay(StayTemplateComposite stay) {
+		this.stay = stay;
 	}
 	
 	/*Prima volta che lo chiama decUser smista l'operazione e ritorna il decorator appropriato

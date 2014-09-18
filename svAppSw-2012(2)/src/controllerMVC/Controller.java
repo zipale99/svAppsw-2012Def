@@ -157,9 +157,6 @@ public class Controller extends HttpServlet {
          * Dato l'id di un leaf mostra le opzioni ad esso associate
          */
         
-        /*
-         * Restituisce tutti gli StayTemplate dell'agenzia
-         */
         
         /*
          * Restituisce tutte le attività dell'agenzia
@@ -192,9 +189,30 @@ public class Controller extends HttpServlet {
         	String nome = request.getParameter("nome");
         	String descrizione = request.getParameter("descrizione");
         	String categoria = request.getParameter("categoria");
-        	Itinerary itinerario = new Itinerary(utenteDecorato.getUsername(), nome, descrizione, categoria);
-        	session.setAttribute("itinerario", itinerario);
+        	utenteDecorato.createItinerary(nome, descrizione, categoria);
         	forward(request, response, "/creaItinerario.jsp");
+        }
+        
+        /*
+         * Restituisce tutti gli StayTemplate dell'agenzia
+         */
+        if(operazione.equals("searchStayTemplate")) {
+        	utenteDecorato.searchStayTemplate();
+        	session.setAttribute("utenteDecorato", utenteDecorato);
+        	forward(request, response, "/selectStayTemplate.jsp");
+        }
+        
+        
+        if(operazione.equals("configureStayParameter")) {
+        	//recupero l'id dello StayTemplate nell'arrayList
+        	int id = Integer.parseInt(request.getParameter("id"));
+        	//Recupero le attività per lo stayTemplate scelto
+        	utenteDecorato.searchActivityStayTemplate(utenteDecorato.getStay(id).getId());
+        	//Recupero i leaf dello stayTemplate
+        	
+        	//Recupero le opzioni dei leaf
+        	
+        	//TO-DO: inviare il controllo alla jsp che visualizza tutto questo
         }
         
 
