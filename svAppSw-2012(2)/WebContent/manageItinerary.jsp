@@ -25,8 +25,8 @@ if (du.getRuolo().equals("CreatorCustomer")) {
 			<h3>Manage Itinerary Base</h3>
 			<hr>
 			<ul id="menu">
-			<li><a href="basicInfo.jsp">Crea nuovo Itinerario</a></li>
-   			<li><a href="Controller?operazione=modificaItinerario">Modifica Itinerario esistente</a></li>
+			<li><a href="Controller?operazione=">Crea nuovo Itinerario</a></li>
+   			<li><a href="Controller?operazione=searchMyItinerary">Modifica Itinerario esistente</a></li>
 			</ul>
 <% 
 	}
@@ -36,8 +36,8 @@ if (du.getRuolo().equals("CreatorCustomer")) {
 			<h3>Manage Itinerary Pro</h3>
 			<hr>
 			<ul id="menu">
-			<li><a href="Controller?operazione=basicInfo.jsp">Crea nuovo Itinerario</a></li>
-   			<li><a href="Controller?operazione=modificaItinerario">Modifica Itinerario esistente</a></li>
+			<li><a href="Controller?operazione=">Crea nuovo Itinerario</a></li>
+   			<li><a href="Controller?operazione=searchMyItinerary">Modifica Itinerario esistente</a></li>
 			</ul>
 	
 <%

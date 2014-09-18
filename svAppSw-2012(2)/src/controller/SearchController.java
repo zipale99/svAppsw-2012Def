@@ -23,7 +23,6 @@ public class SearchController {
 	 * @return
 	 */
 	public static void searchMyItinerary(User user) {
-		//return ServiceDB.riempiItDaDB(user);
 		user.recuperaMyItinerary();
 	}
 	
@@ -33,8 +32,8 @@ public class SearchController {
 	 * @param endLoc
 	 * @return
 	 */
-	public static ArrayList<Itinerary> searchItinerary() {
-		return ServiceDB.searchItinerary();
+	public static void searchItinerary(User user) {
+		user.searchItinerary();
 	}
 	
 	/**

@@ -62,7 +62,7 @@ public class Controller extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, IllegalArgumentException, SQLException {
         
 		//recupero l'operazione scelta dall'utente e l'oggetto in sessione utente
-		String operazione = (String)request.getParameter("operazione");
+		String operazione = request.getParameter("operazione");
 		HttpSession session = request.getSession();
 		  
         ProxyUser proxy = null;
@@ -86,6 +86,7 @@ public class Controller extends HttpServlet {
         	System.out.println("Operazione diversa da null");
         	proxy = (ProxyUser)session.getAttribute("proxy");
             utenteDecorato = (DecoratorUser)session.getAttribute("utenteDecorato");
+            System.out.println(operazione);
         }   
             
         /*
@@ -111,6 +112,27 @@ public class Controller extends HttpServlet {
 			forward(request, response, "/Index.jsp");
 		}
         
+		
+        //Mostra itinerari dell'utente
+        if(operazione.equals("searchMyItinerary")) {
+        	System.out.println("utente: " + proxy.getUser().getUsername());
+        	SearchController.searchMyItinerary(proxy.getUser());
+        	session.setAttribute("proxy", proxy);
+        	forward(request, response, "/viewMyItinerarySearchResults.jsp");
+        }
+        
+        //Mostra tutti gli itinerari
+        if(operazione.equals("searchItineraryOrJourney")) {
+        	String startLoc = request.getParameter("startLoc");
+        	String endLoc = request.getParameter("endLoc");
+        	int durata = Integer.parseInt(request.getParameter("durata"));
+        	String nome = request.getParameter("nome");
+        	String cat = request.getParameter("categoria");
+        	SearchController.searchItinerary(proxy.getUser(), startLoc, endLoc, durata, nome, cat);
+        	session.setAttribute("proxy", proxy);
+        	forward(request, response, "/viewItineraryOrJourneySearchResults.jsp");
+        }
+        
         
         if(operazione.equals("manageItinerary")) {
         	if (utenteDecorato == null)
@@ -118,6 +140,49 @@ public class Controller extends HttpServlet {
         	session.setAttribute("utenteDecorato", utenteDecorato);
         	forward(request, response, "/manageItinerary.jsp");
         }
+        
+        /*
+         * Dato l'id di uno StayTemplate, mostra le Attività di default ad esso associate
+         */
+        
+        /*
+         * Dato l'id di una Stay mostra le Attività(personalizzate) di quella Stay
+         */
+        
+        /*
+         * Dato l'id di un leaf mostra le opzioni ad esso associate
+         */
+        
+        /*
+         * Restituisce tutti gli StayTemplate dell'agenzia
+         */
+        
+        /*
+         * Restituisce tutte le attività dell'agenzia
+         */
+        
+        /*
+         * Dato l'id di uno StayTemplate, restituisce tutti i leaf che compongono quello StayTemplate
+         */
+        
+        /*
+         * Dato l'id di una Stay, restituisce tutti i leaf che compongono quella Stay
+         */
+        
+        /*
+         * Dato l'id di un opzione associata ad un leaf, restituisce tutti i valori possibili per quell'opzione
+         */
+        
+        /*
+         * Restituisce gli StayTemplate di tipo Transport, date una startLoc e un endLoc
+         */
+        
+        
+        /*
+         * Crea un itinerario
+         */
+		
+
         
         if(operazione.equals("confermaBasicInfo")) {
         	String nome = request.getParameter("nome");
@@ -128,39 +193,7 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/creaItinerario.jsp");
         }
         
-        
-        if(operazione.equals("creaItinerario")) {
-        	forward(request, response, "/basicInfo.jsp");
-        }
-        
-        /*
-        if(operazione.equals("addItineraryStay")) {
-        	StayTemplate st = searchController.searchStay();
-        	session.setAttribute("elencoTappe", elenco);
-        	forward(request, response, "/searchStayTemplate.jsp");
-        }
-        */
-        
-        if(operazione.equals("addStayTemplate")) {
-        	/*
-        	 * TO-DO: recuperare le tappe composite presente in elencoTappe, controllare se eventualmente 
-        	 * c'è ne solo una. Recupera quella con id uguale a idTappa. Passare il composite a 
-        	 * coonfigureStayParameter ed effettuare il recupero dei leaf dalla jsp.
-        	 */
-        	int idStay = Integer.parseInt(request.getParameter("idTappa"));
-        	StayTemplateComposite st = (StayTemplateComposite)session.getAttribute("elencoTappe");
-        	session.setAttribute("tappa", st.getStayTemplate(idStay));
-        	forward(request, response, "/configureStayParameter.jsp");
-        }
-        
-        //Mostra itinerari dell'utente
-        if(operazione.equals("elencoItinerari")) {
-        	System.out.println("utente: " + proxy.getUser().getUsername());
-        	//SearchController.searchMyItinerary(proxy.getUser());
-        	proxy.getUser().recuperaMyItinerary();
-        	session.setAttribute("proxy", proxy);
-        	forward(request, response, "/viewElencoItinerari.jsp");
-        }
+
         
         
         

@@ -73,12 +73,12 @@ public class Itinerary extends StayTemplateComposite{
 	
 	@Override
 	public String toString() {
-		return "Stato: " + stato +
-				"; startLoc: " + startLoc +
-				"; endLoc: " + endLoc +
-				"; durata: " + durata +
-				"; nome: " + nome +
-				"; desc: " + desc +
+		return 	"NOME: " + nome +
+				"; PARTENZA: " + startLoc + 
+				"; ARRIVO: " + endLoc +
+				"; DURATA(giorni): " + durata + 
+				" giorni; DESCRIZIONE: " + desc +
+				"; PREZZO(euro): " + price +
 				super.toString();
 	}
 	
