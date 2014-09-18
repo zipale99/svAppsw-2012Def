@@ -18,8 +18,6 @@ public class SearchController {
 	
 	/**
 	 * riempie un ArrayList contenente tutti gli itinerari presenti nel DB aventi lo stesso username
-	 * @param startLoc
-	 * @param endLoc
 	 * @return
 	 */
 	public static void searchMyItinerary(User user) {
@@ -27,13 +25,18 @@ public class SearchController {
 	}
 	
 	/**
-	 * riempie un ArrayList contenente tutti gli itinerari presenti nel DB aventi lo stesso username
+	 * riempie un ArrayList contenente tutti gli itinerari presenti nel DB
 	 * @param startLoc
 	 * @param endLoc
 	 * @return
 	 */
+
 	public static void searchItinerary(User user) {
 		user.searchItinerary();
+
+	public static void searchItinerary(User user,String sl,String el,int dur,String nome,String cat) {
+		user.searchItinerary(sl,el,dur,nome,cat);
+
 	}
 	
 	/**
