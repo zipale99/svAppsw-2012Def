@@ -43,11 +43,11 @@ public class ServiceDB {
 	 }
 	
 	/**
-     * recupera tutte le attività dell'agenzia e le mette in un arrayList che sarà il parametro
-     * listActivity di StayTemplateComposite
+     * recupera tutte le attività dell'agenzia e le mette in un arrayList che sarà il Bean
+     * elencoAttivitaBean
      */	
-	public static void searchActivity(StayTemplateComposite stc) {
-        
+	public static ElencoAttivitaBean searchActivity() {
+        ElencoAttivitaBean elb = new ElencoAttivitaBean();
     	Connection connessione = DBconnection.getConnection();    	
     	//se la connessione è andata a buon fine   	
         try {
@@ -59,7 +59,7 @@ public class ServiceDB {
             while (rs.next()) {
             	Activity act  = new Activity(rs.getInt("idattivita"),rs.getString("tipo"),rs.getString("citta"),
             					rs.getString("descrizione"),rs.getInt("durata"),rs.getDouble("prezzo"));
-            	stc.addAc(act);
+            	elb.add(act);
             }            
             st.close();
             connessione.close();                        
@@ -67,11 +67,11 @@ public class ServiceDB {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
+        return elb;
     }
     
 
 	/**
-	 * 
 	 * @param user utente per il quale cercare gli itinerari
 	 * @return ArrayList che rappresenta un elenco di itinerari dell'utente
 	 */    
@@ -109,14 +109,19 @@ public class ServiceDB {
     
     
     /**
-     * @param 
-     */
-    
-    public static ArrayList<Itinerary> searchItinerary(String sl,String el,int d,String nome,String cat) {
+     * ricerca gli itinerari presenti nel DB aventi iparametri specificati(in and i primi 2 parametri)
+     * @param sl
+     * @param el
+     * @param d
+     * @param nome
+     * @param cat
+     * @return
+     */    
+    public static ElencoItineraryBean searchItinerary(String sl,String el,int d,String nome,String cat) {
         
     	Connection connessione = DBconnection.getConnection();
     	
-    	ArrayList <Itinerary> listaIt = new ArrayList<Itinerary>();
+    	ElencoItineraryBean eib = new ElencoItineraryBean();
     	
     	//se la connessione è andata a buon fine   	
         try {
@@ -132,7 +137,7 @@ public class ServiceDB {
             			rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
             			rs.getDouble("prezzo"));
             	it.setId(rs.getInt("iditinerario"));
-            	listaIt.add(it);
+            	eib.add(it);
             }
             
             st.close();
@@ -141,16 +146,16 @@ public class ServiceDB {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return listaIt;
+        return eib;
     }
     
     
     /**
      * @param elenco per gli stayTemplate presenti nel DB
      */
-    public static StayTemplateComposite searchStayTemplate() {        
+    public static ElencoStayTemplateBean searchStayTemplate() {        
     	Connection connessione = DBconnection.getConnection();    	    	
-    	StayTemplateComposite stcomp = new StayTemplateComposite();
+    	ElencoStayTemplateBean esb = new ElencoStayTemplateBean();
     	//se la connessione è andata a buon fine   	
         try {
             Statement st = connessione.createStatement();                                
@@ -160,7 +165,7 @@ public class ServiceDB {
             	StayTemplateComposite stc = new StayTemplateComposite(rs.getString("startLoc"),
             			rs.getString("endloc"), rs.getInt("durata"), rs.getString("nomest"),
             			rs.getDouble("prezzo"),null);
-            	stcomp.add(stc);
+            	esb.add(stc);
             }            
             st.close();
             connessione.close();
@@ -168,14 +173,16 @@ public class ServiceDB {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return stcomp;
+        return esb;
     }
     
     /**
-     * metodo utile a riempire le attività corrispondenti ad un certo StayTemplate
+     * metodo utile a trovare l'elenco delle attività corrispondenti ad un certo stayTemplate
+     * @param id
+     * @return beanActivity
      */
-    public static List<Activity> searchActivityStayTemplate(int id) {
-    	List<Activity> listActivity = new ArrayList<Activity>();            
+    public static ElencoAttivitaBean searchActivityStayTemplate(int id) {
+    	ElencoAttivitaBean elb = new ElencoAttivitaBean();        
         Connection connessione = DBconnection.getConnection();
         	//se la connessione è andata a buon fine   	
         try {
@@ -189,7 +196,7 @@ public class ServiceDB {
           	Activity ac = new Activity(rs.getInt("idattivita"),
           	rs.getString("tipo"), rs.getString("citta"), rs.getString("descrizione"),
           	rs.getInt("durata"), rs.getDouble("prezzo"),-1,false);
-            listActivity.add(ac);
+            elb.add(ac);
           }                
           st.close();
           connessione.close();
@@ -197,9 +204,40 @@ public class ServiceDB {
         catch (SQLException ex) {
           ex.printStackTrace();
         }    	
-    	return listActivity;
+    	return elb;
     }
 	
+    /**
+     * metodo che dato un idStayTemplate, recupera i leaf ad esso associati
+     * @param idStayTemplate
+     * @return
+     */
+    
+    public static ElencoStayTemplateBean searchLeafStayTemplate(int idStayTemplate) {
+    	ElencoStayTemplateBean elb = new ElencoStayTemplateBean();
+    	Connection connessione = DBconnection.getConnection();
+    	
+    	try {
+            Statement st = connessione.createStatement();                       
+            
+            String sql = "SELECT * from staytemplate_leaf where idstaytemplate="+idStayTemplate;            
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+            	StayTemplateLeaf stl = new StayTemplateLeaf(rs.getString("startloc"),
+            	rs.getString("endloc"), rs.getInt("durata"), null,
+            	rs.getString("typeleaf"), rs.getDouble("price"),-1,null);
+              elb.addLeaf(stl);
+            }                
+            st.close();
+            connessione.close();
+          }
+          catch (SQLException ex) {
+            ex.printStackTrace();
+          }    	
+    	return elb; 
+    }
+    
+    
     /**
      * recupera option associate ad un certo leaf(ovvero un determinato stayTemplateLeaf)
      * usando il parametro idStLeaf della tabella opzioni_standard

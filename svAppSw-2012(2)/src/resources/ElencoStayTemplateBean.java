@@ -31,5 +31,13 @@ public class ElencoStayTemplateBean {
     public List<StayTemplate> getElencoStayTemplate(){
 		return elencoStayTemplate;
 	}
+    
+    public void add(StayTemplate st) {
+    	elencoStayTemplate.add(st);
+    }
+    
+    public void addLeaf(StayTemplateLeaf stl) {
+    	elencoStayTemplate.add(stl);
+    }
 	
 }
