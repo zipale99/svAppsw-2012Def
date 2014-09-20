@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="decorator.*"%>
+    pageEncoding="UTF-8" import="decorator.*, controller.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -18,7 +18,8 @@
 	<div class = "main">
 		<div class = "content">
 <%
-DecoratorUser du = (DecoratorUser)session.getAttribute("utenteDecorato");
+ManagementController mc = (ManagementController)session.getAttribute("managementController");
+DecoratorUser du = mc.getCurrentUser();
 System.out.println("utente:  " + du.getRuolo());
 if (du.getRuolo().equals("CreatorCustomer")) {
 %>	

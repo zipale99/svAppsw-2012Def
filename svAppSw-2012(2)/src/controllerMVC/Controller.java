@@ -2,6 +2,7 @@ package controllerMVC;
 
 import decorator.*;
 import composite.*;
+import controller.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -69,6 +70,7 @@ public class Controller extends HttpServlet {
 		  
         ProxyUser proxy = null;
         DecoratorUser utenteDecorato = null;
+        ManagementController managementController = null;
               
         if(operazione == null) {
         	System.out.println("Operazione uguale uguale a null");
@@ -77,7 +79,7 @@ public class Controller extends HttpServlet {
                 proxy = new ProxyUser();
                 session.setAttribute("proxy", proxy);
                 utenteDecorato = null;
-                session.setAttribute("userDec", utenteDecorato);
+                session.setAttribute("utenteDecorato", utenteDecorato);
             }
             else{
                 proxy = (ProxyUser)session.getAttribute("proxy");
@@ -88,6 +90,7 @@ public class Controller extends HttpServlet {
         	System.out.println("Operazione diversa da null");
         	proxy = (ProxyUser)session.getAttribute("proxy");
             utenteDecorato = (DecoratorUser)session.getAttribute("utenteDecorato");
+            managementController = (ManagementController)session.getAttribute("managementController");
             System.out.println(operazione);
         }   
             
@@ -143,7 +146,8 @@ public class Controller extends HttpServlet {
         if(operazione.equals("manageItinerary")) {
         	if (utenteDecorato == null)
                 utenteDecorato = DecoratorUser.decora(proxy.getUser());
-        	session.setAttribute("utenteDecorato", utenteDecorato);
+        	managementController = new ManagementController(utenteDecorato);
+        	session.setAttribute("managementController", managementController);
         	forward(request, response, "/manageItinerary.jsp");
         }
         
@@ -191,8 +195,8 @@ public class Controller extends HttpServlet {
         	String nome = request.getParameter("nome");
         	String descrizione = request.getParameter("descrizione");
         	String categoria = request.getParameter("categoria");
-        	System.out.println("Utente itinerario: "+utenteDecorato.getUsername());
-        	utenteDecorato.createItinerary(nome, descrizione, categoria);
+        	System.out.println("Utente itinerario: "+managementController.getCurrentUser().getUsername());
+        	managementController.createItinerary(nome, descrizione, categoria);
         	forward(request, response, "/creaItinerario.jsp");
         }
         
@@ -200,8 +204,7 @@ public class Controller extends HttpServlet {
          * Restituisce tutti gli StayTemplate dell'agenzia
          */
         if(operazione.equals("searchtStayTemplate")) {
-        	searchController.searchStayTemplate(utenteDecorato);
-        	session.setAttribute("utenteDecorato", utenteDecorato);
+        	//searchController.searchStayTemplate(utenteDecorato);
         	forward(request, response, "/selectStayTemplate.jsp");
         }
         
@@ -210,7 +213,7 @@ public class Controller extends HttpServlet {
         	//recupero l'id dello StayTemplate nell'arrayList
         	int id = Integer.parseInt(request.getParameter("id"));
         	//Recupero le attività standard per lo stayTemplate scelto + quelle personalizzate
-        	utenteDecorato.searchActivityStayTemplate(utenteDecorato.getStay(id).getId());
+        	//utenteDecorato.searchActivityStayTemplate(utenteDecorato.getStay(id).getId());
         	//Recupero i leaf dello stayTemplate
         	
         	//Recupero le opzioni dei leaf
