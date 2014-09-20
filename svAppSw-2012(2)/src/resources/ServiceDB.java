@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import composite.Itinerary;
-
+import composite.StayTemplateComposite;
+import composite.StayTemplateLeaf;
 import decorator.User;
 import DB.DBconnection;
 
@@ -29,7 +31,8 @@ public class ServiceDB {
 	public static String login(String username, String password) throws SQLException{
 		Connection conn = DBconnection.getConnection();
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM UTENTI where username='"+username+"' and password='"+password+"'");
+        ResultSet rs = st.executeQuery("SELECT * FROM UTENTI where username='"+username+
+        		"' and password='"+password+"'");
         if(rs.next()){
             return rs.getString("ruolo");
         }
@@ -39,11 +42,13 @@ public class ServiceDB {
         return "";
 	 }
 	
-public static ElencoAttivitaBean riempiAttDaDB() {
+	/**
+     * recupera tutte le attività dell'agenzia e le mette in un arrayList che sarà il parametro
+     * listActivity di StayTemplateComposite
+     */	
+	public static void searchActivity(StayTemplateComposite stc) {
         
-    	Connection connessione = DBconnection.getConnection();
-    	
-    	ElencoAttivitaBean elencoAttivita = new ElencoAttivitaBean();
+    	Connection connessione = DBconnection.getConnection();    	
     	//se la connessione è andata a buon fine   	
         try {
             Statement st = connessione.createStatement();
@@ -52,36 +57,24 @@ public static ElencoAttivitaBean riempiAttDaDB() {
 
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-            	elencoAttivita.aggiungi(rs.getInt("id"),rs.getString("tipo"),rs.getString("citta"),rs.getString("descrizione"),rs.getInt("durata"),rs.getFloat("prezzo"));
-            }
-            
+            	Activity act  = new Activity(rs.getInt("idattivita"),rs.getString("tipo"),rs.getString("citta"),
+            					rs.getString("descrizione"),rs.getInt("durata"),rs.getDouble("prezzo"));
+            	stc.addAc(act);
+            }            
             st.close();
-            connessione.close();
-                        
+            connessione.close();                        
         }
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return elencoAttivita;
     }
     
-    /**
-     * @param elenco per gli itinerari
-     * 
-     * 	Itinerary it = new Itinerary(rs.getString("creatoruser"),
-            			rs.getString("startLoc"),rs.getString("endloc"),rs.getInt("durata"),
-            			rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
-            			rs.getDouble("prezzo"));
-            	it.setId(rs.getInt("iditinerario"));
-            	listaIt.add(it);
-     */
 
 	/**
 	 * 
 	 * @param user utente per il quale cercare gli itinerari
 	 * @return ArrayList che rappresenta un elenco di itinerari dell'utente
-	 */
-    
+	 */    
     public static ArrayList<Itinerary> riempiItDaDB(User user) {
         
     	Connection connessione = DBconnection.getConnection();
@@ -129,8 +122,8 @@ public static ElencoAttivitaBean riempiAttDaDB() {
         try {
             Statement st = connessione.createStatement();
 
-            String sql = "SELECT * FROM itinerario where startloc='"+sl+"' or endloc='"+el+"' or durata='"+d+
-            		"' or itname='"+nome+"' or categoria='"+cat+"'";
+            String sql = "SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
+            		" or itname='"+nome+"' or categoria='"+cat+"'";
 
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
@@ -153,25 +146,84 @@ public static ElencoAttivitaBean riempiAttDaDB() {
     
     
     /**
-     * @param elenco per gli itinerari
+     * @param elenco per gli stayTemplate presenti nel DB
      */
+    public static StayTemplateComposite searchStayTemplate() {        
+    	Connection connessione = DBconnection.getConnection();    	    	
+    	StayTemplateComposite stcomp = new StayTemplateComposite();
+    	//se la connessione è andata a buon fine   	
+        try {
+            Statement st = connessione.createStatement();                                
+            String sql = "SELECT * FROM staytemplate";            
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+            	StayTemplateComposite stc = new StayTemplateComposite(rs.getString("startLoc"),
+            			rs.getString("endloc"), rs.getInt("durata"), rs.getString("nomest"),
+            			rs.getDouble("prezzo"),null);
+            	stcomp.add(stc);
+            }            
+            st.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        return stcomp;
+    }
     
-    /*
-    public static ElencoItineraryBean riempiStDaDB(String startLoc,String endLoc) {
-        
-    	Connection connessione = DBconnection.getConnection();
+    /**
+     * metodo utile a riempire le attività corrispondenti ad un certo StayTemplate
+     */
+    public static List<Activity> searchActivityStayTemplate(int id) {
+    	List<Activity> listActivity = new ArrayList<Activity>();            
+        Connection connessione = DBconnection.getConnection();
+        	//se la connessione è andata a buon fine   	
+        try {
+          Statement st = connessione.createStatement();                       
+            
+          String sql = "SELECT attivita.idattivita,attivita.tipo,attivita.citta,attivita.descrizione,attivita.durata,"
+          		+ "attivita.prezzo FROM attivita,ATTIVITA_ST where attivita_st.idstaytemplate="
+        		  +id+" and ATTIVITA_ST.IDACTIVITY=ATTIVITA.IDATTIVITA";            
+          ResultSet rs = st.executeQuery(sql);
+          while (rs.next()) {
+          	Activity ac = new Activity(rs.getInt("idattivita"),
+          	rs.getString("tipo"), rs.getString("citta"), rs.getString("descrizione"),
+          	rs.getInt("durata"), rs.getDouble("prezzo"),-1,false);
+            listActivity.add(ac);
+          }                
+          st.close();
+          connessione.close();
+        }
+        catch (SQLException ex) {
+          ex.printStackTrace();
+        }    	
+    	return listActivity;
+    }
+	
+    /**
+     * recupera option associate ad un certo leaf(ovvero un determinato stayTemplateLeaf)
+     * usando il parametro idStLeaf della tabella opzioni_standard
+     */
+    public void searchOptionLeaf(StayTemplateLeaf stl) {
     	
-    	ElencoStayItinerary elencoStayTemplate = new ElencoStayTemplateBean();
+    	Connection connessione = DBconnection.getConnection();    	
+    	ArrayList <Option> listaOpt = new ArrayList<Option>();    	
     	//se la connessione è andata a buon fine   	
         try {
             Statement st = connessione.createStatement();
-
-            String sql = "SELECT * FROM staytemplate where startloc='"+startLoc+"' and endloc='"+endLoc+"'";
+            //TO-DO
+            String sql = "SELECT * FROM option,staytemplate_leaf,opzioni_standard"
+            		+ " where ";
 
             ResultSet rs = st.executeQuery(sql);
+           
             while (rs.next()) {
-      
-            	elencoStayTemplate.aggiungi(rs.getInt("iditinerario"),rs.getString("creatoruser"),rs.getString("startloc"),rs.getString("endloc"),rs.getInt("durata"),rs.getString("itname"),rs.getString("itdesc"),rs.getString("stato"),rs.getDouble("prezzo"));                 
+            	Option opt = new Itinerary(rs.getString("creatoruser"),
+            	rs.getString("startLoc"),rs.getString("endloc"),rs.getInt("durata"),
+            	rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
+            	rs.getDouble("prezzo"));
+            	it.setId(rs.getInt("iditinerario"));
+            	lisaOpt.add(it);
             }
             
             st.close();
@@ -180,9 +232,18 @@ public static ElencoAttivitaBean riempiAttDaDB() {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return elencoItinerari;
+        return listaIt;
     }
-    */
-	
+    	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	
 }
