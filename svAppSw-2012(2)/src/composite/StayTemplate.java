@@ -3,6 +3,10 @@
  */
 package composite;
 
+import java.util.List;
+
+import resources.Option;
+
 /**
  * @author utente
  *
@@ -37,6 +41,8 @@ public abstract class StayTemplate {
 	
 	public abstract void add(StayTemplate st);
 	//public abstract void remove(StayTemplate st);
+	
+	public abstract List<Option> getOptionList();
 	
 	@Override
 	public String toString() {
@@ -102,6 +108,11 @@ public abstract class StayTemplate {
 	public void setTimeOffset(int timeOffset) {
 		this.timeOffset = timeOffset;
 	}
+	
+	public abstract Option getOption(int index);
+	
+	public abstract int getOptionListSize();
+	 
 	
 		
 }

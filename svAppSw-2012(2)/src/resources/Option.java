@@ -67,6 +67,18 @@ public class Option {
 	public List<OptionValue> getPossibleValue() {
 		return possibleValue;
 	}
+	
+	public OptionValue getOptionValue(int index) {
+		return possibleValue.get(index);
+	}
+	
+	public void setOptionValue(int index, OptionValue optionValue) {
+		possibleValue.set(index, optionValue);
+	}
+	
+	public int getPossibleValueSize() {
+		return possibleValue.size();
+	}
 		
 	
 	

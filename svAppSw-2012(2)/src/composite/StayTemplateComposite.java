@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import resources.Activity;
+import resources.Option;
 
 
 
@@ -55,6 +56,26 @@ public class StayTemplateComposite extends StayTemplate {
 		return super.toString();
 	}
 	
+	public List<Option> getOptionList() {
+		return null;
+	}
+	
+
+	public List<Activity> getActivityList() {
+		return activityList;
+	}
+
+	public void setActivityList(List<Activity> activityList) {
+		this.activityList = activityList;
+	}
+	
+	public Option getOption(int index) {
+		return null;
+	}
+	
+	public int getOptionListSize() {
+		return -1;
+	}
 	
 	
 	

@@ -129,8 +129,7 @@ public static ElencoAttivitaBean riempiAttDaDB() {
         try {
             Statement st = connessione.createStatement();
 
-            String sql = "SELECT * FROM itinerario where startloc='"+sl+"' and endloc='"+el+"' and durata='"+d+
-            		"' and itname='"+nome+"' and categoria='"+cat+"'";
+            String sql = "SELECT * FROM itinerario where startloc='"+sl+"' or endloc='"+el+"' or durata="+d+" or itname='"+nome+"' or categoria='"+cat+"'";
 
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {

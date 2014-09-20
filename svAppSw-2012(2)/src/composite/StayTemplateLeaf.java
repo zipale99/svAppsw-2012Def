@@ -14,13 +14,14 @@ import resources.Option;
 public class StayTemplateLeaf extends StayTemplate {
 	
 	String typeLeaf;
-	List<Option> optionValueList;
+	List<Option> optionList;
 	
 	public StayTemplateLeaf(String startLoc, String endLoc, int durata, String nome, String typeLeaf, double price, int timeOffset, List<Option> optionValueList) {
 		super(startLoc, endLoc, durata, nome, price, timeOffset);
 		this.typeLeaf = typeLeaf;
-		this.setOptionValueList(optionValueList);
+		this.setOptionList(optionValueList);
 	}
+	
 	
 	public String getTypeLeaf() {
 		return typeLeaf;
@@ -28,14 +29,35 @@ public class StayTemplateLeaf extends StayTemplate {
 
 	public void add(StayTemplate st){}
 	
-	public List<Option> getOptionValueList() {
-		return optionValueList;
+
+	public List<Option> getOptionList() {
+		return optionList;
 	}
 
-	public void setOptionValueList(List<Option> optionValueList) {
-		this.optionValueList = optionValueList;
+	public void setOptionList(List<Option> optionList) {
+		this.optionList = optionList;
+	}
+	
+	public int getSizeOption() {
+		return optionList.size();
 	}
 
+	public void setTypeLeaf(String typeLeaf) {
+		this.typeLeaf = typeLeaf;
+	}
+	
+	public Option getOption(int index) {
+		return optionList.get(index);
+	}
+	
+	public void setOption(int index, Option option) {
+		optionList.set(index, option);
+	}
+	
+	public int getOptionListSize() {
+		return optionList.size();
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() +

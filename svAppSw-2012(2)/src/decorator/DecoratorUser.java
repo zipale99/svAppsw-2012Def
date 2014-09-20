@@ -49,10 +49,12 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	 public void createItinerary(){
 		 itinerary = new Itinerary();
+		 itinerary.setUser(this.getUsername());
 	 }
 	 
 	 public void createItinerary(String nome, String descrizione, String categoria){
 		 itinerary = new Itinerary();
+		 itinerary.setUser(this.getUsername());
 		 itinerary.setNome(nome);
 		 itinerary.setDesc(descrizione);
 		 itinerary.setCategoria(categoria);

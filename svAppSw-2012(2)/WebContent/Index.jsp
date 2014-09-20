@@ -20,7 +20,7 @@
 		<p>Benvenuto nell'agenzia viaggi Awesome Journey. Seleziona nel menu a lato l'operazione che vuoi effettuare.</p>
 			<div class="contentImg">
 			<img src="img/logo.jpeg">
-			</div>		
+			</div>	
 		</div>
 		
 		<div class = "sidenav">

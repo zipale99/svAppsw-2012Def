@@ -9,7 +9,7 @@ public class TestDB {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		User utente = new User("filomena", "", "");
+		User utente = new User("antonio", "", "");
 		/*
 		utente.recuperaMyItinerary();
 		System.out.println(utente.getItineraryList().get(0).getStartLoc());
@@ -18,8 +18,10 @@ public class TestDB {
 		
 		
 		
-		utente.searchItinerary("torino", "roma", 3, "to-rm", null);
-		System.out.println(utente.getItineraryList().get(0).getStartLoc());
+		utente.searchItinerary("", "", 5, "", "");
+		System.out.println(utente.getItineraryList().toString());
+		
+		
 		
 	}
 

@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="composite.*"%>
+    pageEncoding="UTF-8" import="composite.*, decorator.*, resources.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean id="tappa" class="composite.StayTemplateComposite" scope="session"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Search Stay</title>
+<title>configureStayParameter</title>
 <link rel="stylesheet" type="text/css" href="stile.css"/>
 </head>
 <body>
@@ -19,45 +19,67 @@
 		<div class = "content">
 			<h3>ConfigureStayParameter</h3>
 			
-Il Template selezionato è composto dalle seguenti parti. 
-
-
-
 <%
-int size = tappa.getSize();
-if (size != 0) {
-%>			
+//Stampo i leaf contenuti nello stayTemplate selezionato
+DecoratorUser du = (DecoratorUser)session.getAttribute("utenteDecorato");
+StayTemplateComposite stay = du.getStay();
+%>
+
+StayTemplate selezionato:
+
+		<table>
+		
+			<tr>
+				<th>StayTemplate</th>
+				<th>Attività</th>
+			</tr>
+	
+			<tr>
+				<td> <%= stay.toString() %> </td>
+				<td> 
+					 <%= stay.getActivityList().toString() %> 
+					<form action="Controller" method="POST" >
+						<input type="hidden" name="operazione" value="addActivity">
+						<input type="hidden" name="id" value='<%= stay.getId() %>'>
+						<input type="submit" value="Imposta un valore"/>
+					</form>
+				</td>
+			</tr>
+				
+		</table>
+
+Il Template è composto dalle seguenti parti:
 			
 			<table>
 				<tr>
-					<th>StayTemplate</th>
-					<th></th>
+					<th>StayTemplateLeaf</th>
+					<th>Opzioni disponibili</th>
 				</tr>
 <%
-
-	int i = 0;
-	while(size > 0) {
+int sizeListLeaf = stay.getSize();
+int i = 0;
+while(sizeListLeaf > 0) {
+	StayTemplate stayLeaf = stay.getStayTemplate(i); //recupero il leaf del composite
 %>
-	
+
 				<tr>
-					<td> <%= tappa.getStayTemplate(i).toString() %> </td>
-					<td>  
-						<button onclick="location.href='Controller?operazione=addStayTemplate&idTappa=<%= i %>'">Aggiungi Template</button> 
-							<form action="Controller" method="POST" >
-								<input type="hidden" name="operazione" value="viewStayTemplate">
-								<input type="hidden" name="idTappa" value='<%= i %>'>
-								<input type="submit" value="Visualizza Template" onClick="return(confirm('Sei sicuro di voler procedere?'))"/>
-							</form>
+					<td> <%= stayLeaf.toString() %> </td>
+					<td> 
+						 <%= stayLeaf.getOptionList().toString() %> 
+						<form action="Controller" method="POST" >
+							<input type="hidden" name="operazione" value="viewOptionValues">
+							<input type="hidden" name="idLeaf" value='<%= i %>'>
+							<input type="submit" value="Imposta un valore"/>
+						</form>
 					</td>
 				</tr>
+				
 <%
-	size--;
-	i++;
-	}
-
+sizeListLeaf--;
+i++;
 }
 %>	
-		</table>	
+			</table>	
 				
 		</div>
 		

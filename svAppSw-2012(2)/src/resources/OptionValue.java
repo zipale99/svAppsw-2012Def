@@ -40,6 +40,10 @@ public class OptionValue {
 			this.price = price;
 		}
 		
+		@Override
+		public String toString() {
+			return "Valore: " + value + "[Costo: " + price + "]";
+		}
 		
 		
 }
