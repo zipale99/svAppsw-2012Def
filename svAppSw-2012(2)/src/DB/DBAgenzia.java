@@ -32,7 +32,7 @@ public class DBAgenzia {
 	 	        			"creatorUser VARCHAR(30) NOT NULL,"+
 	 	        			"startLoc VARCHAR(30),"+  
 	 	        			"endLoc VARCHAR(30),"+
-	 	        			"durata int not null,"+
+	 	        			"durata integer not null,"+
 	 	        			"itName VARCHAR(30),"+
 	 	        			"itDesc VARCHAR(30),"+
 	 	        			"categoria VARCHAR(50),"+
@@ -94,7 +94,7 @@ public class DBAgenzia {
 	 		    	 		"startLoc varchar(30),"+
 	 		     		    "endLoc varchar(30),"+
 	 		    	 		"typeLeaf varchar(30),"+
-	 		    	   	    "durata VARCHAR(30),"+
+	 		    	   	    "durata integer not null,"+
 	 		    		    "transport varchar(30),"+
 	 		    	   	    "accomodation varchar(30),"+
 	 		    	    		        
@@ -137,7 +137,7 @@ public class DBAgenzia {
 	 		    	   		 "tipo varchar(30),"+
 	 		    	   		 "citta varchar(30),"+
 	 		    	   		 "descrizione varchar(30),"+
-	 		    	   		 "durata varchar(30),"+
+	 		    	   		 "durata integer not null,"+
 	 		    	   		 "prezzo float(10) not null,"+
 	 		    	
 	 		    	   		 "PRIMARY KEY (idAttivita))";

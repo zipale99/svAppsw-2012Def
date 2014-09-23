@@ -35,8 +35,16 @@ public class StayTemplateComposite extends StayTemplate {
 		tree = new ArrayList<StayTemplate>();
 	}
 	
-	public void add (StayTemplate st) {
+	public List<Activity> getActivityList() {
+		return activityList;
+	}
+	
+	public void add(StayTemplate st) {
 		tree.add(st);
+	}
+	
+	public void addAc(Activity ac) {
+		activityList.add(ac);
 	}
 	
 	public void remove (StayTemplate st) {
@@ -61,8 +69,9 @@ public class StayTemplateComposite extends StayTemplate {
 		return result;
 	}
 	
-	
-	
+	public void add (Activity act) {
+		activityList.add(act);
+	}	
 	
 	
 	

@@ -227,7 +227,7 @@ public class ServiceDB {
             	rs.getString("endloc"), rs.getInt("durata"), null,
             	rs.getString("typeleaf"), rs.getDouble("price"),-1,null);
               elb.addLeaf(stl);
-            }                
+            }
             st.close();
             connessione.close();
           }

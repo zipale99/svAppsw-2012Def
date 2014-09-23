@@ -19,7 +19,8 @@ public class Activity {
     boolean obbligatoria; //Verificare quale tipo restituisce il db.
 
 
-    public Activity(int idActivity, String type, String location, String desc, int durata, float price, int timeOffset, boolean obbligatoria) {
+    public Activity(int idActivity, String type, String location, String desc, int durata,
+    		double price, int timeOffset, boolean obbligatoria) {
 		this.idActivity = idActivity;
 		this.type = type;
 		this.location = location;
@@ -29,6 +30,15 @@ public class Activity {
 		this.timeOffset = timeOffset;
 		this.obbligatoria = obbligatoria;
 	}
+    
+    public Activity(int id,String t,String c,String des,int dur,double p) {
+    	id = idActivity;
+    	type=t;
+    	location=c;
+    	desc=des;
+    	durata=dur;
+    	price=p;
+    }
     
     public Activity() {
     	

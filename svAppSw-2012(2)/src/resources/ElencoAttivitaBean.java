@@ -40,5 +40,9 @@ public class ElencoAttivitaBean {
 		att.setPrice(prezzo);
 		elencoAttivita.add(att);
 	}
+    
+    public void add(Activity a) {
+    	elencoAttivita.add(a);
+    }
 	
 }

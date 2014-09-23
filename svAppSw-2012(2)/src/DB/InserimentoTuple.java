@@ -14,7 +14,7 @@ public class InserimentoTuple {
 		PreparedStatement pst=null;
 		String insert=null;
 	    try {
-		/*
+		
 	    	insert = "INSERT INTO attivita (tipo,citta,descrizione,durata,prezzo)VALUES (?,?,?,?,?)";
 	    	pst = conn.prepareStatement(insert);            
 	    	pst.setString(1, "culturale");
@@ -115,8 +115,8 @@ public class InserimentoTuple {
 	    	pst.executeUpdate();
 	    	
 	    	
-	    	*/
 	    	
+	    	/*
 	    	insert = "INSERT INTO utenti (username,password,ruolo)VALUES (?,?,?)";
 	    	pst = conn.prepareStatement(insert);            
 	    	pst.setString(1, "antonio");
@@ -548,7 +548,7 @@ public class InserimentoTuple {
  			pst.setBoolean(3, true);
  			pst.setInt(4, 1);
  			pst.executeUpdate();
- 			
+ 			*/
 	    }
 	    
 	    catch (SQLException ex) {

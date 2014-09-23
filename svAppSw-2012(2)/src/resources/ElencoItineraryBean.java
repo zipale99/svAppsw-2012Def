@@ -34,5 +34,9 @@ public class ElencoItineraryBean {
 		it.setPrice(prezzo);
 		elencoItinerari.add(it);
 	}
+    
+    public void add(Itinerary it) {
+    	elencoItinerari.add(it);
+    }
 	
 }

@@ -82,14 +82,6 @@ public class Itinerary extends StayTemplateComposite{
 				super.toString();
 	}
 	
-
-
-
-
-
-
-	
-	
 	
 }
 

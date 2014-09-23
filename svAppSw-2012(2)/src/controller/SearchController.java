@@ -3,6 +3,7 @@ package controller;
 //import java.util.ArrayList;
 //import decorator.*;
 
+import decorator.DecoratorUser;
 import decorator.User;
 //import composite.*;
 //import resources.*;
@@ -36,15 +37,13 @@ public class SearchController {
 	}
 	
 	/**
-	 * riempie un ArrayList contenente tutti gli stayTemplate presenti nel DB aventi startLoc ed endLoc
-	 * @param startLoc
-	 * @param endLoc
+	 * riempie un ArrayList contenente tutti gli stayTemplate presenti nel DB
 	 * @return
 	 */
-	/*
-	public static ElencoItineraryBean cercaStayTemplate(String startLoc,String endLoc) {
-		return ServiceDB.riempiStDaDB(startLoc,endLoc);
+	
+	public static StayTemplateComposite searchStayTemplate(DecoratorUser userDec) {
+		userDec.searchStayTemplate();
 	}
-	*/
+	
 	
 }

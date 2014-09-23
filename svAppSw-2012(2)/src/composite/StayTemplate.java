@@ -40,10 +40,10 @@ public abstract class StayTemplate {
 	
 	@Override
 	public String toString() {
-		return  "\nstartLoc: " + startLoc +
-				"\nendLoc: " + endLoc +
-				"\ndurata: " + durata +
-				"\nnome: " + nome;
+		return  "startLoc: " + startLoc +
+				"endLoc: " + endLoc +
+				"durata: " + durata +
+				"nome: " + nome;
 	}
 
 	public int getId() {
