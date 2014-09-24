@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import composite.Itinerary;
+import composite.*;
 
 import decorator.User;
 import DB.DBconnection;
