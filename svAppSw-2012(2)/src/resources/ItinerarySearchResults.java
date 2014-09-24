@@ -35,4 +35,8 @@ public class ItinerarySearchResults {
 		elencoItinerari.add(it);
 	}
 	
+    public void add(Itinerary it) {
+    	elencoItinerari.add(it);
+    }
+    
 }

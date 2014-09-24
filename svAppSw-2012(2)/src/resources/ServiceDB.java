@@ -237,10 +237,9 @@ public class ServiceDB {
     }
     
     
-    /**
+    /*
      * recupera option associate ad un certo leaf(ovvero un determinato stayTemplateLeaf)
      * usando il parametro idStLeaf della tabella opzioni_standard
-     */
     public void searchOptionLeaf(StayTemplateLeaf stl) {
     	
     	Connection connessione = DBconnection.getConnection();    	
@@ -272,5 +271,6 @@ public class ServiceDB {
         return listaIt;
     }
 	
+    */
 	
 }
