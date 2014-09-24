@@ -44,8 +44,8 @@ public class ServiceDB {
      * recupera tutte le attività dell'agenzia e le mette in un arrayList che sarà il Bean
      * searchActivityResults
      */	
-	public static ElencoAttivitaBean searchActivity() {
-        ElencoAttivitaBean elb = new ElencoAttivitaBean();
+	public static ActivitySearchResults searchActivity() {
+        ActivitySearchResults results = new ActivitySearchResults();
     	Connection connessione = DBconnection.getConnection();    	
     	//se la connessione è andata a buon fine   	
         try {
@@ -57,7 +57,7 @@ public class ServiceDB {
             while (rs.next()) {
             	Activity act  = new Activity(rs.getInt("idattivita"),rs.getString("tipo"),rs.getString("citta"),
             					rs.getString("descrizione"),rs.getInt("durata"),rs.getDouble("prezzo"));
-            	elb.add(act);
+            	results.add(act);
             }            
             st.close();
             connessione.close();                        
@@ -65,7 +65,7 @@ public class ServiceDB {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return elb;
+        return results;
     }
     
 
@@ -73,7 +73,7 @@ public class ServiceDB {
 	 * @param user utente per il quale cercare gli itinerari
 	 * @return ArrayList che rappresenta un elenco di itinerari dell'utente
 	 */    
-    public static ArrayList<Itinerary> riempiItDaDB(User user) {
+    public static ArrayList<Itinerary> myItinerary(User user) {
         
     	Connection connessione = DBconnection.getConnection();
     	
@@ -115,11 +115,11 @@ public class ServiceDB {
      * @param cat
      * @return
      */    
-    public static ElencoItineraryBean searchItinerary(String sl,String el,int d,String nome,String cat) {
+    public static ItinerarySearchResults searchItinerary(String sl,String el,int d,String nome,String cat) {
         
     	Connection connessione = DBconnection.getConnection();
     	
-    	ElencoItineraryBean eib = new ElencoItineraryBean();
+    	ItinerarySearchResults results = new ItinerarySearchResults();
     	
     	//se la connessione è andata a buon fine   	
         try {
@@ -135,7 +135,7 @@ public class ServiceDB {
             			rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
             			rs.getDouble("prezzo"));
             	it.setId(rs.getInt("iditinerario"));
-            	eib.add(it);
+            	results.add(it);
             }
             
             st.close();
@@ -144,16 +144,16 @@ public class ServiceDB {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return eib;
+        return results;
     }
     
     
     /**
      * @param elenco per gli stayTemplate presenti nel DB
      */
-    public static ElencoStayTemplateBean searchStayTemplate() {        
+    public static StaySearchResults searchStayTemplate() {        
     	Connection connessione = DBconnection.getConnection();    	    	
-    	ElencoStayTemplateBean esb = new ElencoStayTemplateBean();
+    	StaySearchResults esb = new StaySearchResults();
     	//se la connessione è andata a buon fine   	
         try {
             Statement st = connessione.createStatement();                                
@@ -179,8 +179,8 @@ public class ServiceDB {
      * @param id
      * @return beanActivity
      */
-    public static ElencoAttivitaBean searchActivityStayTemplate(int id) {
-    	ElencoAttivitaBean elb = new ElencoAttivitaBean();        
+    public static ActivitySearchResults searchActivityStayTemplate(int id) {
+    	ActivitySearchResults results = new ActivitySearchResults();        
         Connection connessione = DBconnection.getConnection();
         	//se la connessione è andata a buon fine   	
         try {
@@ -194,7 +194,7 @@ public class ServiceDB {
           	Activity ac = new Activity(rs.getInt("idattivita"),
           	rs.getString("tipo"), rs.getString("citta"), rs.getString("descrizione"),
           	rs.getInt("durata"), rs.getDouble("prezzo"),-1,false);
-            elb.add(ac);
+            results.add(ac);
           }                
           st.close();
           connessione.close();
@@ -202,7 +202,7 @@ public class ServiceDB {
         catch (SQLException ex) {
           ex.printStackTrace();
         }    	
-    	return elb;
+    	return results;
     }
 	
     /**
@@ -211,8 +211,8 @@ public class ServiceDB {
      * @return
      */
     
-    public static ElencoStayTemplateBean searchLeafStayTemplate(int idStayTemplate) {
-    	ElencoStayTemplateBean elb = new ElencoStayTemplateBean();
+    public static StaySearchResults searchLeafStayTemplate(int idStayTemplate) {
+    	StaySearchResults results = new StaySearchResults();
     	Connection connessione = DBconnection.getConnection();
     	
     	try {
@@ -224,7 +224,7 @@ public class ServiceDB {
             	StayTemplateLeaf stl = new StayTemplateLeaf(rs.getString("startloc"),
             	rs.getString("endloc"), rs.getInt("durata"), null,
             	rs.getString("typeleaf"), rs.getDouble("price"),-1,null);
-              elb.addLeaf(stl);
+              results.addLeaf(stl);
             }                
             st.close();
             connessione.close();
@@ -232,7 +232,7 @@ public class ServiceDB {
           catch (SQLException ex) {
             ex.printStackTrace();
           }    	
-    	return elb; 
+    	return results; 
     }
     
     

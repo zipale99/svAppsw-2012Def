@@ -3,14 +3,14 @@ package resources;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElencoAttivitaBean {
+public class ActivitySearchResults {
 
     private List<Activity> elencoAttivita;    
     
     /**
      * senza argomenti come da regola dei Bean
      **/
-    public ElencoAttivitaBean() {
+    public ActivitySearchResults() {
 		elencoAttivita = new ArrayList<Activity>();
 	}
     

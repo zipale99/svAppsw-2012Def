@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import composite.Itinerary;
 
-public class ElencoItineraryBean {
+public class ItinerarySearchResults {
 
     private List<Itinerary> elencoItinerari;    
     
     /**
      * senza argomenti come da regola dei Bean
      **/
-    public ElencoItineraryBean() {
+    public ItinerarySearchResults() {
 		elencoItinerari = new ArrayList<Itinerary>();
 	}
     
