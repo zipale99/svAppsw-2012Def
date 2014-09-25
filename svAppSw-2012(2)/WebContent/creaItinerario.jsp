@@ -19,10 +19,9 @@
 			<h3>Create Itinerary</h3>
 			
 <%
-System.out.println("creat itinerariooooooooooooo");
 ManagementController mc = (ManagementController)session.getAttribute("managementController");
-DecoratorUser du = mc.getCurrentUser();
-Itinerary myIt = du.getItinerary();
+AbstractUserComponent auc = mc.getCurrentUser();
+Itinerary myIt = auc.getItinerary();
 %>			
 			
 			<p><b>Creatore:</b> <%= myIt.getUser() %> </p>
@@ -92,7 +91,7 @@ if (size != 0) {
 	</div>
 	
 	<div class = "footer">
-		Progetto di Teconologie Web di Lanciano Alessandro
+		Progetto di Teconologie Web di Lanciano Alessandro e Ficarra Sergio
 	</div>
 	
 </div>

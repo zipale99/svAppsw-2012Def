@@ -123,6 +123,11 @@ public class Activity {
 	public void setObbligatoria(boolean obbligatoria) {
 		this.obbligatoria = obbligatoria;
 	}
+	
+	public String toString() {
+		return "id: "+idActivity +
+		" type: " +type + " location: " + location;
+	}
 
 	
     

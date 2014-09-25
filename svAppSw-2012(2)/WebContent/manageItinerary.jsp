@@ -19,9 +19,9 @@
 		<div class = "content">
 <%
 ManagementController mc = (ManagementController)session.getAttribute("managementController");
-DecoratorUser du = mc.getCurrentUser();
-System.out.println("utente:  " + du.getRuolo());
-if (du.getRuolo().equals("CreatorCustomer")) {
+AbstractUserComponent auc = mc.getCurrentUser();
+System.out.println("utente:  " + auc.getRuolo());
+if (auc.getRuolo().equals("CreatorCustomer")) {
 %>	
 			<h3>Manage Itinerary Base</h3>
 			<hr>
@@ -31,7 +31,7 @@ if (du.getRuolo().equals("CreatorCustomer")) {
 			</ul>
 <% 
 	}
-	else if (du.getRuolo().equals("CreatorTA")) { 
+	else if (auc.getRuolo().equals("CreatorTA")) { 
 %>
 	
 			<h3>Manage Itinerary Pro</h3>

@@ -125,9 +125,16 @@ public class DecoratorTest {
 		
 		
 		User utente = new User("filomena", "", "");
-		utente.recuperaMyItinerary();
+		//utente.recuperaMyItinerary();
 		utente.getItineraryList().get(0).toString();
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		
+		AbstractUser ab = new ProxyUser();
+		ab.login("", "");
+		AbstractUserComponent abc = new Customer("","");
+		abc = DecoratorUser.decora(abc);
+		
+		
 		
 		/*
 		 * TO-DO_2: PATTERN GRASP CONTROLLER (managementController, searchController)

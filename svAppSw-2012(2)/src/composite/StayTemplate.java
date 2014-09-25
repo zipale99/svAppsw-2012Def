@@ -5,13 +5,14 @@ package composite;
 
 import java.util.List;
 
+import resources.Activity;
 import resources.Option;
 
 /**
  * @author utente
  *
  */
-public abstract class StayTemplate {
+public abstract class StayTemplate implements Cloneable{
 	
 	int id;
 	String startLoc;
@@ -37,12 +38,7 @@ public abstract class StayTemplate {
 		this.price = price;
 		this.timeOffset = timeOffset;
 	}
-	
-	
-	public abstract void add(StayTemplate st);
-	//public abstract void remove(StayTemplate st);
-	
-	public abstract List<Option> getOptionList();
+
 	
 	@Override
 	public String toString() {
@@ -109,9 +105,64 @@ public abstract class StayTemplate {
 		this.timeOffset = timeOffset;
 	}
 	
-	public abstract Option getOption(int index);
+	public int getOptionListSize() {
+		return -1;
+	}
 	
-	public abstract int getOptionListSize();
+	public StayTemplate getStayTemplate(int i) {
+		return null;
+	}
+	
+	public int getSize() {
+		return -1;
+	}
+	
+	public List<Activity> getActivityList() {
+		return null;
+	}
+
+	public void setActivityList(List<Activity> activityList) {}
+	
+	public String print() {
+		return null;
+	}
+	
+	@Override
+	public Object clone() { 
+		try { 
+			StayTemplate stl = (StayTemplate)super.clone(); 
+			return stl;
+			} catch (CloneNotSupportedException e) { 
+				e.printStackTrace(); 
+				return null; 
+				} 
+		}
+	
+	public String getTypeLeaf() {
+		return null;
+	}
+	
+	public void add(StayTemplate st){}
+	public void remove(StayTemplate st){}
+	
+	public List<Option> getOptionList() {
+		return null;
+	}
+
+	public void setOptionList(List<Option> optionList) {}
+	
+	public int getSizeOption() {
+		return -1;
+	}
+
+	public void setTypeLeaf(String typeLeaf) {}
+	
+	public Option getOption(int index) {
+		return null;
+	}
+	
+	public void setOption(int index, Option option) {}
+	
 	 
 	
 		

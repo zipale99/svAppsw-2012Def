@@ -2,7 +2,7 @@ package decorator;
 
 public class CreatorTADecorator extends DecoratorUser {
 
-	public CreatorTADecorator(User user) { //Decoro con la funzionalità di creator
+	public CreatorTADecorator(AbstractUserComponent user) { //Decoro con la funzionalità di creator
 		super(user);
 	}
 	

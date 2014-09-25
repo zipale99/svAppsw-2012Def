@@ -15,20 +15,32 @@ import resources.*;
  */
 public class ManagementController {
 	
-	private DecoratorUser currentUser;
+	private AbstractUserComponent currentUser;
 	
-	public ManagementController(DecoratorUser user) {
+	public ManagementController(AbstractUserComponent user) {
 		this.currentUser = user;
 	}
 	
-	public DecoratorUser getCurrentUser() {
+	public AbstractUserComponent getCurrentUser() {
 		return currentUser;
 	}
 	
 	public void createItinerary(String nome, String descrizione, String categoria) {
 		System.out.println("metodo create itinerary di management controller");
-		currentUser.createItinerary(nome, descrizione, categoria);
+		currentUser.provideBasicInfo(nome, descrizione, categoria);
 	}
+	
+	public void setStay(StayTemplate st) {
+		currentUser.setStay(st);
+		System.out.println("clone: "+currentUser.getStay().toString());
+		
+	}
+	
+	public void getMyItinerary(AbstractUserComponent user) {
+		System.out.println("metodo getMyItinerary di managementController");
+		user.myItinerary();
+	}
+
 	
 	
 	

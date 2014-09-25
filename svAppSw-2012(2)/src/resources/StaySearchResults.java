@@ -20,7 +20,7 @@ private List<StayTemplate> elencoStayTemplate;
     
     public void aggiungiComposite(int id, String user,String startLoc,String endLoc, String nome, int durata,String transport, double prezzo){
     	List<Activity> activityList = new ArrayList<Activity>();
-		StayTemplate st = new StayTemplateComposite(startLoc, endLoc, durata, nome, prezzo, activityList);
+		StayTemplateComposite st = new StayTemplateComposite(startLoc, endLoc, durata, nome, prezzo, activityList);
 		st.setId(id);
 	}
     
@@ -40,4 +40,12 @@ private List<StayTemplate> elencoStayTemplate;
     	elencoStayTemplate.add(stl);
     }
 	
+    public int size() {
+    	return elencoStayTemplate.size();
+    }
+    
+    public StayTemplate get(int index) {
+    	return elencoStayTemplate.get(index);
+    }
+    
 }

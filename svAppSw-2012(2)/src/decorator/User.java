@@ -7,8 +7,10 @@
  */
 package decorator;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import resources.ServiceDB;
 import composite.Itinerary;
 
@@ -36,10 +38,12 @@ public class User extends AbstractUser{
 		ruolo = null;
 	}
 	
+	@Override
 	public List<Itinerary> getItineraryList() {
 		return itineraryList;
 	}
-
+	
+	@Override
 	public void setItineraryList(List<Itinerary> itineraryList) {
 		this.itineraryList = itineraryList;
 	}
@@ -47,47 +51,35 @@ public class User extends AbstractUser{
 	/**
 	 * chiama il metodo che recupera gli itinerari per un determinato utente
 	 */
-	public void recuperaMyItinerary() {
-		this.itineraryList = ServiceDB.riempiItDaDB(this);
-	}
-	
-	/**
-	 * chiama il metodo che recupera tutti gli itinerari presenti nel DB
-	 */	
-	public void searchItinerary(String sl,String el, int d,String nome,String cat) {
-		this.itineraryList = ServiceDB.searchItinerary(this,sl,el,d,nome,cat);
+	@Override
+	public void myItinerary() {
+		this.itineraryList = ServiceDB.myItinerary(this);
 	}
 
-	@Override
 	public String getUsername() {
 		return username;
 	}
 	
-	@Override
 	public String getPwd() {
 		// TODO Auto-generated method stub
 		return pwd;
 	}
 	
-	@Override
 	public String getRuolo() {
 		// TODO Auto-generated method stub
 		return ruolo;
 	}
 	
-	@Override
 	public void setUsername(String username) {
 		// TODO Auto-generated method stub
 		this.username = username;
 	}
 	
-	@Override
 	public void setPwd(String pwd) {
 		// TODO Auto-generated method stub
 		this.pwd = pwd;
 	}
 	
-	@Override
 	public void setRuolo(String ruolo) {
 		// TODO Auto-generated method stub
 		this.ruolo = ruolo;

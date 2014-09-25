@@ -16,7 +16,6 @@ public class Itinerary extends StayTemplateComposite{
 	String stato;
 	
 	public Itinerary() {
-		
 	}
 	
 	
@@ -69,15 +68,13 @@ public class Itinerary extends StayTemplateComposite{
 	}
 
 	
-
-	
 	@Override
 	public String toString() {
 		return 	"NOME: " + nome +
 				"; PARTENZA: " + startLoc + 
 				"; ARRIVO: " + endLoc +
 				"; DURATA(giorni): " + durata + 
-				" giorni; DESCRIZIONE: " + desc +
+				"; DESCRIZIONE: " + desc +
 				"; PREZZO(euro): " + price +
 				super.toString();
 	}

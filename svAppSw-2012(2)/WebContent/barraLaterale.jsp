@@ -25,7 +25,7 @@ if(p != null) {
 	<li><a href="Index.jsp">Home</a></li>
 	<li><a href="searchItineraryOrJourney.jsp">SearchItineraryOrJourney</a></li>
    	<li><a href="Controller?operazione=manageItinerary">Manage Itinerary</a></li>
-   	<li><a href="Controller?operazione=elencoItinerari">SearchMyItinerary</a></li>
+   	<li><a href="Controller?operazione=searchMyItinerary">SearchMyItinerary</a></li>
 	</ul>
 	
 <% 

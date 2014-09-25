@@ -16,11 +16,13 @@ public class TestDB {
 		*/
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
+		StaySearchResults st = ServiceDB.searchStayTemplate();
+		System.out.println(st.get(0).getActivityList().toString());
 		
-		
-		utente.searchItinerary("", "", 5, "", "");
-		System.out.println(utente.getItineraryList().toString());
-		
+		System.out.println(st.get(0).getStayTemplate(0).toString());
+		System.out.println(st.get(0).getStayTemplate(1).toString());
+		System.out.println(st.get(0).getStayTemplate(2).toString());
+		System.out.println(st.get(0).getStayTemplate(3).toString());
 		
 		
 	}

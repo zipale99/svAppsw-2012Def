@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="composite.*, decorator.*"%>
+    pageEncoding="UTF-8" import="composite.*, decorator.*, resources.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<jsp:useBean id="elencoTappe" class="composite.StayTemplateComposite" scope="session"/>
+<jsp:useBean id="itineraryResults" class="resources.ItinerarySearchResults" scope="session"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,26 +19,30 @@
 		<div class = "content">
 			<h3>Risultati ricerca:</h3>
 			
-<%
-ProxyUser pu = (ProxyUser)session.getAttribute("proxy");
-%>		
-			
 			<table>
 				<tr>
 					<th>Itinerari</th>
 					<th></th>
 				</tr>
 <%
-	for (Itinerary it : pu.getUser().getItineraryList()) {
+int size = itineraryResults.getElencoItinerari().size();
+int i = 0;
+while(size > 0) {
+	Itinerary it = itineraryResults.getElencoItinerari().get(i);
 %>
 				<tr>
 					<td> 
 						<%= it.toString() %>					
 					</td>
+					<td>  
+						<button onclick="location.href='Controller?operazione=selectItinerary&idItinerary=<%= i %>'">Select</button> 
+					</td>
 				</tr>
 <%
+size--;
+i++;
 }
-%>	
+%>		
 		</table>	
 				
 		</div>
@@ -50,7 +54,7 @@ ProxyUser pu = (ProxyUser)session.getAttribute("proxy");
 	</div>
 	
 	<div class = "footer">
-		Progetto di Teconologie Web di Lanciano Alessandro
+		Progetto di Teconologie Web di Lanciano Alessandro e Ficarra Sergio
 	</div>
 	
 </div>

@@ -4,54 +4,67 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>modificaItinerario</title>
+<title>ManageItineraryBase</title>
 <link rel="stylesheet" type="text/css" href="stile.css"/>
 </head>
 <body>
 
 	<div class = "container">
 	<div class = "header">
-		<h1>modificaItinerario</h1>
+		<h1>Awesome Journey</h1>
 	</div>	
 	
 	<div class = "main">
 		<div class = "content">
-			<h3>Elenco dei tuoi itinerari:</h3>
+			<h3>View Itinerary</h3>
 			
-Seleziona l'itinerario che vuoi modificare
+<%
+Itinerary it = (Itinerary)request.getAttribute("itinerario");
+%>			
+			<table>
+				<tr>
+					<th>Itinerario</th>
+				</tr>
+				
+				<tr>
+					<td> <%= it.toString() %> </td>
+				</tr>
+			
+			</table>
+			
 
 <%
-ManagementController mc = (ManagementController)session.getAttribute("managementController");
-if(mc == null)
-System.out.println("mc uguale a nulllll");
-AbstractUserComponent auc = mc.getCurrentUser();
-
-
-%>		
+int size = it.getSize();
+if (size != 0) {
+%>			
 			
 			<table>
 				<tr>
-					<th>Itinerari</th>
-					<th></th>
+					<th>Tappe</th>
+					<th>Leaf</th>
+					<th>Lista Attività</th>
 				</tr>
 <%
+
 	int i = 0;
-	for (Itinerary it : auc.getItineraryList()) {
+	while(size > 0) {
 %>
+	
 				<tr>
-					<td> 
-						<%= it.toString() %>					
-					</td>
-					<td>  
-						<button onclick="location.href='Controller?operazione=modificaItinerario&idItinerario=<%= i %>'">Modifica</button> 
-					</td>
+					<td> <%= it.getStayTemplate(i) %> </td>
+					<td> <%= it.getStayTemplate(i).print()%> </td>
+					<td> <%= it.getStayTemplate(i).getActivityList().toString()%> </td>
 				</tr>
 <%
-i++;
+	size--;
+	i++;
+	}
+
 }
 %>	
-		</table>	
-				
+			</table>
+			
+			
 		</div>
 		
 		<div class = "sidenav">

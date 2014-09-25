@@ -152,7 +152,7 @@ public class ServiceDB {
     /**
      * @param elenco per gli stayTemplate presenti nel DB
      */
-    public static StaySearchResults searchStayTemplate() {        
+    public static StaySearchResults searchStayTemplated() {        
     	Connection connessione = DBconnection.getConnection();    	    	
     	StaySearchResults esb = new StaySearchResults();
     	//se la connessione è andata a buon fine   	
@@ -174,6 +174,49 @@ public class ServiceDB {
         }
         return esb;
     }
+    
+    
+    
+    
+    
+    
+    /**
+     * @param recupero gli stayTemplate presenti nel DB
+     */
+    public static StaySearchResults searchStayTemplate() {        
+    	Connection connessione = DBconnection.getConnection();    	    	
+    	StaySearchResults esb = new StaySearchResults();
+    	//se la connessione è andata a buon fine   	
+        try {
+            Statement st = connessione.createStatement();                                
+            String sql = "SELECT * FROM staytemplate";            
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+            	StayTemplateComposite stc = new StayTemplateComposite();
+            	int id = rs.getInt("idstaytempl");
+            	stc.setStartLoc(rs.getString("startLoc"));
+            	stc.setEndLoc(rs.getString("endLoc"));
+            	stc.setDurata(rs.getInt("durata"));
+            	stc.setNome(rs.getString("nomest"));
+            	stc.setPrice(rs.getDouble("prezzo"));
+            	stc.setActivityList(searchActivityStayTemplate(id).getElencoAttivita());
+            	for (StayTemplate stay :  searchLeafStayTemplate(id).getElencoStayTemplate())
+            		stc.add(stay);
+            	
+            	esb.add(stc);
+            }            
+            st.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        return esb;
+    }
+    
+    
+    
+    
     
     /**
      * metodo utile a trovare l'elenco delle attività corrispondenti ad un certo stayTemplate
@@ -224,7 +267,7 @@ public class ServiceDB {
             while (rs.next()) {
             	StayTemplateLeaf stl = new StayTemplateLeaf(rs.getString("startloc"),
             	rs.getString("endloc"), rs.getInt("durata"), null,
-            	rs.getString("typeleaf"), rs.getDouble("price"),-1,null);
+            	rs.getString("typeleaf"),0,-1,null);
               results.addLeaf(stl);
             }                
             st.close();
@@ -240,6 +283,7 @@ public class ServiceDB {
     /*
      * recupera option associate ad un certo leaf(ovvero un determinato stayTemplateLeaf)
      * usando il parametro idStLeaf della tabella opzioni_standard
+     */
     public void searchOptionLeaf(StayTemplateLeaf stl) {
     	
     	Connection connessione = DBconnection.getConnection();    	
@@ -254,7 +298,7 @@ public class ServiceDB {
             ResultSet rs = st.executeQuery(sql);
            
             while (rs.next()) {
-            	Option opt = new Itinerary(rs.getString("creatoruser"),
+            	Option opt = new Option(rs.getString("creatoruser"),
             	rs.getString("startLoc"),rs.getString("endloc"),rs.getInt("durata"),
             	rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
             	rs.getDouble("prezzo"));
@@ -271,6 +315,6 @@ public class ServiceDB {
         return listaIt;
     }
 	
-    */
+    
 	
 }

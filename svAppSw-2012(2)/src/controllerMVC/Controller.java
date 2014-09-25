@@ -3,6 +3,7 @@ package controllerMVC;
 import decorator.*;
 import composite.*;
 import controller.*;
+import resources.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -68,10 +69,11 @@ public class Controller extends HttpServlet {
 		String operazione = request.getParameter("operazione");
 		HttpSession session = request.getSession();
 		  
-        ProxyUser proxy = null;
-        DecoratorUser utenteDecorato = null;
+        AbstractUser proxy = null; //proxy
+        AbstractUserComponent utenteDecorato = null;
         ManagementController managementController = null;
-              
+        //session.setAttribute("managementController", managementController);
+       
         if(operazione == null) {
         	System.out.println("Operazione uguale uguale a null");
             if(session.isNew()) {
@@ -87,9 +89,10 @@ public class Controller extends HttpServlet {
             forward(request, response,"/login.jsp");
         }
         else { //Se l'operazione è diversa da null recupero dalla sessione utente gli oggetti proxy e decoratorUser
+        
         	System.out.println("Operazione diversa da null");
         	proxy = (ProxyUser)session.getAttribute("proxy");
-            utenteDecorato = (DecoratorUser)session.getAttribute("utenteDecorato");
+            utenteDecorato = (AbstractUserComponent)session.getAttribute("utenteDecorato");
             managementController = (ManagementController)session.getAttribute("managementController");
             System.out.println(operazione);
         }   
@@ -121,8 +124,12 @@ public class Controller extends HttpServlet {
         //Mostra itinerari dell'utente
         if(operazione.equals("searchMyItinerary")) {
         	System.out.println("utente: " + proxy.getUser().getUsername());
-        	SearchController.searchMyItinerary(proxy.getUser());
-        	session.setAttribute("proxy", proxy);
+        	if (managementController == null)
+                utenteDecorato = DecoratorUser.decora(proxy.getUser());
+        	managementController = new ManagementController(utenteDecorato);
+        	System.out.println("ssssssssssssssssssssssssssssssssssss");
+        	managementController.getMyItinerary(utenteDecorato);
+        	session.setAttribute("managementController", managementController);
         	forward(request, response, "/viewMyItinerarySearchResults.jsp");
         }
         
@@ -137,9 +144,18 @@ public class Controller extends HttpServlet {
         	String cat = null;
         	if (request.getParameter("categoria") != "") 
         		cat = request.getParameter("categoria");
-        	SearchController.searchItinerary(proxy.getUser(), startLoc, endLoc, durata, nome, cat);
-        	session.setAttribute("proxy", proxy);
+        	ItinerarySearchResults results = SearchController.searchItinerary(startLoc, endLoc, durata, nome, cat);
+        	session.setAttribute("itineraryResults", results);
+        	//session.setAttribute("proxy", proxy);
         	forward(request, response, "/viewItineraryOrJourneySearchResults.jsp");
+        }
+        
+        if(operazione.equals("selectItinerary")) {
+        	int id = Integer.parseInt(request.getParameter("idItinerary"));
+         	ItinerarySearchResults results = (ItinerarySearchResults)session.getAttribute("itineraryResults");
+         	Itinerary it = results.getElencoItinerari().get(id);
+         	request.setAttribute("itinerario", it);
+        	forward(request, response, "/viewItinerary.jsp");
         }
         
         
@@ -149,6 +165,82 @@ public class Controller extends HttpServlet {
         	managementController = new ManagementController(utenteDecorato);
         	session.setAttribute("managementController", managementController);
         	forward(request, response, "/manageItinerary.jsp");
+        }
+        
+
+        
+        if(operazione.equals("confermaBasicInfo")) {
+        	String nome = request.getParameter("nome");
+        	String descrizione = request.getParameter("descrizione");
+        	String categoria = request.getParameter("categoria");
+        	System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        	System.out.println("Utente itinerario: "+managementController.getCurrentUser().getUsername());
+        	managementController.createItinerary(nome, descrizione, categoria);
+        	forward(request, response, "/creaItinerario.jsp");
+        }
+        
+        /*
+         * Restituisce tutti gli StayTemplate dell'agenzia
+         */
+        if(operazione.equals("searchtStayTemplate")) {
+        	StaySearchResults results = SearchController.searchStayTemplate();
+        	System.out.println("ssss: "+results.get(0).toString());
+        	session.setAttribute("stayResults", results);
+        	forward(request, response, "/selectStayTemplate.jsp");
+        }
+        
+        
+        if(operazione.equals("configureStayParameter")) {
+        	//recupero l'id dello StayTemplate nell'arrayList
+        	//Recupero le attività standard per lo stayTemplate scelto + quelle personalizzate
+        	//utenteDecorato.searchActivityStayTemplate(utenteDecorato.getStay(id).getId());
+        	//Recupero i leaf dello stayTemplate
+        	//Recupero le opzioni dei leaf
+        	int id = Integer.parseInt(request.getParameter("id"));
+        	StaySearchResults results = (StaySearchResults)session.getAttribute("stayResults");
+        	if (results != null)
+        	System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh: ");
+        	StayTemplate st = results.get(id);
+        	managementController.setStay(st);
+        	//TO-DO: inviare il controllo alla jsp che visualizza il tutto
+        	
+        	forward(request, response, "/configureStayParameter.jsp");
+        }
+        
+        
+        //Visualizza opzioni per un leaf con i valori possibili
+        if (operazione.equals("viewOptionValues")) {
+        	int id = Integer.parseInt(request.getParameter("idLeaf"));
+        	//utenteDecorato.searchOptionValue();
+        	//passo l'indice dell'optionList scelta
+        	request.setAttribute("idLeaf", id);
+        	//invio il controllo a viewOptionValue   
+        	forward(request, response, "/selectOptionValue.jsp");
+        }
+        
+        
+      //Recupera il valore per l'opzione selezionato(radioButton) e lo imposta a Option, da il controllo a configureStayParameter
+        if (operazione.equals("selectValue")) {
+        	int idOption = Integer.parseInt(request.getParameter("idOption"));
+        	String optValue = request.getParameter("optValue");
+        	//price da recuperare da form
+        	//idLeaf da recuperare da form
+        	OptionValue optValueObj = new OptionValue(optValue, 0);
+        	//utenteDecorato.setOptionValue(int posizioneDelLeaf, idOption, optValueObj);
+        	
+        }
+        
+        
+        //Visualizzo tutte le attività dell'agenzia data una Località
+        if (operazione.equals("addActivity")) {
+        	String loc = request.getParameter("loc");
+        	/*
+        	 * uso un bean per visualizzare tutte le attività
+        	 * recupero l'attività scelta
+        	 * controllo se la località è compatibile
+        	 * rinvio il controllo alla jsp chiamante(configureStayParameter)
+        	 */
+        	forward(request, response, "/viewActivitySearchResults.jsp");
         }
         
         /*
@@ -189,78 +281,6 @@ public class Controller extends HttpServlet {
          * Crea un itinerario
          */
 		
-
-        
-        if(operazione.equals("confermaBasicInfo")) {
-        	String nome = request.getParameter("nome");
-        	String descrizione = request.getParameter("descrizione");
-        	String categoria = request.getParameter("categoria");
-        	System.out.println("Utente itinerario: "+managementController.getCurrentUser().getUsername());
-        	managementController.createItinerary(nome, descrizione, categoria);
-        	forward(request, response, "/creaItinerario.jsp");
-        }
-        
-        /*
-         * Restituisce tutti gli StayTemplate dell'agenzia
-         */
-        if(operazione.equals("searchtStayTemplate")) {
-        	//searchController.searchStayTemplate(utenteDecorato);
-        	forward(request, response, "/selectStayTemplate.jsp");
-        }
-        
-        
-        if(operazione.equals("configureStayParameter")) {
-        	//recupero l'id dello StayTemplate nell'arrayList
-        	int id = Integer.parseInt(request.getParameter("id"));
-        	//Recupero le attività standard per lo stayTemplate scelto + quelle personalizzate
-        	//utenteDecorato.searchActivityStayTemplate(utenteDecorato.getStay(id).getId());
-        	//Recupero i leaf dello stayTemplate
-        	
-        	//Recupero le opzioni dei leaf
-        	
-        	
-        	
-        	//TO-DO: inviare il controllo alla jsp che visualizza tutto questo
-        	forward(request, response, "/configureStayParameter.jsp");
-        }
-        
-        
-        //Visualizza opzioni per un leaf con i valori possibili
-        if (operazione.equals("viewOptionValues")) {
-        	int id = Integer.parseInt(request.getParameter("idLeaf"));
-        	//utenteDecorato.searchOptionValue();
-        	//passo l'indice dell'optionList scelta
-        	request.setAttribute("idLeaf", id);
-        	//invio il controllo a viewOptionValue   
-        	forward(request, response, "/selectOptionValue.jsp");
-        }
-        
-        
-      //Recupera il valore per l'opzione selezionato(radioButton) e lo imposta a Option, da il controllo a configureStayParameter
-        if (operazione.equals("selectValue")) {
-        	int idOption = Integer.parseInt(request.getParameter("idOption"));
-        	String optValue = request.getParameter("optValue");
-        	//price da recuperare da form
-        	//idLeaf da recuperare da form
-        	OptionValue optValueObj = new OptionValue(optValue, 0);
-        	//utenteDecorato.setOptionValue(int posizioneDelLeaf, idOption, optValueObj);
-        	
-        }
-        
-        
-        //Visualizzo tutte le attività dell'agenzia data una Località
-        if (operazione.equals("addActivity")) {
-        	String loc = request.getParameter("loc");
-        	/*
-        	 * uso un bean per visualizzare tutte le attività
-        	 * recupero l'attività scelta
-        	 * controllo se la località è compatibile
-        	 * rinvio il controllo alla jsp chiamante(configureStayParameter)
-        	 */
-        	forward(request, response, "/viewActivitySearchResults.jsp");
-        }
-        
-        
         
         
 

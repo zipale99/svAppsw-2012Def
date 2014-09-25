@@ -35,18 +35,22 @@ public class StayTemplateComposite extends StayTemplate {
 		tree = new ArrayList<StayTemplate>();
 	}
 	
+	@Override
 	public void add (StayTemplate st) {
 		tree.add(st);
 	}
 	
+	@Override
 	public void remove (StayTemplate st) {
 		tree.remove(st);
 	}
 	
+	@Override
 	public StayTemplate getStayTemplate(int i) {
 		return tree.get(i);
 	}
 	
+	@Override
 	public int getSize() {
 		return tree.size();
 	}
@@ -56,28 +60,20 @@ public class StayTemplateComposite extends StayTemplate {
 		return super.toString();
 	}
 	
-	public List<Option> getOptionList() {
-		return null;
-	}
-	
-
+	@Override
 	public List<Activity> getActivityList() {
 		return activityList;
 	}
-
+	
+	@Override
 	public void setActivityList(List<Activity> activityList) {
 		this.activityList = activityList;
 	}
 	
-	public Option getOption(int index) {
-		return null;
+	@Override
+	public String print() {
+		return tree.toString();
 	}
-	
-	public int getOptionListSize() {
-		return -1;
-	}
-	
-	
 	
 	
 	

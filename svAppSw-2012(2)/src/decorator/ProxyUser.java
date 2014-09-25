@@ -35,41 +35,35 @@ public class ProxyUser extends AbstractUser {
 		this.user = user;
 	}
 	
-	@Override
 	public String getUsername() {
 		if (this.user == null)
 			return null;
 		else return user.getUsername();
 	}
 	
-	@Override
 	public String getPwd() {
 		if (this.user == null)
 			return null;
 		else return user.getPwd();
 	}
 	
-	@Override
 	public String getRuolo() {
 		if (this.user == null)
 			return null;
 		else return user.getRuolo();
 	}
 	
-	@Override
 	public void setUsername(String username) {
 		// TODO Auto-generated method stub
 		this.user.setUsername(username);
 	}
 	
-	@Override
 	public void setPwd(String pwd) {
 		// TODO Auto-generated method stub
 		this.user.setPwd(pwd);
 		
 	}
 	
-	@Override
 	public void setRuolo(String ruolo) {
 		// TODO Auto-generated method stub
 		this.user.setRuolo(ruolo);
@@ -80,6 +74,7 @@ public class ProxyUser extends AbstractUser {
 	 *impostati(parametro user passato come parametro)
 	 */
 	
+	 @Override
 	 public boolean login(String username, String password) throws IllegalArgumentException, SQLException{
 	        	String type = ServiceDB.login(username, password);
 	        	if (!type.equals("")) {
@@ -92,12 +87,11 @@ public class ProxyUser extends AbstractUser {
 	        	return false; //se il login fallisce
 	 }
 	   
-
+	@Override
 	public User getUser() {
 		if (this.user == null)
 			return null;
 		else return user;
 	}
-	
 	
 }

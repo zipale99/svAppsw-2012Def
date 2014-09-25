@@ -8,11 +8,12 @@
  */
 package decorator;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import resources.ServiceDB;
 import composite.*;
+import resources.*;
 
 /**
  * @author Alessandro
@@ -21,18 +22,18 @@ import composite.*;
 public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	
-	protected User user; //Riferimento al user
+	protected AbstractUserComponent user; //Riferimento al user
 	private Itinerary itinerary;
-	private StayTemplateComposite stay;
+	private StayTemplate stay;
 	
 	private static DecoratorUser instance = null; //Riferimento a un istanza di se stessa
 	
 	//Questo costruttore viene utilizzato solo allo scopo di assegnare la decorazione al user
-	public DecoratorUser(User user) { 
+	public DecoratorUser(AbstractUserComponent user) { 
 		this.user = user; //Assegno la decorazione al user
 	}
 	
-	public static DecoratorUser decora(User user){
+	public static DecoratorUser decora(AbstractUserComponent user){
 	        if(instance == null){
 	        	System.out.println("Creo e restituisco una nuova instanza del DecoratorUser specifico");
 	        	if (user.getRuolo().equals("Customer"))
@@ -43,28 +44,25 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	        return instance;
 	}
 	
+	@Override
 	public void invalida() {
 		instance = null;
 	}
 	
-	 public void createItinerary(){
+	@Override
+	public void createItinerary(){
 		 itinerary = new Itinerary();
 		 itinerary.setUser(this.getUsername());
-	 }
-	 
-	 public void createItinerary(String nome, String descrizione, String categoria){
+	}
+	
+	@Override
+	public void provideBasicInfo(String nome, String descrizione, String categoria){
 		 itinerary = new Itinerary();
 		 itinerary.setUser(this.getUsername());
 		 itinerary.setNome(nome);
 		 itinerary.setDesc(descrizione);
 		 itinerary.setCategoria(categoria);
 	 }
-	 
-	 public void searchStayTemplate() {
-		 stay = new StayTemplateComposite();
-		 this.stay = ServiceDB.searchStayTemplate();
-	 }
-	
 	
 	public String getRuolo() {
 		return user.getRuolo();
@@ -78,24 +76,50 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		return user.getPwd();
 	}
 	
-	public User getUser() {
+	public AbstractUserComponent getUser() {
 		return user;
 	}
-
+	
+	@Override
 	public Itinerary getItinerary() {
 		return itinerary;
 	}
-
+	
+	@Override
 	public void setItinerary(Itinerary itinerary) {
 		this.itinerary = itinerary;
 	}
 	
-	public StayTemplateComposite getStay() {
+	@Override
+	public StayTemplate getStay() {
 		return stay;
 	}
+	
+	@Override
+	public void setStay(StayTemplate stay) {
+		this.stay = (StayTemplate)stay.clone();
+	}
+	
+	public void setUsername(String username) {
+		user.setUsername(username);
+	}
 
-	public void setStay(StayTemplateComposite stay) {
-		this.stay = stay;
+	public void setPwd(String pwd) {
+		user.setPwd(pwd);
+	}
+
+	public void setRuolo(String ruolo) {
+		user.setRuolo(ruolo);
+	}
+	
+	@Override
+	public void myItinerary() {
+		user.myItinerary();
+	}
+	
+	@Override
+	public List<Itinerary> getItineraryList() {
+		return user.getItineraryList();
 	}
 	
 	/*Prima volta che lo chiama decUser smista l'operazione e ritorna il decorator appropriato

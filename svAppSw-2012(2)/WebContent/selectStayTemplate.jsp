@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="composite.*, decorator.*"%>
+    pageEncoding="UTF-8" import="composite.*, decorator.*, resources.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<jsp:useBean id="elencoTappe" class="composite.StayTemplateComposite" scope="session"/>
+<jsp:useBean id="stayResults" class="resources.StaySearchResults" scope="session"/>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,11 +19,6 @@
 		<div class = "content">
 			<h3>SelectStayTemplate</h3>
 			
-<%
-DecoratorUser du = (DecoratorUser)session.getAttribute("utenteDecorato");
-StayTemplateComposite stay = du.getStay();
-%>			
-
 Seleziona uno StayTemplate da personalizzare e aggiungere all'itinerario:			
 
 			<table>
@@ -32,13 +27,14 @@ Seleziona uno StayTemplate da personalizzare e aggiungere all'itinerario:
 					<th>Gestione Tappa</th>
 				</tr>
 <%
-int size = stay.getSize();
+int size = stayResults.size();
 int i = 0;
 while(size > 0) {
+	System.out.println("tappa: " + stayResults.get(i).toString());
 %>
 	
 				<tr>
-					<td> <%= stay.getStayTemplate(i).toString() %> </td>
+					<td> <%= stayResults.get(i).toString() %> </td>
 					<td>  
 						<form action="Controller" method="POST" >
 							<input type="hidden" name="operazione" value="configureStayParameter">
