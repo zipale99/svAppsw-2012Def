@@ -91,7 +91,7 @@ if (size != 0) {
 	</div>
 	
 	<div class = "footer">
-		Progetto di Teconologie Web di Lanciano Alessandro e Ficarra Sergio
+		Progetto di Sviluppo Applicazioni Software di Lanciano Alessandro e Ficarra Sergio
 	</div>
 	
 </div>

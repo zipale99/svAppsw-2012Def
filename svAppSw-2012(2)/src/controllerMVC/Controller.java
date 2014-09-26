@@ -127,7 +127,6 @@ public class Controller extends HttpServlet {
         	if (managementController == null)
                 utenteDecorato = DecoratorUser.decora(proxy.getUser());
         	managementController = new ManagementController(utenteDecorato);
-        	System.out.println("ssssssssssssssssssssssssssssssssssss");
         	managementController.getMyItinerary(utenteDecorato);
         	session.setAttribute("managementController", managementController);
         	forward(request, response, "/viewMyItinerarySearchResults.jsp");
@@ -173,7 +172,6 @@ public class Controller extends HttpServlet {
         	String nome = request.getParameter("nome");
         	String descrizione = request.getParameter("descrizione");
         	String categoria = request.getParameter("categoria");
-        	System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         	System.out.println("Utente itinerario: "+managementController.getCurrentUser().getUsername());
         	managementController.createItinerary(nome, descrizione, categoria);
         	forward(request, response, "/creaItinerario.jsp");
@@ -198,8 +196,6 @@ public class Controller extends HttpServlet {
         	//Recupero le opzioni dei leaf
         	int id = Integer.parseInt(request.getParameter("id"));
         	StaySearchResults results = (StaySearchResults)session.getAttribute("stayResults");
-        	if (results != null)
-        	System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhh: ");
         	StayTemplate st = results.get(id);
         	managementController.setStay(st);
         	//TO-DO: inviare il controllo alla jsp che visualizza il tutto

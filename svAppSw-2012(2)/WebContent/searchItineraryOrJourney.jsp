@@ -12,7 +12,7 @@
 	<div class = "container">
 	<div class = "header">
 		<h1>Awesome Journey</h1>
-	</div>	
+	</div>	1
 	
 	<div class = "main">
 		<div class = "content">
@@ -45,7 +45,7 @@ Inserisci i parametri di ricerca per un Itinerario o un viaggio
 	</div>
 	
 	<div class = "footer">
-		Progetto di Teconologie Web di Lanciano Alessandro
+		Progetto di Svilluppo Applicazioni Software di Lanciano Alessandro e Ficarra Sergio
 	</div>
 	
 </div>
