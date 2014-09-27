@@ -65,7 +65,7 @@ while(sizeListLeaf > 0) {
 				<tr>
 					<td> <%= stayLeaf.toString() %> </td>
 					<td> 
-						 <% //stayLeaf.getOptionList().toString() %> 
+						 <%= stayLeaf.getOptionList().toString() %> 
 						<form action="Controller" method="POST" >
 							<input type="hidden" name="operazione" value="viewOptionValues">
 							<input type="hidden" name="idLeaf" value='<%= i %>'>

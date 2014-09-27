@@ -199,8 +199,10 @@ public class ServiceDB {
             	stc.setNome(rs.getString("nomest"));
             	stc.setPrice(rs.getDouble("prezzo"));
             	stc.setActivityList(searchActivityStayTemplate(id).getElencoAttivita());
-            	for (StayTemplate stay :  searchLeafStayTemplate(id).getElencoStayTemplate())
+            	for (StayTemplate stay :  searchLeafStayTemplate(id).getElencoStayTemplate()) {
+            		stay.setOptionList(getOptionLeaf(stay.getId()).getElencoOptions());
             		stc.add(stay);
+            	}
             	
             	esb.add(stc);
             }            
@@ -267,6 +269,7 @@ public class ServiceDB {
             	StayTemplateLeaf stl = new StayTemplateLeaf(rs.getString("startloc"),
             	rs.getString("endloc"), rs.getInt("durata"), null,
             	rs.getString("typeleaf"),0,-1,null);
+            	stl.setId(rs.getInt("idstleaf"));
               results.addLeaf(stl);
             }                
             st.close();
@@ -347,6 +350,8 @@ public class ServiceDB {
         }
         return results;
     }
+    
+    
 	
     
 	
