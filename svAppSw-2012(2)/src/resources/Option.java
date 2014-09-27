@@ -85,7 +85,7 @@ public class Option {
 	}
 	
 	public String toString() {
-		return "Name: " + name + " Desc: " + desc + "Value: " + value;
+		return "Name: " + name + " Desc: " + desc + " Value: " + value;
 	}
 
 	public void setPossibleValue(List<OptionValue> possibleValue) {

@@ -1,8 +1,5 @@
 package DB;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import java.sql.*;
 
 
@@ -471,8 +468,36 @@ public class InserimentoTuple {
  			pst.setFloat(4, 0);
  			pst.executeUpdate();
  			
+ 			insert="INSERT INTO OPTION_LIST(idOption,description,value,price) values(?,?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setInt(1, 4);
+ 			pst.setString(2, "70% autostrada 30% extraurbano");
+ 			pst.setString(3,"Auto");
+ 			pst.setFloat(4, 50);
+ 			pst.executeUpdate();
+ 			
+ 			insert="INSERT INTO OPTION_LIST(idOption,description,value,price) values(?,?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setInt(1, 4);
+ 			pst.setString(2, "Intercity - seconda classe");
+ 			pst.setString(3,"Treno");
+ 			pst.setFloat(4, 120);
+ 			pst.executeUpdate();
+ 			
+ 			insert="INSERT INTO OPTION_LIST(idOption,description,value,price) values(?,?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setInt(1, 4);
+ 			pst.setString(2, "alitalia-prima classe");
+ 			pst.setString(3,"Aereo");
+ 			pst.setFloat(4, 400);
+ 			pst.executeUpdate();
  			
  			
+ 			
+ 			//pst.executeUpdate("INSERT INTO OPTION_LIST (idOption, description, value, price) VALUES (, '', '', )");
+ 			
+ 			
+ 
  			
  			
  			
@@ -495,6 +520,14 @@ public class InserimentoTuple {
  			pst.setString(1, "piscina");
  			pst.setInt(2, 11);
  			pst.setInt(3, 1);
+ 			pst.executeUpdate();
+ 			
+
+ 			insert="insert into opzioni_standard(optionName,idSTleaf,idOptionList)values(?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setString(1, "Trasporto");
+ 			pst.setInt(2, 2);
+ 			pst.setInt(3, 7);
  			pst.executeUpdate();
  			
  			

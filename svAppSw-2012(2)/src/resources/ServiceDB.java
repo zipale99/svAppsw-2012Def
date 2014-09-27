@@ -292,7 +292,7 @@ public class ServiceDB {
             Statement st = connessione.createStatement();
             //TO-DO
             String sql = "SELECT * FROM OPZIONI_STANDARD, OPTION_LIST"
-            			+ " WHERE OPZIONI_STANDARD.idStLeaf = "+ idLeaf + "AND OPTION_LIST.idOption = OPZIONI_STANDARD.idOptionList";
+            			+ " WHERE OPZIONI_STANDARD.idStLeaf = "+ idLeaf + "AND OPZIONI_STANDARD.idOptionList = OPTION_LIST.id";
 
             ResultSet rs = st.executeQuery(sql);
            

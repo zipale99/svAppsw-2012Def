@@ -144,6 +144,21 @@ public class DBAgenzia {
 
 	 	        	pst = conn.prepareStatement(create);
 	 	        	pst.executeUpdate();//fine creazione*/
+	 	        	
+	 	        	
+	 	        	 //CREA TABELLA attivitaStay
+	 	        	create = "CREATE TABLE ATTIVITA_STAY("+
+	 		    	   		 "id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+
+	 		    	   		 "idStay integer not null,"+
+	 		    	   		 "idAttivita integer not null,"+
+	 		    	   		 "timeOffset integer not null,"+
+	 		    	
+							 "PRIMARY KEY (id),"+
+							 "foreign key(idStay) references stay(idStay),"+
+							 "foreign key(idAttivita) references attivita(idAttivita))";
+
+	 	        	pst = conn.prepareStatement(create);
+	 	        	pst.executeUpdate();//fine creazione*/
 	 	    		 	    	
 	 		    	 
 	 	        	     
