@@ -21,6 +21,10 @@ public class ManagementController {
 		this.currentUser = user;
 	}
 	
+	public void setUser (AbstractUserComponent auc) {
+		currentUser = auc;
+	}
+	
 	public AbstractUserComponent getCurrentUser() {
 		return currentUser;
 	}
@@ -39,6 +43,11 @@ public class ManagementController {
 	public void getMyItinerary(AbstractUserComponent user) {
 		System.out.println("metodo getMyItinerary di managementController");
 		user.myItinerary();
+	}
+	
+	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {
+		currentUser.setOptionValue(idOption, idOptionValue, idLeaf);
+		System.out.println("valoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeei");
 	}
 
 	

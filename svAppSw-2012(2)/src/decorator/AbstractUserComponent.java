@@ -28,6 +28,7 @@ public abstract class AbstractUserComponent {
 	public void setStay(StayTemplate stay) {}
 	public void setItineraryList(List<Itinerary> itineraryList) {}
 	public void setItinerary(Itinerary itinerary) {}
+	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {}
 	
 	public Itinerary getItinerary() {
 		return null;

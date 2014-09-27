@@ -301,11 +301,14 @@ public class ServiceDB {
            
             while (rs.next()) {
             	Option opt = new Option();
+            	OptionValue optValueStandard = new OptionValue();
             	opt.setId(rs.getInt("idoption"));
             	opt.setName(rs.getString("optionname"));
             	opt.setDesc(rs.getString("description"));
-            	opt.setValue(rs.getString("value"));
+            	optValueStandard.setValue(rs.getString("value"));
+            	optValueStandard.setPrice(rs.getInt("price"));
             	opt.setPossibleValue(getOptionValue(opt.getId()));
+            	opt.setValue(optValueStandard);
             	results.add(opt);
             }
             

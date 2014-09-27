@@ -57,6 +57,7 @@ public class StayTemplateLeaf extends StayTemplate {
 		optionList.set(index, option);
 	}
 	
+	
 	@Override
 	public int getOptionListSize() {
 		return optionList.size();

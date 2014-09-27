@@ -64,6 +64,12 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		 itinerary.setCategoria(categoria);
 	 }
 	
+	@Override
+	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa"+idOption);
+		stay.getStayTemplate(idLeaf).getOptionList().get(idOption).setValue(stay.getStayTemplate(idLeaf).getOptionList().get(idOption).getPossibleValue().get(idOptionValue));
+	}
+	
 	public String getRuolo() {
 		return user.getRuolo();
 	}

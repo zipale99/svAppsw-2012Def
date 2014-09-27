@@ -207,23 +207,18 @@ public class Controller extends HttpServlet {
         //Visualizza opzioni per un leaf con i valori possibili
         if (operazione.equals("viewOptionValues")) {
         	int id = Integer.parseInt(request.getParameter("idLeaf"));
-        	//utenteDecorato.searchOptionValue();
-        	//passo l'indice dell'optionList scelta
-        	request.setAttribute("idLeaf", id);
-        	//invio il controllo a viewOptionValue   
+        	request.setAttribute("idLeaf", id);   
         	forward(request, response, "/selectOptionValue.jsp");
         }
         
         
       //Recupera il valore per l'opzione selezionato(radioButton) e lo imposta a Option, da il controllo a configureStayParameter
         if (operazione.equals("selectValue")) {
+        	int idLeaf = Integer.parseInt(request.getParameter("idLeaf"));
         	int idOption = Integer.parseInt(request.getParameter("idOption"));
-        	String optValue = request.getParameter("optValue");
-        	//price da recuperare da form
-        	//idLeaf da recuperare da form
-        	OptionValue optValueObj = new OptionValue(optValue, 0);
-        	//utenteDecorato.setOptionValue(int posizioneDelLeaf, idOption, optValueObj);
-        	
+        	int idOptValue = Integer.parseInt(request.getParameter("optValue"));
+        	managementController.setOptionValue(idOption, idOptValue, idLeaf);
+        	forward(request, response, "/selectOptionValue.jsp");
         }
         
         

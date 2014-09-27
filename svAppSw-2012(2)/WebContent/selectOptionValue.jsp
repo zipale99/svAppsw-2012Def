@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="composite.*, decorator.*, resources.*"%>
+    pageEncoding="UTF-8" import="composite.*, decorator.*, resources.*, controller.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:useBean id="tappa" class="composite.StayTemplateComposite" scope="session"/>
 <html>
@@ -19,16 +19,6 @@
 		<div class = "content">
 			<h3>SelectOptionValue</h3>
 			
-<%
-//Recupero la lista delle opzioni per il leaf selezionato(idLeaf)
-DecoratorUser du = (DecoratorUser)session.getAttribute("utenteDecorato");
-int idLeaf = Integer.parseInt(request.getParameter("idLeaf"));
-StayTemplate stayLeaf = du.getStay().getStayTemplate(idLeaf);
-int sizeListOption = stayLeaf.getOptionListSize();
-int i = 0;
-while(sizeListOption > 0) {
-	Option opt = stayLeaf.getOption(i);
-%>
 
 Scegli i valori per le opzioni proposte:
 
@@ -37,7 +27,20 @@ Scegli i valori per le opzioni proposte:
 			<tr>
 				<th>Option</th>
 				<th>Value</th>
-			</tr>
+			</tr>	
+
+<%
+//Recupero la lista delle opzioni per il leaf selezionato(idLeaf)
+ManagementController mc = (ManagementController)session.getAttribute("managementController");
+AbstractUserComponent auc = mc.getCurrentUser();
+int idLeaf = Integer.parseInt(request.getParameter("idLeaf"));
+StayTemplate stayLeaf = auc.getStay().getStayTemplate(idLeaf);
+int sizeListOption = stayLeaf.getOptionListSize();
+int i = 0;
+while(sizeListOption > 0) {
+	Option opt = stayLeaf.getOption(i);
+%>	
+	
 	
 			<tr>
 				<td> <%= opt.toString() %> </td>
@@ -52,48 +55,52 @@ while(sizePossibleValue > 0) {
 					
 					<form action="Controller" method="POST" >
 <%
-if (optValue.getValue().equals(opt.getValue())) {
+if (optValue.getValue().equals(opt.getValue().getValue())) {
 %>					
-							<input type="radio" name="optValue" value='<%= optValue.getValue() %>' checked/><%= optValue.toString() %>
+						<input type="radio" name="optValue" value='<%= j %>' checked/><%= optValue.toString() %>
+						<br>
 							
 <%
 }
 else {
 %>		
-							<input type="radio" name="optValue" value='<%= optValue.getValue() %>'/><%= optValue.toString() %>
+						<input type="radio" name="optValue" value='<%= j %>'/><%= optValue.toString() %>
+						<br>
 <%
 }
 %>					
-							<input type="hidden" name="idLeaf" value='<%= i %>'>
-							<input type="hidden" name="idOption" value='<%= i %>'>
-							<input type="hidden" name="operazione" value="selectValue">
-							<input type="submit" value="Conferma il valore"/>
-					</form>
-					 					
+						<input type="hidden" name="idLeaf" value='<%= idLeaf %>'>
+						<input type="hidden" name="idOption" value='<%= i %>'>		
 <%
 sizePossibleValue--;
 j++;
 }
 %>					
+						<input type="hidden" name="operazione" value="selectValue">
+						<input type="submit" value="Conferma il valore"/>	
+					</form>
+					 		
 					
 				</td>
 			</tr>
 				
-		</table>
+		
 
 <%
 sizeListOption--;
 i++;
 }
 %>	
-	
+		</table>
+		
+		<a href="configureStayParameter.jsp">Torna alla configurazione della tappa</a>
 				
-		</div>
+	</div>
 		
 		<div class = "sidenav">
 			<jsp:include page="barraLaterale.jsp"></jsp:include>			
 		</div>	
-		
+			
 	</div>
 	
 	<div class = "footer">

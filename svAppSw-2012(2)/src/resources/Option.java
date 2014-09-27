@@ -17,10 +17,10 @@ public class Option {
 	int id;
 	String name;
 	String desc;
-	String value;
+	OptionValue value;
 	private List<OptionValue> possibleValue;
 
-	public Option(int id, String name, String desc, String value) {
+	public Option(int id, String name, String desc, OptionValue value) {
 		this.id = id;
 		this.name = name;
 		this.desc = desc;
@@ -60,11 +60,11 @@ public class Option {
 		this.desc = desc;
 	}
 
-	public String getValue() {
+	public OptionValue getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(OptionValue value) {
 		this.value = value;
 	}
 
@@ -85,7 +85,7 @@ public class Option {
 	}
 	
 	public String toString() {
-		return "Name: " + name + " Desc: " + desc + " Value: " + value;
+		return "Name: " + name + " Desc: " + desc + " Value: " + value.getValue()+"[+"+value.getPrice()+" euro]";
 	}
 
 	public void setPossibleValue(List<OptionValue> possibleValue) {
