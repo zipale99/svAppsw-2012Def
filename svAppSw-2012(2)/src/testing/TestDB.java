@@ -16,6 +16,7 @@ public class TestDB {
 		*/
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		
+		
 		StaySearchResults st = ServiceDB.searchStayTemplate();
 		System.out.println(st.get(0).getActivityList().toString());
 		
@@ -23,6 +24,10 @@ public class TestDB {
 		System.out.println(st.get(0).getStayTemplate(1).toString());
 		System.out.println(st.get(0).getStayTemplate(2).toString());
 		System.out.println(st.get(0).getStayTemplate(3).toString());
+		
+		OptionSearchResults optList = ServiceDB.getOptionLeaf(3);
+		System.out.println(optList.getElencoOptions().get(0).toString()+"\n");
+		System.out.println(optList.getElencoOptions().get(0).getPossibleValue().toString());
 		
 		
 	}

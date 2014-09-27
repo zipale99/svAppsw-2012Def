@@ -500,6 +500,34 @@ public class InserimentoTuple {
  			
  			
  			
+ 			/*
+ 			insert="insert into option_list(idOption,description,value, price)values(?,?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setString(1, 0);
+ 			pst.setInt(2, "Aperta dalle ");
+ 			pst.setInt(3, 100);
+ 			pst.setInt(3, 100);
+ 			pst.executeUpdate();
+ 			
+ 			insert="insert into opzioni_standard(optionName,idSTleaf,idOptionList)values(?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setString(1, "piscina");
+ 			pst.setInt(2, 2);
+ 			pst.setInt(3, 2);
+ 			pst.executeUpdate();
+ 			
+ 			insert="insert into opzioni_standard(optionName,idSTleaf,idOptionList)values(?,?,?)";
+ 			pst=conn.prepareStatement(insert);
+ 			pst.setString(1, "piscina");
+ 			pst.setInt(2, 11);
+ 			pst.setInt(3, 1);
+ 			pst.executeUpdate();
+ 			*/
+ 			
+ 			
+ 			
+ 			
+ 			
  			insert="insert into viaggio(creatoruser,iditinerario,startDate,endDate,costo,npersone,acquistato)values(?,?,?,?,?,?,?)";
  			pst=conn.prepareStatement(insert);
  			pst.setString(1, "filomena");

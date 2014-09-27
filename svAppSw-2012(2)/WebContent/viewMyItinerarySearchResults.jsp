@@ -22,8 +22,6 @@ Seleziona l'itinerario che vuoi modificare
 
 <%
 ManagementController mc = (ManagementController)session.getAttribute("managementController");
-if(mc == null)
-System.out.println("mc uguale a nulllll");
 AbstractUserComponent auc = mc.getCurrentUser();
 
 

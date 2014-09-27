@@ -41,7 +41,7 @@ StayTemplate selezionato:
 					<form action="Controller" method="POST" >
 						<input type="hidden" name="operazione" value="addActivity">
 						<input type="hidden" name="id" value='<%= stay.getId() %>'>
-						<input type="submit" value="Imposta un valore"/>
+						<input type="submit" value="Aggiungi un'attività"/>
 					</form>
 				</td>
 			</tr>
@@ -65,7 +65,7 @@ while(sizeListLeaf > 0) {
 				<tr>
 					<td> <%= stayLeaf.toString() %> </td>
 					<td> 
-						 <%= stayLeaf.getOptionList().toString() %> 
+						 <% //stayLeaf.getOptionList().toString() %> 
 						<form action="Controller" method="POST" >
 							<input type="hidden" name="operazione" value="viewOptionValues">
 							<input type="hidden" name="idLeaf" value='<%= i %>'>

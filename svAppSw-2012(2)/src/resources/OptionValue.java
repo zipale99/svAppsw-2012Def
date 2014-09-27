@@ -21,6 +21,11 @@ public class OptionValue {
 		}
 
 
+		public OptionValue() {
+			// TODO Auto-generated constructor stub
+		}
+
+
 		public String getValue() {
 			return value;
 		}

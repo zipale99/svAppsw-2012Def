@@ -28,6 +28,10 @@ public class Option {
 		possibleValue = new ArrayList<OptionValue>();
 	}
 	
+	public Option() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void add(OptionValue valore) {
         possibleValue.add(valore);
     }
@@ -78,6 +82,15 @@ public class Option {
 	
 	public int getPossibleValueSize() {
 		return possibleValue.size();
+	}
+	
+	public String toString() {
+		return "Name: " + name + " Desc: " + desc + "Value: " + value;
+	}
+
+	public void setPossibleValue(List<OptionValue> possibleValue) {
+		this.possibleValue = possibleValue;
+		
 	}
 		
 	

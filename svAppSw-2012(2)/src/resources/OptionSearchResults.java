@@ -1,10 +1,15 @@
 package resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OptionSearchResults {
 	
 	private List<Option> elencoOptions;
+	
+	public OptionSearchResults() {
+		elencoOptions = new ArrayList<Option>();
+	}
 
 	public List<Option> getElencoOptions() {
 		return elencoOptions;

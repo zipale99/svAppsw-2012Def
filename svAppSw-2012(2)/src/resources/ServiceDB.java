@@ -8,10 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
-import composite.Itinerary;
 import composite.*;
-
 import decorator.User;
 import DB.DBconnection;
 
@@ -284,26 +283,27 @@ public class ServiceDB {
      * recupera option associate ad un certo leaf(ovvero un determinato stayTemplateLeaf)
      * usando il parametro idStLeaf della tabella opzioni_standard
      */
-    public void searchOptionLeaf(StayTemplateLeaf stl) {
+    public static OptionSearchResults getOptionLeaf(int idLeaf) {
     	
     	Connection connessione = DBconnection.getConnection();    	
-    	ArrayList <Option> listaOpt = new ArrayList<Option>();    	
+    	OptionSearchResults results = new OptionSearchResults();    	
     	//se la connessione è andata a buon fine   	
         try {
             Statement st = connessione.createStatement();
             //TO-DO
-            String sql = "SELECT * FROM option,staytemplate_leaf,opzioni_standard"
-            		+ " where ";
+            String sql = "SELECT * FROM OPZIONI_STANDARD, OPTION_LIST"
+            			+ " WHERE OPZIONI_STANDARD.idStLeaf = "+ idLeaf + "AND OPTION_LIST.idOption = OPZIONI_STANDARD.idOptionList";
 
             ResultSet rs = st.executeQuery(sql);
            
             while (rs.next()) {
-            	Option opt = new Option(rs.getString("creatoruser"),
-            	rs.getString("startLoc"),rs.getString("endloc"),rs.getInt("durata"),
-            	rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
-            	rs.getDouble("prezzo"));
-            	it.setId(rs.getInt("iditinerario"));
-            	lisaOpt.add(it);
+            	Option opt = new Option();
+            	opt.setId(rs.getInt("idoption"));
+            	opt.setName(rs.getString("optionname"));
+            	opt.setDesc(rs.getString("description"));
+            	opt.setValue(rs.getString("value"));
+            	opt.setPossibleValue(getOptionValue(opt.getId()));
+            	results.add(opt);
             }
             
             st.close();
@@ -312,7 +312,40 @@ public class ServiceDB {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }
-        return listaIt;
+        return results;
+    }
+    
+    
+    /*
+     * Dato l'id di un opzione recupera tutti i valori ad essa associtati
+     */
+    public static List<OptionValue> getOptionValue(int idOption) {
+    	
+    	Connection connessione = DBconnection.getConnection();    	
+    	List<OptionValue> results = new ArrayList<OptionValue>();    	
+    	//se la connessione è andata a buon fine   	
+        try {
+            Statement st = connessione.createStatement();
+            //TO-DO
+            String sql = "SELECT value, price FROM OPTION_LIST"
+            			+ " WHERE idOption = "+ idOption;
+
+            ResultSet rs = st.executeQuery(sql);
+           
+            while (rs.next()) {
+            	OptionValue optValue = new OptionValue();
+            	optValue.setValue(rs.getString("value"));
+            	optValue.setPrice(rs.getInt("price"));     
+            	results.add(optValue);
+            }
+            
+            st.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        return results;
     }
 	
     

@@ -191,10 +191,12 @@ public class DBAgenzia {
 	 	        	create = "CREATE TABLE OPZIONI_PERS("+
 	 				   		 "idOption INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"+
 	 				  		 "idOptStandard integer not null,"+
+	 				  		 "idStay integer not null,"+
 	 				  		 "idOptionList integer not null,"+
 	 	
 	     					"PRIMARY key (idOption),"+
 	     					"foreign key(idOptStandard) references opzioni_standard(idOption),"+
+	     					"foreign key(idStay) references stay(idStay),"+
 	     					"FOREIGN KEY (idOptionList) REFERENCES option_list(id))";
 
 	 				    	
