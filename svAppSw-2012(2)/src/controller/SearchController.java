@@ -44,6 +44,10 @@ public class SearchController {
 		return ServiceDB.searchActivityStayTemplate(idStayTemplate);
 	}
 	
+	public static ActivitySearchResults searchActivity() {
+		return ServiceDB.searchActivity();
+	}
+	
 	
 	
 }

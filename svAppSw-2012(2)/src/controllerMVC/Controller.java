@@ -223,54 +223,38 @@ public class Controller extends HttpServlet {
         
         
         //Visualizzo tutte le attività dell'agenzia data una Località
-        if (operazione.equals("addActivity")) {
-        	String loc = request.getParameter("loc");
-        	/*
-        	 * uso un bean per visualizzare tutte le attività
-        	 * recupero l'attività scelta
-        	 * controllo se la località è compatibile
-        	 * rinvio il controllo alla jsp chiamante(configureStayParameter)
-        	 */
+        if (operazione.equals("searchActivity")) {
+        	session.setAttribute("activityResults", SearchController.searchActivity());
         	forward(request, response, "/viewActivitySearchResults.jsp");
         }
         
-        /*
-         * Dato l'id di uno StayTemplate, mostra le Attività di default ad esso associate
-         */
+        if (operazione.equals("addActivity")) {
+        	int idActivity = Integer.parseInt(request.getParameter("id"));
+        	ActivitySearchResults results = (ActivitySearchResults)session.getAttribute("activityResults");
+        	/*
+        	 * Decidere come proseguire per il controllo di un attività compatibile
+        	 * fare un metodo boolean in managementcontroller che ritorna true o false
+        	 * in caso di false come segnali l'errore? bisognerebbe chiamare una jsp di errore->pessima soluzione
+        	 * meglio: controllo js che in chiama il metodo del managementocntroller sull onclick e 
+        	 * visualizza un popup seganalndo l'errora senza dare la possibilità di proseguire.
+        	 */
+        }
         
-        /*
-         * Dato l'id di una Stay mostra le Attività(personalizzate) di quella Stay
-         */
         
-        /*
-         * Dato l'id di un leaf mostra le opzioni ad esso associate
-         */
+    
         
+
         
-        /*
-         * Restituisce tutte le attività dell'agenzia
-         */
+     
+      
         
-        /*
-         * Dato l'id di uno StayTemplate, restituisce tutti i leaf che compongono quello StayTemplate
-         */
-        
-        /*
-         * Dato l'id di una Stay, restituisce tutti i leaf che compongono quella Stay
-         */
-        
-        /*
-         * Dato l'id di un opzione associata ad un leaf, restituisce tutti i valori possibili per quell'opzione
-         */
+   
+   
         
         /*
          * Restituisce gli StayTemplate di tipo Transport, date una startLoc e un endLoc
          */
         
-        
-        /*
-         * Crea un itinerario
-         */
 		
         
         

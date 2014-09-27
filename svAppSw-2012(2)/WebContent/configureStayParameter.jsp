@@ -39,7 +39,7 @@ StayTemplate selezionato:
 				<td> 
 					 <%= stay.getActivityList().toString() %> 
 					<form action="Controller" method="POST" >
-						<input type="hidden" name="operazione" value="addActivity">
+						<input type="hidden" name="operazione" value="searchActivity">
 						<input type="hidden" name="id" value='<%= stay.getId() %>'>
 						<input type="submit" value="Aggiungi un'attività"/>
 					</form>

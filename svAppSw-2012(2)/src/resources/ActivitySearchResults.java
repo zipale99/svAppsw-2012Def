@@ -3,6 +3,8 @@ package resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import composite.StayTemplate;
+
 public class ActivitySearchResults {
 
     private List<Activity> elencoAttivita;    
@@ -43,6 +45,14 @@ public class ActivitySearchResults {
     
     public void add(Activity a) {
     	elencoAttivita.add(a);
+    }
+    
+    public int size() {
+    	return elencoAttivita.size();
+    }
+    
+    public Activity get(int index) {
+    	return elencoAttivita.get(index);
     }
     
 	
