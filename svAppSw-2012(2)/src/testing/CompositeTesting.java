@@ -40,12 +40,12 @@ public class CompositeTesting {
 		listaAtt3.add(attivita8);
 		
 		//Creo delle opzioni
-		Option opt1 = new Option(1, "Servizio in Camera", "Permette di specificare se si vuole il servizio in camera", "NO");
-		Option opt2 = new Option(2, "Frigo-bar", "Permette di specificare si vuole il frigo bar", "NO");
-		Option opt3 = new Option(3, "Trasporto", "Permette di specificare la tipologia di trasporto", "AUTO");
-		Option opt4 = new Option(4, "Pernottamento", "Permette di scegliere una soluzione per il pernottamento", "HOTEL");
+		//Option opt1 = new Option(1, "Servizio in Camera", "Permette di specificare se si vuole il servizio in camera", "NO");
+		//Option opt2 = new Option(2, "Frigo-bar", "Permette di specificare si vuole il frigo bar", "NO");
+		//Option opt3 = new Option(3, "Trasporto", "Permette di specificare la tipologia di trasporto", "AUTO");
+		//Option opt4 = new Option(4, "Pernottamento", "Permette di scegliere una soluzione per il pernottamento", "HOTEL");
 		
-		//Recupero(creo) una serie di valori per le opzioni appena create
+		/*Recupero(creo) una serie di valori per le opzioni appena create
 		opt1.add(new OptionValue("SI", 50));
 		opt1.add(new OptionValue("NO", 0));
 		opt2.add(new OptionValue("SI", 20));
@@ -93,12 +93,23 @@ public class CompositeTesting {
 			
 		
 		//Creo un nuovo itinerario
-		Itinerary itinerario = new Itinerary(2,"parziale","turistico","torino","milano","12","ciao","null","");
+		Itinerary itinerario = new Itinerary();
 		
-		itinerario.add(tappaComposita1);
-		itinerario.add(leaf2);
-		itinerario.add(tappaComposita2);
-		itinerario.add(leaf4);
+		StayTemplate st1 = new StayTemplateComposite();
+		StayTemplate st2 = new StayTemplateComposite();
+		st1.setNome("st1");
+		st2.setNome("st2");
+		
+		itinerario.add(st1);
+		itinerario.add(st2);
+		
+		st1.setTimeOffset(3);
+		st2.setTimeOffset(7);
+		
+		itinerario.sort();
+		
+		System.out.println(itinerario.getStayTemplate(0).getNome());
+		System.out.println(itinerario.getStayTemplate(1).getNome());
 		
 		
 		

@@ -2,13 +2,14 @@
  * 
  */
 package composite;
+import java.util.*;
 
 
 /**
  * @author utente
  *
  */
-public class Itinerary extends StayTemplateComposite{
+public class Itinerary extends StayTemplateComposite implements Comparator<StayTemplate> {
 	
 	private int position = 0;
 	String user;
@@ -73,6 +74,24 @@ public class Itinerary extends StayTemplateComposite{
 		position++;
 		st.setTimeOffset(position);
 		super.add(st);
+	}
+	
+	public int compare(StayTemplate st1, StayTemplate st2) {
+		 if ( st1.getTimeOffset() < st2.getTimeOffset() ) {
+			 System.out.println("metodo compare, return -1");
+		 	 return -1;
+		 	}
+		 	else if ( st1.getTimeOffset() > st2.getTimeOffset() ) {
+		 		System.out.println("metodo compare, return 1");
+		 		return 1;
+		 	}
+		 	System.out.println("metodo compare, return 0");
+		 	return 0;
+	} 
+	
+	
+	public void sort() {
+		Collections.sort(this.tree, this);
 	}
 
 	

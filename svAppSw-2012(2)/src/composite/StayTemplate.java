@@ -3,6 +3,7 @@
  */
 package composite;
 
+import java.util.Comparator;
 import java.util.List;
 
 import resources.Activity;
@@ -137,6 +138,7 @@ public abstract class StayTemplate implements Cloneable{
 				return null; 
 				} 
 		}
+
 	
 	public String getTypeLeaf() {
 		return null;

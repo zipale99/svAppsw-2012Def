@@ -22,6 +22,7 @@
 ManagementController mc = (ManagementController)session.getAttribute("managementController");
 AbstractUserComponent auc = mc.getCurrentUser();
 Itinerary myIt = auc.getItinerary();
+myIt.sort();
 %>			
 			
 			<p><b>Creatore:</b> <%= myIt.getUser() %> </p>
