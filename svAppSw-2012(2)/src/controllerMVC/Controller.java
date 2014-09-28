@@ -231,6 +231,8 @@ public class Controller extends HttpServlet {
         if (operazione.equals("addActivity")) {
         	int idActivity = Integer.parseInt(request.getParameter("id"));
         	ActivitySearchResults results = (ActivitySearchResults)session.getAttribute("activityResults");
+        	managementController.addActivity(results.get(idActivity));
+        	forward(request, response, "/configureStayParameter.jsp");
         	/*
         	 * Decidere come proseguire per il controllo di un attività compatibile
         	 * fare un metodo boolean in managementcontroller che ritorna true o false

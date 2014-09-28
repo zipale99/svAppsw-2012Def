@@ -47,7 +47,10 @@ public class ManagementController {
 	
 	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {
 		currentUser.setOptionValue(idOption, idOptionValue, idLeaf);
-		System.out.println("valoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeei");
+	}
+	
+	public void addActivity(Activity activity) {
+		currentUser.addActivity(activity);
 	}
 
 	

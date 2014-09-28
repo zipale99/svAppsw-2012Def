@@ -70,6 +70,12 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		stay.getStayTemplate(idLeaf).getOptionList().get(idOption).setValue(stay.getStayTemplate(idLeaf).getOptionList().get(idOption).getPossibleValue().get(idOptionValue));
 	}
 	
+	@Override
+	public void addActivity(Activity activity) {
+		if(stay.getActivityList().add(activity));
+		else System.out.println("Impossibile aggiungere l'attività");
+	}
+	
 	public String getRuolo() {
 		return user.getRuolo();
 	}
@@ -127,6 +133,7 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	public List<Itinerary> getItineraryList() {
 		return user.getItineraryList();
 	}
+	
 	
 	/*Prima volta che lo chiama decUser smista l'operazione e ritorna il decorator appropriato
 	 * Quanod sarachiamato una seconda volta, viene invocato il metodo create del concrete dec appropriato

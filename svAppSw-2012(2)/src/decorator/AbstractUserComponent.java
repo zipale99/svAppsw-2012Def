@@ -6,6 +6,7 @@ package decorator;
 
 import java.util.List;
 
+import resources.Activity;
 import composite.Itinerary;
 import composite.StayTemplate;
 
@@ -29,6 +30,7 @@ public abstract class AbstractUserComponent {
 	public void setItineraryList(List<Itinerary> itineraryList) {}
 	public void setItinerary(Itinerary itinerary) {}
 	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {}
+	public void addActivity(Activity activity) {}
 	
 	public Itinerary getItinerary() {
 		return null;
