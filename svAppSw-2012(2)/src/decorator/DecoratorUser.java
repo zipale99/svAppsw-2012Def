@@ -76,6 +76,11 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		else System.out.println("Impossibile aggiungere l'attività");
 	}
 	
+	@Override
+	public void addStay() {
+		this.itinerary.add(this.stay);
+	}
+	
 	public String getRuolo() {
 		return user.getRuolo();
 	}

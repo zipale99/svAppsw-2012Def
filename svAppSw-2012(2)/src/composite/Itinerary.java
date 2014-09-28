@@ -9,7 +9,8 @@ package composite;
  *
  */
 public class Itinerary extends StayTemplateComposite{
-
+	
+	private int position = 0;
 	String user;
 	String desc;
 	String categoria;
@@ -66,6 +67,13 @@ public class Itinerary extends StayTemplateComposite{
 	public void setStato(String stato) {
 		this.stato = stato;
 	}
+	
+	@Override
+	public void add(StayTemplate st) {
+		position++;
+		st.setTimeOffset(position);
+		super.add(st);
+	}
 
 	
 	@Override
@@ -78,6 +86,9 @@ public class Itinerary extends StayTemplateComposite{
 				"; PREZZO(euro): " + price +
 				super.toString();
 	}
+
+
+
 	
 
 

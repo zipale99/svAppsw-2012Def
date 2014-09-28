@@ -242,9 +242,11 @@ public class Controller extends HttpServlet {
         	 */
         }
         
-        
-    
-        
+        if (operazione.equals("addStay")) {
+        	//viene aggiunta la tappa che l'utente si sta configurando al suo itinerario
+        	managementController.addStay();
+        	forward(request, response, "/creaItinerario.jsp");
+        }
 
         
      

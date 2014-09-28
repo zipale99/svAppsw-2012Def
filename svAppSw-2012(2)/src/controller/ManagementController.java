@@ -53,6 +53,9 @@ public class ManagementController {
 		currentUser.addActivity(activity);
 	}
 
+	public void addStay() {
+		currentUser.addStay();
+	}
 	
 	
 	

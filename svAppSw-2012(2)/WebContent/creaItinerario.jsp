@@ -36,6 +36,7 @@ if (size != 0) {
 			
 			<table>
 				<tr>
+					<th>#</th>
 					<th>Tappa</th>
 					<th>Gestione Tappa</th>
 				</tr>
@@ -46,13 +47,21 @@ if (size != 0) {
 %>
 	
 				<tr>
+					<td> <%= myIt.getStayTemplate(i).getTimeOffset() %>
 					<td> <%= myIt.getStayTemplate(i) %> </td>
 					<td>  
-						<button onclick="location.href='Controller?operazione=configureStayParameter&idTappa=<%= i %>'">ConfigureStayParameter</button> 
+							<button onclick="location.href='Controller?operazione=modificaTappa&idTappa=<%= i %>'">Modifica Tappa</button> 
+							
 							<form action="Controller" method="POST" >
 								<input type="hidden" name="operazione" value="deleteStay">
 								<input type="hidden" name="idTappa" value='<%= i %>'>
-								<input type="submit" value="Elimina" onClick="return(confirm('Sei sicuro di voler procedere?'))"/>
+								<input type="submit" value="Elimina Tappa" onClick="return(confirm('Sei sicuro di voler procedere?'))"/>
+							</form>
+							
+							<form action="Controller" method="POST" >
+								<input type="hidden" name="operazione" value="addTransferStay">
+								<input type="hidden" name="idTappa" value='<%= i %>'>
+								<input type="submit" value="Add Transfer Stay"/>
 							</form>
 					</td>
 				</tr>
