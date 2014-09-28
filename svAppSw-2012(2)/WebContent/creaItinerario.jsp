@@ -22,7 +22,7 @@
 ManagementController mc = (ManagementController)session.getAttribute("managementController");
 AbstractUserComponent auc = mc.getCurrentUser();
 Itinerary myIt = auc.getItinerary();
-myIt.sort();
+//myIt.sort();
 %>			
 			
 			<p><b>Creatore:</b> <%= myIt.getUser() %> </p>
@@ -41,14 +41,14 @@ if (size != 0) {
 					<th>Tappa</th>
 					<th>Gestione Tappa</th>
 				</tr>
+				
 <%
-
 	int i = 0;
 	while(size > 0) {
 %>
 	
 				<tr>
-					<td> <%= myIt.getStayTemplate(i).getTimeOffset() %>
+					<td> <%= i %>
 					<td> <%= myIt.getStayTemplate(i) %> </td>
 					<td>  
 							<button onclick="location.href='Controller?operazione=modificaTappa&idTappa=<%= i %>'">Modifica Tappa</button> 

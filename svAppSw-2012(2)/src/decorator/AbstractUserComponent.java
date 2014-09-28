@@ -32,6 +32,8 @@ public abstract class AbstractUserComponent {
 	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {}
 	public void addActivity(Activity activity) {}
 	public void addStay() {}
+	public void deleteStay(int idStay) {}
+	public void modificaTappa(int idStay) {}
 	
 	public Itinerary getItinerary() {
 		return null;

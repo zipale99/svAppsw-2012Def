@@ -97,20 +97,28 @@ public class CompositeTesting {
 		
 		StayTemplate st1 = new StayTemplateComposite();
 		StayTemplate st2 = new StayTemplateComposite();
+		StayTemplate st3 = new StayTemplateComposite();
+		StayTemplate st4 = new StayTemplateComposite();
 		st1.setNome("st1");
 		st2.setNome("st2");
+		st3.setNome("transport");
+		st4.setNome("transport1");
 		
 		itinerario.add(st1);
 		itinerario.add(st2);
+		itinerario.add(st3);
+		itinerario.add(st4);
 		
-		st1.setTimeOffset(3);
-		st2.setTimeOffset(7);
+		st3.setTimeOffset(st1.getTimeOffset());
+		st4.setTimeOffset(st1.getTimeOffset());
+		
 		
 		itinerario.sort();
 		
 		System.out.println(itinerario.getStayTemplate(0).getNome());
 		System.out.println(itinerario.getStayTemplate(1).getNome());
-		
+		System.out.println(itinerario.getStayTemplate(2).getNome());
+		System.out.println(itinerario.getStayTemplate(3).getNome());
 		
 		
 		

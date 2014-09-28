@@ -80,8 +80,9 @@ i++;
 }
 %>	
 			</table>	
-			
+				
 			<a href="Controller?operazione=addStay">Conferma e aggiungi la tappa all'itinerario</a>
+
 				
 		</div>
 		

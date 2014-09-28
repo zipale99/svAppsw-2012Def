@@ -117,6 +117,15 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		this.stay = (StayTemplate)stay.clone();
 	}
 	
+	@Override
+	public void deleteStay(int idStay) {
+		itinerary.remove(idStay);
+	}
+	
+	public void modificaTappa(int idStay) {
+		this.stay = itinerary.getStayTemplate(idStay);
+	}
+	
 	public void setUsername(String username) {
 		user.setUsername(username);
 	}

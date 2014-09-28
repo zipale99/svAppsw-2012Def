@@ -41,8 +41,8 @@ public class StayTemplateComposite extends StayTemplate {
 	}
 	
 	@Override
-	public void remove (StayTemplate st) {
-		tree.remove(st);
+	public void remove (int index) {
+		tree.remove(index);
 	}
 	
 	@Override

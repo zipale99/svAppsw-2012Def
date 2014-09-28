@@ -249,11 +249,24 @@ public class Controller extends HttpServlet {
         }
 
         
-     
-      
-        
+        //TO-DO!!
+        if(operazione.equals("addTransferStay")) {
+        	int idStay = Integer.parseInt(request.getParameter("idTappa"));
+        	request.setAttribute("idTappa", idStay);
+        }
    
+        if (operazione.equals("deleteStay")) {
+        	int idStay = Integer.parseInt(request.getParameter("idTappa"));
+        	managementController.deleteStay(idStay);
+        	forward(request, response, "/creaItinerario.jsp");
+        }
    
+        //TO-DO!!
+        if (operazione.equals("modificaTappa")) {
+        	int idStay = Integer.parseInt(request.getParameter("idTappa"));
+        	managementController.modificaTappa(idStay);
+        	forward(request, response, "/configureStayParameter.jsp");
+        }
         
         /*
          * Restituisce gli StayTemplate di tipo Transport, date una startLoc e un endLoc

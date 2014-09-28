@@ -72,6 +72,12 @@ public class ServiceDB {
 	/**
 	 * @param user utente per il quale cercare gli itinerari
 	 * @return ArrayList che rappresenta un elenco di itinerari dell'utente
+	 * 
+	 * TO-DO: Recuperare in maniera completa l'itinerario!! 
+	 * 1) Stay
+	 * 2) Leaf associati a ciascuna stay
+	 * 3) Opzioni + possibili valori associate a ciascun Leaf
+	 * 4) Attività di ciascuna Stay
 	 */    
     public static ArrayList<Itinerary> myItinerary(User user) {
         
@@ -353,6 +359,17 @@ public class ServiceDB {
         }
         return results;
     }
+    
+    /*
+     * SaveItinerary()
+     * 
+     * Inserisce nella tapella Itinerary le informazioni reperite dall'oggetto Itinerary di user
+     * Scorre l'arrayList associata a Itinerary e inserisce le informazioni per ciascun StayTemplate nella tabella Stay
+     * Importante: Associare anche l'id dello stayTemplate associato(utile per il recupero dei leaf)
+     * Inserire le attivita dell'arrayList activity associato a ciascun StayTemplate nella tabell attività personalizzate
+     * Settare i valori delle opzioni.
+     * Con questo metodo si conclude lo scenario principale di successo.
+     */
     
     
 	

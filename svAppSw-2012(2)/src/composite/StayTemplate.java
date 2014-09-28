@@ -145,7 +145,7 @@ public abstract class StayTemplate implements Cloneable{
 	}
 	
 	public void add(StayTemplate st){}
-	public void remove(StayTemplate st){}
+	public void remove(int index){}
 	
 	public List<Option> getOptionList() {
 		return null;
