@@ -80,6 +80,9 @@ public class ProxyUser extends AbstractUser {
 	        	if (!type.equals("")) {
 	        		if(type.equals("customer"))
 		                this.user = new Customer(username,"Customer");
+	        		////////////////////ma il costruttore di 
+	        		//Customer ha parametri username,pw; in tal modo è come se si setta la pw
+	        		///pari a "Customer" e il ruolo rimane il precedente(cioè customer)
 		            else if(type.equals("TA"))
 		                this.user = new TA(username,"TA");
 	        		return true; //se il login ha successo
