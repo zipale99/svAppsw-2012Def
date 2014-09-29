@@ -58,10 +58,9 @@ public class ManagementController {
 	}
 	
 	
-	 //TO_DO!!
-	 /*public void addTransferStay(int timeOffset, StayTemplate st) {
-	 	currentUser.setTransferStay(timeOffset, st);		
-	 }*/
+	 public void addTransferStay(StayTemplate tr,int timeOffset) {
+	 	currentUser.setTransferStay(tr, timeOffset);		
+	 }
 	 
 	
 	public void deleteStay(int idStay) {

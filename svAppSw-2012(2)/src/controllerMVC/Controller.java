@@ -289,7 +289,18 @@ public class Controller extends HttpServlet {
         	//la località attinente
         	request.setAttribute("idTappa", idStay);
         	//passa il controllo alla view che si occupa di visualizzare i transfer e poterne scegliere 1 da inserire nell'itinerario
-        	forward(request, response, "/transferlist.jsp");
+        	forward(request, response, "/transferList.jsp");
+        }
+        
+        if(operazione.equals("addTransfer")) {
+        	int idTrans = Integer.parseInt(request.getParameter("id"));
+        	//recupero transfer scelto dall'utente in session
+        	StaySearchResults transfer = (StaySearchResults)(session.getAttribute("stayResults"));
+        	//dal bean prelevo il transfer selezionato dall'utente
+        	StayTemplate tr = transfer.getElencoStayTemplate().get(idTrans);
+        	managementController.addTransferStay(tr,(int)request.getAttribute("idTappa"));
+        	//(ManagementController)session.getAttribute("managementController");
+        	forward(request, response, "/creaItinerario.jsp");
         }
    
         if (operazione.equals("deleteStay")) {

@@ -156,6 +156,10 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		return user.getItineraryList();
 	}
 	
+	public void setTransferStay(StayTemplate tr, int offset) {
+		this.itinerary.addTr(this.stay,offset);
+	}
+	
 	
 	/*Prima volta che lo chiama decUser smista l'operazione e ritorna il decorator appropriato
 	 * Quanod sarachiamato una seconda volta, viene invocato il metodo create del concrete dec appropriato

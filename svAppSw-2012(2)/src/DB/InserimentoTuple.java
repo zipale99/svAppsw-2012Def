@@ -272,7 +272,7 @@ public class InserimentoTuple {
 	    	pst.setFloat(6, 250);
  			pst.executeUpdate();
  			
- 			*/
+ 			
     	
 	    	insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
 	    	pst = conn.prepareStatement(insert);            
@@ -283,7 +283,30 @@ public class InserimentoTuple {
 	    	pst.setBoolean(5, true);
 	    	pst.setFloat(6, 250);
  			pst.executeUpdate();
+	    	*/
 	    	
+	    	
+	    	insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st53456");
+	    	pst.setString(2, "roma");
+	    	pst.setString(3, "napoli");
+	    	pst.setInt(4, 5);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 250);
+ 			pst.executeUpdate();
+	    	
+ 			
+ 			insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st51236");
+	    	pst.setString(2, "reggio-calabria");
+	    	pst.setString(3, "milano");
+	    	pst.setInt(4, 5);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 250);
+ 			pst.executeUpdate();
+ 			
  			
  			/*
  			insert = "INSERT INTO staytemplate_leaf(idstaytemplate,startloc,endloc,typeleaf,durata,transport,accomodation)VALUES (?,?,?,?,?,?,?)";

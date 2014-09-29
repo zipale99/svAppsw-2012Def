@@ -75,6 +75,9 @@ public class StayTemplateComposite extends StayTemplate {
 		return tree.toString();
 	}
 	
+	@Override
+	public void setTransferStay(StayTemplate tr, int offset) {
+	}
 	
 	
 }
