@@ -18,7 +18,8 @@ private List<StayTemplate> elencoStayTemplate;
  
     
     
-    public void aggiungiComposite(int id, String user,String startLoc,String endLoc, String nome, int durata,String transport, double prezzo){
+    public void aggiungiComposite(int id, String user,String startLoc,String endLoc
+    							, String nome, int durata,String transport, double prezzo){
     	List<Activity> activityList = new ArrayList<Activity>();
 		StayTemplateComposite st = new StayTemplateComposite(startLoc, endLoc, durata, nome, prezzo, activityList);
 		st.setId(id);

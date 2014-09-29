@@ -16,7 +16,8 @@ public class StayTemplateLeaf extends StayTemplate {
 	String typeLeaf;
 	List<Option> optionList;
 	
-	public StayTemplateLeaf(String startLoc, String endLoc, int durata, String nome, String typeLeaf, double price, int timeOffset, List<Option> optionValueList) {
+	public StayTemplateLeaf(String startLoc, String endLoc, int durata, String nome, String typeLeaf, 
+							double price, int timeOffset, List<Option> optionValueList) {
 		super(startLoc, endLoc, durata, nome, price, timeOffset);
 		this.typeLeaf = typeLeaf;
 		this.setOptionList(optionValueList);

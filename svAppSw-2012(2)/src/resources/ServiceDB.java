@@ -360,6 +360,35 @@ public class ServiceDB {
         return results;
     }
     
+    /**
+     * metodo utile a recuperare dal DB gli stayTemplate di tipo transfer con StartLoc=start ed endLoc=end
+     * @param start
+     * @param end
+     * @return arrayList contenente tutti gli stayTemplate di tipo transfer
+     */
+    public static StaySearchResults transferList(String start, String end) {
+    	StaySearchResults results = new StaySearchResults();
+    	Connection connessione = DBconnection.getConnection();    	
+    	//recupera dal db(tabella stayTemplate) le tuple corrispondenti a tranfer=true e start=startLoc e end=endLoc
+    	try {
+            Statement st = connessione.createStatement();
+            String sql = "SELECT * FROM staytemplate where startloc='"+start+"' and endloc='"+end+"' and transport="+true;
+            
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+            	StayTemplate trans = new StayTemplateLeaf(rs.getString("startloc"),rs.getString("endloc"),
+            			rs.getInt("durata"),rs.getString("nomest"),null,rs.getDouble("prezzo"),-1,null);
+
+            	results.add(trans);
+            }
+    	}
+    	catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+    	return results;
+    }
+    
+    
     /*
      * SaveItinerary()
      * 

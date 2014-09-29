@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import resources.OptionValue;
+//import resources.OptionValue;
 import controller.SearchController;
 
 /**
@@ -187,7 +187,14 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/selectStayTemplate.jsp");
         }
         
-        
+        /**
+         * richiama il processo di configurazione della tappa; scelto uno stayTemplate dall'utente,
+         * viene recuperato il suo id dalla form, viene caricato il bean in sessione corrispondente
+         * all'elenco di tutti gli stayTemplate disponibili e tra essi, viene scelto quello avente
+         * il campo id corrispondente.viene passato il controllo al managementController passando
+         * lo stayTemplate scelto al metodo setStay(st), il quale si occupera di clonare lo stayTemplate
+         * e associarlo alla variabile utente il quale è in sessione(aggiunta a tal scopo)
+         */
         if(operazione.equals("configureStayParameter")) {
         	//recupero l'id dello StayTemplate nell'arrayList
         	//Recupero le attività standard per lo stayTemplate scelto + quelle personalizzate
@@ -203,15 +210,24 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/configureStayParameter.jsp");
         }
         
-        
-        //Visualizza opzioni per un leaf con i valori possibili
+        /**
+         * condizione chiamata dalla view configureStayParameter,
+         * recupera dal form il campo id di un certo leaf e metto esso stesso
+         * in richiesta chiamandolo "idLeaf", in modo da usarlo nella view che 
+         * elenchera le opzioni possibili per un determinato leaf
+         */
         if (operazione.equals("viewOptionValues")) {
         	int id = Integer.parseInt(request.getParameter("idLeaf"));
         	request.setAttribute("idLeaf", id);   
         	forward(request, response, "/selectOptionValue.jsp");
         }
         
-        
+        /**
+         * condizione chiamata dalla view selectOptionValue, che recupera dalla form i
+         * parametri delle opzioni per un determinato leaf e chiama il metodo
+         * del managementController, il quale setta per il determinato leaf scelto dall'utente,
+         * la corrispondnete opzione associata col relativo valore
+         */
       //Recupera il valore per l'opzione selezionato(radioButton) e lo imposta a Option, da il controllo a configureStayParameter
         if (operazione.equals("selectValue")) {
         	int idLeaf = Integer.parseInt(request.getParameter("idLeaf"));
@@ -228,6 +244,9 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/viewActivitySearchResults.jsp");
         }
         
+        /**
+         * sempre dalla view configureStayParameter, aggiunge la tappa al template
+         */
         if (operazione.equals("addActivity")) {
         	int idActivity = Integer.parseInt(request.getParameter("id"));
         	ActivitySearchResults results = (ActivitySearchResults)session.getAttribute("activityResults");
@@ -242,6 +261,10 @@ public class Controller extends HttpServlet {
         	 */
         }
         
+        /**
+         * condizione richiamata dalla configureStayParameter dopo la configurazione di 
+         * attività e di opzioni(personalizzazione)
+         */
         if (operazione.equals("addStay")) {
         	//viene aggiunta la tappa che l'utente si sta configurando al suo itinerario
         	managementController.addStay();
@@ -252,7 +275,21 @@ public class Controller extends HttpServlet {
         //TO-DO!!
         if(operazione.equals("addTransferStay")) {
         	int idStay = Integer.parseInt(request.getParameter("idTappa"));
+        	//recupera il template che si sta inserendo l'utente nel proprio itinerario
+        	//oltre il quale vuole aggiungere la tappa di trasferimento
+        	managementController = (ManagementController)session.getAttribute("managementController");
+        	AbstractUserComponent auc = managementController.getCurrentUser();
+        	StayTemplate mySt1 = auc.getItinerary().getStayTemplate(idStay);
+        	StayTemplate mySt2 = auc.getItinerary().getStayTemplate(idStay+1);        	
+        	//chiamare il metodo che mette nel bean i soli transport con le località decise(endLoc diventa stratLoc per il bean)
+        	session.setAttribute("stayResults",SearchController.transferList(mySt1.getEndLoc(),mySt2.getStartLoc()));       	
+        	//aggiungo un bean con stay di tipo transfer
+        	//metto in sessione(o in request) tale bean
+        	//la view successiva, illustrerà all'utente l'elenco dei tranfer possibili con 
+        	//la località attinente
         	request.setAttribute("idTappa", idStay);
+        	//passa il controllo alla view che si occupa di visualizzare i transfer e poterne scegliere 1 da inserire nell'itinerario
+        	forward(request, response, "/transferlist.jsp");
         }
    
         if (operazione.equals("deleteStay")) {

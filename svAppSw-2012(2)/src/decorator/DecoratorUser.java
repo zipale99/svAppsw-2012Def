@@ -67,11 +67,15 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	@Override
 	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {
 		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa"+idOption);
+		//il metodo getStayTemplate(idLeaf) chiamerà l'esecuzione nella classe StayTemplateComposite
+		//in quanto è stato in essa ridefinito tale metodo lavorando sull'arrayList tree
 		stay.getStayTemplate(idLeaf).getOptionList().get(idOption).setValue(stay.getStayTemplate(idLeaf).getOptionList().get(idOption).getPossibleValue().get(idOptionValue));
 	}
 	
 	@Override
 	public void addActivity(Activity activity) {
+		//il metodo getActivityList() chiamerà l'esecuzione nella classe StayTemplateComposite
+		//in quanto è stato in essa ridefinito tale metodo lavorando sull'arrayList activityList
 		if(stay.getActivityList().add(activity));
 		else System.out.println("Impossibile aggiungere l'attività");
 	}
@@ -113,6 +117,10 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	}
 	
 	@Override
+	/**
+	 * metodo utile a clonare lo stayTemplate ricavato dalla sessione utente.Serve per associare
+	 * all'utente in sessione uno stayTemplate da personalizzarecon attività ed opzioni
+	 */
 	public void setStay(StayTemplate stay) {
 		this.stay = (StayTemplate)stay.clone();
 	}

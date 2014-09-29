@@ -31,8 +31,9 @@ Itinerary myIt = auc.getItinerary();
 			<p><b>Categoria:</b> <%= myIt.getCategoria() %> </p>
 
 <%
-int size = myIt.getSize();
-if (size != 0) {
+int size1 = myIt.getSize();
+int size2 = myIt.getSize()-1;
+if (size1 != 0) {
 %>			
 			
 			<table>
@@ -44,7 +45,7 @@ if (size != 0) {
 				
 <%
 	int i = 0;
-	while(size > 0) {
+	while(size1 > 0) {
 %>
 	
 				<tr>
@@ -58,6 +59,11 @@ if (size != 0) {
 								<input type="hidden" name="idTappa" value='<%= i %>'>
 								<input type="submit" value="Elimina Tappa" onClick="return(confirm('Sei sicuro di voler procedere?'))"/>
 							</form>
+	
+<% 
+	if(i < size2)
+		if(!(myIt.getStayTemplate(i).getEndLoc().equals(myIt.getStayTemplate(i+1).getStartLoc()))) {
+%>	
 							
 							<form action="Controller" method="POST" >
 								<input type="hidden" name="operazione" value="addTransferStay">
@@ -66,8 +72,13 @@ if (size != 0) {
 							</form>
 					</td>
 				</tr>
+				
 <%
-	size--;
+	}
+%>				
+
+<%
+	size1--;
 	i++;
 	}
 

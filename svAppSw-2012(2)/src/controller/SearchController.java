@@ -4,7 +4,7 @@ import resources.ActivitySearchResults;
 import resources.ItinerarySearchResults;
 import resources.ServiceDB;
 import resources.StaySearchResults;
-import decorator.User;
+//import decorator.User;
 
 
 public class SearchController {
@@ -48,6 +48,10 @@ public class SearchController {
 		return ServiceDB.searchActivity();
 	}
 	
+	
+	public static StaySearchResults transferList(String sl, String el) {
+		return ServiceDB.transferList(sl,el);
+	}
 	
 	
 }
