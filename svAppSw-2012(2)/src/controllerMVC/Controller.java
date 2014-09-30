@@ -269,7 +269,11 @@ public class Controller extends HttpServlet {
         }
         
         /*
-         * Restituisce gli StayTemplate di tipo Transport, date una startLoc e un endLoc
+         * to-do: calcolare stato itinerario 
+         * 		completare modifica tappa
+         * 		competare aggiunta attivita
+         * 		eliminazione transferstay + configurazione Attività e parametri
+         * 		
          */
         
 		

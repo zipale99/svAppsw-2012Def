@@ -72,6 +72,9 @@ public class ManagementController {
 		currentUser.modificaTappa(idStay);
 	}
 	
+	public boolean verificaCompatibilita(String location) {
+		return true;
+	}
 	
 	
 	

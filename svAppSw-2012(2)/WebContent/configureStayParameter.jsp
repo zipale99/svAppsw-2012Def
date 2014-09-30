@@ -81,8 +81,11 @@ i++;
 %>	
 			</table>	
 				
+<%
+System.out.println(request.getHeader("Referer"));
+%>				
 			<a href="Controller?operazione=addStay">Conferma e aggiungi la tappa all'itinerario</a>
-
+			
 				
 		</div>
 		

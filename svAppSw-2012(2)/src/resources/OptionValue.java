@@ -11,6 +11,7 @@ package resources;
  */
 public class OptionValue {
 
+		int id;
 		String value;
 		double price;
 		
@@ -48,6 +49,16 @@ public class OptionValue {
 		@Override
 		public String toString() {
 			return "Valore: " + value + "[Costo: " + price + "]";
+		}
+
+
+		public int getId() {
+			return id;
+		}
+
+
+		public void setId(int id) {
+			this.id = id;
 		}
 		
 		

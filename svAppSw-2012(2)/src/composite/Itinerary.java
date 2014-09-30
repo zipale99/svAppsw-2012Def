@@ -76,6 +76,10 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 		super.add(st);
 	}
 	
+	public void addStay(StayTemplate st) {
+		super.add(st);
+	}
+	
 	public int compare(StayTemplate st1, StayTemplate st2) {
 		 if ( st1.getTimeOffset() < st2.getTimeOffset() ) {
 			 System.out.println("metodo compare, return -1");

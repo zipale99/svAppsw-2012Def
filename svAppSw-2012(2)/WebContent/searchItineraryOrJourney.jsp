@@ -12,7 +12,7 @@
 	<div class = "container">
 	<div class = "header">
 		<h1>Awesome Journey</h1>
-	</div>	1
+	</div>
 	
 	<div class = "main">
 		<div class = "content">

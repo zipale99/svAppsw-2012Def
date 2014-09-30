@@ -11,7 +11,9 @@ public class InserimentoTuple {
 		PreparedStatement pst=null;
 		String insert=null;
 	    try {
-		
+	    	
+	    	    	
+	    	
 	    	insert = "INSERT INTO attivita (tipo,citta,descrizione,durata,prezzo)VALUES (?,?,?,?,?)";
 	    	pst = conn.prepareStatement(insert);            
 	    	pst.setString(1, "culturale");
@@ -111,7 +113,6 @@ public class InserimentoTuple {
 	    	pst.setFloat(5, 51);
 	    	pst.executeUpdate();
 	    	
-	    	/*
 	    	
 	    	insert = "INSERT INTO utenti (username,password,ruolo)VALUES (?,?,?)";
 	    	pst = conn.prepareStatement(insert);            
@@ -529,8 +530,7 @@ public class InserimentoTuple {
  			pst.setInt(3, 7);
  			pst.executeUpdate();
  			
- 			
- 			
+ 
  			
  			
  			
@@ -582,8 +582,24 @@ public class InserimentoTuple {
  			pst.setBoolean(3, true);
  			pst.setInt(4, 1);
  			pst.executeUpdate();
+ 			
+ 			insert = "INSERT INTO stay (iditinerario,idstaytemplate, timeoffset, prezzo)VALUES (?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setInt(1, 1);
+	    	pst.setInt(2, 1);
+	    	pst.setInt(3, 1);
+	    	pst.setInt(4, 50);
+	    	pst.executeUpdate();
+	    	
+	    	insert = "INSERT INTO stay (iditinerario,idstaytemplate,timeoffset, prezzo)VALUES (?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setInt(1, 1);
+	    	pst.setInt(2, 2);
+	    	pst.setInt(3, 2);
+	    	pst.setInt(4, 100);
+	    	pst.executeUpdate();
  		
- 			*/
+ 			
 	    }
 	    
 	    
