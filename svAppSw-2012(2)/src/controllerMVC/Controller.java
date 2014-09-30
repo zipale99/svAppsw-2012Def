@@ -287,18 +287,23 @@ public class Controller extends HttpServlet {
         	//metto in sessione(o in request) tale bean
         	//la view successiva, illustrerà all'utente l'elenco dei tranfer possibili con 
         	//la località attinente
-        	request.setAttribute("idTappa", idStay);
+        	session.setAttribute("idTappa", idStay);
         	//passa il controllo alla view che si occupa di visualizzare i transfer e poterne scegliere 1 da inserire nell'itinerario
         	forward(request, response, "/transferList.jsp");
         }
         
         if(operazione.equals("addTransfer")) {
         	int idTrans = Integer.parseInt(request.getParameter("id"));
+        	System.out.println("transfer scelto con id : "+idTrans);
         	//recupero transfer scelto dall'utente in session
         	StaySearchResults transfer = (StaySearchResults)(session.getAttribute("stayResults"));
+        	System.out.println("transfer con partenza da : "+transfer.get(idTrans).getStartLoc());
         	//dal bean prelevo il transfer selezionato dall'utente
-        	StayTemplate tr = transfer.getElencoStayTemplate().get(idTrans);
-        	managementController.addTransferStay(tr,(int)request.getAttribute("idTappa"));
+        	StayTemplate tr = transfer.get(idTrans);
+        	System.out.println("condizione addTransfer...chiama metodo del manController...");
+        	//se il parametro è messo in session lo vede, in request non lo vede :s
+        	System.out.println("id della tappa oltre il quale aggiungere il transfer:"+(int)session.getAttribute("idTappa"));
+        	managementController.addTransferStay(tr,(int)session.getAttribute("idTappa"));
         	//(ManagementController)session.getAttribute("managementController");
         	forward(request, response, "/creaItinerario.jsp");
         }

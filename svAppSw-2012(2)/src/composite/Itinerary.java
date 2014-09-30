@@ -76,11 +76,30 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 		super.add(st);
 	}
 	
+	/**
+	 * metodo che occorre per l'inserimento di una transfer tr;
+	 * il parametro offset indica la posizione dell'elemento oltre il quale inserire la transfer
+	 */	
 	@Override
 	public void setTransferStay(StayTemplate tr, int offset) {
+		System.out.println("setTransferStay di Itinerary");
+		super.tree.get(offset).setTimeOffset(offset);//perchè nella view offset parte da 0;pos parte da 1!!!
 		position++;
-		tr.setTimeOffset(position);
-		super.add(tr);
+		offset+=1;
+		tr.setTimeOffset(offset);	
+		super.add(tr);							
+		int actual = offset;
+		while(offset < position-1) {//potrei mettere la size di tree
+			super.tree.get(offset).setTimeOffset(++actual);		
+			offset++;
+		}
+		for(int i = 0; i < position; i++) {
+			System.out.println("offset prima di sort:"+super.tree.get(i).getTimeOffset());
+		}
+		this.sort();
+		for(int i = 0; i < position; i++) {
+			System.out.println("offset dopo di sort:"+super.tree.get(i).getTimeOffset());
+		}
 	}
 	
 	public int compare(StayTemplate st1, StayTemplate st2) {

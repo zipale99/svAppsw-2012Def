@@ -377,7 +377,7 @@ public class ServiceDB {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
             	StayTemplate trans = new StayTemplateLeaf(rs.getString("startloc"),rs.getString("endloc"),
-            			rs.getInt("durata"),rs.getString("nomest"),null,rs.getDouble("prezzo"),-1,null);
+            			rs.getInt("durata"),rs.getString("nomest"),"transfer",rs.getDouble("prezzo"),-1,null);
 
             	results.add(trans);
             }

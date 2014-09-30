@@ -157,7 +157,8 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	}
 	
 	public void setTransferStay(StayTemplate tr, int offset) {
-		this.itinerary.setTransferStay(this.stay,offset);
+		System.out.println("metodo setTransferStay di DecUser...chiamo metodo setTransferStay di Itinerary...");
+		this.itinerary.setTransferStay(tr,offset);
 	}
 	
 	

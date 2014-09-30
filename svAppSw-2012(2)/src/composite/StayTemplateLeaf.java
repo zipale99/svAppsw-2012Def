@@ -67,7 +67,7 @@ public class StayTemplateLeaf extends StayTemplate {
 	@Override
 	public String toString() {
 		return super.toString() +
-				"\nTypeLeaf: " + typeLeaf;
+				"\nType: " + typeLeaf;
 	}
 		
 }

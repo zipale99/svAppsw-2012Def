@@ -59,7 +59,8 @@ public class ManagementController {
 	
 	
 	 public void addTransferStay(StayTemplate tr,int timeOffset) {
-	 	currentUser.setTransferStay(tr, timeOffset);		
+	 	System.out.println("metodo addTransferStay del manController...chiamo metodo di userDec : setTransferStay");
+		currentUser.setTransferStay(tr, timeOffset);		
 	 }
 	 
 	

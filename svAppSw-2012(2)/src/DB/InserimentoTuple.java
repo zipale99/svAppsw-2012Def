@@ -283,7 +283,7 @@ public class InserimentoTuple {
 	    	pst.setBoolean(5, true);
 	    	pst.setFloat(6, 250);
  			pst.executeUpdate();
-	    	*/
+	    	
 	    	
 	    	
 	    	insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
@@ -305,6 +305,62 @@ public class InserimentoTuple {
 	    	pst.setInt(4, 5);
 	    	pst.setBoolean(5, true);
 	    	pst.setFloat(6, 250);
+ 			pst.executeUpdate();
+ 			*/
+ 			
+	    	
+	    	insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st51136");
+	    	pst.setString(2, "roma");
+	    	pst.setString(3, "napoli");
+	    	pst.setInt(4, 1);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 260);
+ 			pst.executeUpdate();
+	    	
+ 			
+ 			insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st5109");
+	    	pst.setString(2, "firenze");
+	    	pst.setString(3, "roma");
+	    	pst.setInt(4, 1);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 120);
+ 			pst.executeUpdate();
+ 			
+	    	
+ 			insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st57112");
+	    	pst.setString(2, "reggio-calabria");
+	    	pst.setString(3, "milano");
+	    	pst.setInt(4, 1);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 330);
+ 			pst.executeUpdate();
+ 			
+ 			
+ 			insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st591112");
+	    	pst.setString(2, "napoli");
+	    	pst.setString(3, "torino");
+	    	pst.setInt(4, 1);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 230);
+ 			pst.executeUpdate();
+ 			
+ 			
+ 			insert = "INSERT INTO staytemplate(nomest,startloc,endloc,durata,transport,prezzo)VALUES (?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setString(1, "st5111112");
+	    	pst.setString(2, "napoli");
+	    	pst.setString(3, "reggio-calabria");
+	    	pst.setInt(4, 1);
+	    	pst.setBoolean(5, true);
+	    	pst.setFloat(6, 55);
  			pst.executeUpdate();
  			
  			
