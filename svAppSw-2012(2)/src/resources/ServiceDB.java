@@ -161,13 +161,14 @@ public class ServiceDB {
     	ItinerarySearchResults results = new ItinerarySearchResults();   	
         try {
             Statement stIt = connessione.createStatement(); 
+            Statement stActivity = connessione.createStatement();
             Statement stStay = connessione.createStatement();
             
             ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
             													" or itname='"+nome+"' or categoria='"+cat+"'");
             while(rsIt.next()) {   
                 int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));
-                ResultSet rsStay = stStay.executeQuery("SELECT * from STAY where idItinerario ="+idItinerario+"'");
+                ResultSet rsStay = stStay.executeQuery("SELECT * from STAY where idItinerario ="+idItinerario);
             	Itinerary it = new Itinerary(rsIt.getString("creatoruser"),
             			rsIt.getString("startloc"),rsIt.getString("endloc"),rsIt.getInt("durata"),
             			rsIt.getString("itname"),rsIt.getString("itdesc"),rsIt.getString("categoria"),rsIt.getString("stato"),
@@ -176,12 +177,27 @@ public class ServiceDB {
             	while (rsStay.next()) {
             		StayTemplate stay = new StayTemplateComposite();
             		int idStayTemplate = rsStay.getInt("idStayTemplate");
+            		int idStay = rsStay.getInt("idStay");
             		stay.setId(rsStay.getInt("idStay"));
             		stay.setTimeOffset(rsStay.getInt("timeOffset"));
             		stay.setPrice(rsStay.getInt("prezzo"));
             		stay.setActivityList(searchActivityStayTemplate(idStayTemplate).getElencoAttivita());//TO-DO:recupero attivita personalizzate!!
+            		ResultSet rsActivity = stActivity.executeQuery("SELECT * FROM attivita_stay, attivita where idstay="+idStay);
+            		List<Activity> activityPers = new ArrayList<Activity>();
+            		while (rsActivity.next()) {
+            			Activity activity = new Activity();
+            			activity.setIdActivity(rsActivity.getInt("id"));
+            			activity.setType(rsActivity.getString("tipo"));
+            			activity.setLocation(rsActivity.getString("citta"));
+            			activity.setDesc(rsActivity.getString("descrizione"));
+            			activity.setDurata(rsActivity.getInt("durata"));
+            			activity.setPrice(rsActivity.getDouble("prezzo"));
+            			//eventualmente aggiungere il timeoffset nel db e settarlo
+            			activityPers.add(activity);
+            		}
+            		stay.getActivityList().addAll(activityPers);
             		for (StayTemplate leaf :  searchLeafStayTemplate(idStayTemplate).getElencoStayTemplate()) {          			
-                		leaf.setOptionList(getOptionLeaf(leaf.getId()).getElencoOptions()); //TO-DO:recuperare le opzioni personalizzate!!
+                		leaf.setOptionList(getOptionLeafPers(idStay ,leaf.getId()).getElencoOptions());
                 		stay.add(leaf);
                 		it.addStay(stay);
             		}
@@ -369,8 +385,6 @@ public class ServiceDB {
             	
             	
             	opt.setPossibleValue(getOptionValue(opt.getId()));
-            	
-            	System.out.println("valoreeeeeeeee: "+optValueStandard.getId());
             	opt.setValue(optValueStandard);
             	
             	results.add(opt);
@@ -408,6 +422,46 @@ public class ServiceDB {
             	optValue.setValue(rs.getString("value"));
             	optValue.setPrice(rs.getInt("price"));     
             	results.add(optValue);
+            }
+            
+            st.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        return results;
+    }
+    
+public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
+    	
+    	Connection connessione = DBconnection.getConnection();    	
+    	OptionSearchResults results = new OptionSearchResults();    	
+    	//se la connessione è andata a buon fine   	
+        try {
+            Statement st = connessione.createStatement();
+            //TO-DO
+            String sql = "SELECT * FROM OPZIONI_PERS, OPZIONI_STANDARD, OPTION_LIST"
+            			+ " WHERE OPZIONI_PERS.idstay = "+idStay+" AND OPZIONI_STANDARD.idstleaf="+idLeaf+" AND OPZIONI_PERS.idoptionlist=OPTION_LIST.id";
+
+            ResultSet rs = st.executeQuery(sql);
+           
+            while (rs.next()) {
+            	Option opt = new Option();
+            	OptionValue optValuePers = new OptionValue();
+            	
+            	opt.setId(rs.getInt("idoption"));
+            	opt.setName(rs.getString("optionname"));
+            	opt.setDesc(rs.getString("description"));
+            	
+            	optValuePers.setValue(rs.getString("value"));
+            	optValuePers.setPrice(rs.getInt("price"));
+            	optValuePers.setId(rs.getInt("ID"));
+            	
+            	opt.setPossibleValue(getOptionValue(opt.getId()));
+            	opt.setValue(optValuePers);
+            	
+            	results.add(opt);
             }
             
             st.close();

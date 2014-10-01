@@ -42,6 +42,8 @@ public class TestDB {
 		it.setEndLoc("Roma");
 		it.setNome("prova");
 		
+		ItinerarySearchResults sir = ServiceDB.searchItinerary(null, null, 0, "", "");
+		System.out.println("attivita: " + sir.getElencoItinerari().get(0).getStayTemplate(0).getStayTemplate(1).getOption(0).toString());
 		
 	}
 
