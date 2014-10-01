@@ -425,43 +425,48 @@ public class ServiceDB {
     	Connection connessione = DBconnection.getConnection();
     	try {
             Statement stIt = connessione.createStatement();
-            ResultSet rsIt = stIt.executeQuery("select iditinerario from itinerario");
             Statement stLeaf = connessione.createStatement();
             Statement stStay = connessione.createStatement();
+            Statement stActivity = connessione.createStatement();
             Statement stOpzioni_pers = connessione.createStatement();
+            ResultSet rsIt;
             
-            stIt.executeQuery("INSERT INTO itinerario VALUES ("+it.getUser()+","+it.getStartLoc()+","+ it.getEndLoc()+","+ it.getDurata()+","+ it.getNome()+"," 
-            		+it.getDesc()+","+ it.getCategoria()+","+ it.getStato()+","+ it.getPrice()+")");
-           
+            stIt.executeUpdate( "INSERT INTO itinerario (creatoruser, startloc, endloc, durata, itname, itdesc, categoria, stato, prezzo) "
+            		+ "VALUES ('"+it.getUser()+"','"+it.getStartLoc()+"','"+ it.getEndLoc()+"',"+ it.getDurata()+",'"+ it.getNome()+"','" 
+            		+it.getDesc()+"','"+ it.getCategoria()+"','"+ it.getStato()+"',"+ it.getPrice()+")" );
+            rsIt = stIt.executeQuery("select * from itinerario");
             int i = 0;
             int size = it.getSize();
             int j = 0;
             while(size > 0) {
-            	stStay.executeQuery("INSERT INTO stay VALUES ("+rsIt.getInt("iditinerario")+","+it.getStayTemplate(i).getId()+","+ it.getStayTemplate(i).getTimeOffset()
+            	stStay.executeUpdate("INSERT INTO stay (iditinerario, idstaytemplate, timeoffset, prezzo) VALUES "
+            			+ "("+rsIt.getInt("iditinerario")+","+it.getStayTemplate(i).getId()+","+ it.getStayTemplate(i).getTimeOffset()
             			+","+ it.getStayTemplate(i).getPrice()+")");
+            	ResultSet rsStay = stStay.executeQuery("Select * from stay");
+            	for (int z = 0; z < it.getStayTemplate(i).getActivityList().size(); z++)
+            		stActivity.executeUpdate("INSERT INTO attivita_stay (idstay, idattivita, timeoffset) VALUES "
+            				+ "("+ rsStay.getInt("idStay") +","+ it.getStayTemplate(i).getActivityList().get(z).getIdActivity()+")");
             	int sizeLeaf = it.getStayTemplate(i).getSize();
-            	while(sizeLeaf > 0) {
-            		
-            		List<Integer> optionId = new ArrayList<Integer>();
-            		ResultSet rsLeaf = stIt.executeQuery("select * from opzioni_standard where opzioni_standard.idstleaf="+it.getStayTemplate(i).getStayTemplate(j)+"'");
-            		optionId.set(j, rsLeaf.getInt("idoption"));            		
-            		stOpzioni_pers.executeQuery("INSERT INTO opzioni_pers VALUES ("+optionId.get(index)+","+it.getStartLoc()+","+ it.getEndLoc()+","+ it.getDurata()+","+ it.getNome()+"," 
-            		+it.getDesc()+","+ it.getCategoria()+","+ it.getStato()+","+ it.getPrice()+")");
+            	while(sizeLeaf > 0) 
+            		for (int x = 0; x < it.getStayTemplate(i).getStayTemplate(j).getOptionListSize(); x++) {
+            			stOpzioni_pers.executeUpdate("INSERT INTO opzioni_pers (idoptstandard, idstay, idoptionlist) VALUES "
+            					+ "("+it.getStayTemplate(i).getStayTemplate(j).getOption(x).getId()+","
+            					+ rsStay.getInt("idstay") +","+ it.getStayTemplate(i).getStayTemplate(j).getOption(x).getValue().getId() +")");
+            		sizeLeaf--;
+                	j++;
             	}
+            	size--;
+            	i++;
             }
-            size--;
-            i++;
-           
-            
-            st.close();
+            stIt.close();
+            stLeaf.close();
+            stStay.close();
+            stOpzioni_pers.close();
             connessione.close();
         }
         catch (SQLException ex) {
         	ex.printStackTrace();
-        }
-        return results;
-    	
-    	
+        }  	
     }
     
     

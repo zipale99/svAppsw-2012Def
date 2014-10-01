@@ -76,6 +76,10 @@ public class ManagementController {
 		return true;
 	}
 	
+	public void saveItinerary() {
+		ServiceDB.saveItinerary(currentUser.getItinerary());
+	}
+	
 	
 	
 

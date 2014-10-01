@@ -276,6 +276,10 @@ public class Controller extends HttpServlet {
          * 		
          */
         
+        if (operazione.equals("saveItinerary")) {
+        	managementController.saveItinerary();
+        }
+        
 		
         
         
