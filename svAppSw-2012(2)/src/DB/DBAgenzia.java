@@ -8,7 +8,11 @@ public class DBAgenzia {
 	public static void main(String[] args) {
 	       
 		Connection conn = DBconnection.getConnection();
-		
+		/**
+		 * usare sql : "delete from nomeTabella"
+		 * st.executeUpdate(sql);
+		 * eliminare per prime le tabelle che non sono referenziate dalle altre
+		 */ 
 	    try {
 	    	
 	      	//CREA TABELLA UTENTI

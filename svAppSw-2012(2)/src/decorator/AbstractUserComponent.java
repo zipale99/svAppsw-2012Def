@@ -35,6 +35,7 @@ public abstract class AbstractUserComponent {
 	public void deleteStay(int idStay) {}
 	public void modificaTappa(int idStay) {}
 	public void setTransferStay(StayTemplate st, int x){}
+	public void setStato(){}
 	
 	public Itinerary getItinerary() {
 		return null;

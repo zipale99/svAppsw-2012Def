@@ -73,6 +73,10 @@ public class ManagementController {
 	}
 	
 	
+	public void setStato() {
+		currentUser.setStato();
+	}
+	
 	
 	
 

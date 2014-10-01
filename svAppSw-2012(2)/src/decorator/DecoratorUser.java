@@ -167,5 +167,9 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	 * che restituisce l'istanza creata in precedenza. Dunque è il costruttore del concrete dec che deve tenere traccia 
 	 * dell'istanza ed eventualmente restituire l'istanza vecchia.
     */
+	
+	public void setStato() {
+		System.out.println("utente:"+user.getUsername());
+	}
 
 }
