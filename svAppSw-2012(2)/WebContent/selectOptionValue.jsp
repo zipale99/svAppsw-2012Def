@@ -48,6 +48,7 @@ while(sizeListOption > 0) {
 <%
 int sizePossibleValue = opt.getPossibleValueSize();
 int j = 0;
+System.out.println("valore opt: ");
 while(sizePossibleValue > 0) {
 	OptionValue optValue = opt.getOptionValue(j);
 %>				
@@ -63,6 +64,7 @@ if (optValue.getValue().equals(opt.getValue().getValue())) {
 <%
 }
 else {
+	System.out.println("valore opt: "+opt.getValue().getValue().toString());
 %>		
 						<input type="radio" name="optValue" value='<%= j %>'/><%= optValue.toString() %>
 						<br>

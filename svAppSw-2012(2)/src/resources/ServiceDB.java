@@ -248,6 +248,7 @@ public class ServiceDB {
             while (rs.next()) {
             	StayTemplateComposite stc = new StayTemplateComposite();
             	int id = rs.getInt("idstaytempl");
+            	stc.setId(id);
             	stc.setStartLoc(rs.getString("startLoc"));
             	stc.setEndLoc(rs.getString("endLoc"));
             	stc.setDurata(rs.getInt("durata"));
@@ -357,13 +358,21 @@ public class ServiceDB {
             while (rs.next()) {
             	Option opt = new Option();
             	OptionValue optValueStandard = new OptionValue();
+            	optValueStandard.setId(rs.getInt("ID"));
             	opt.setId(rs.getInt("idoption"));
             	opt.setName(rs.getString("optionname"));
             	opt.setDesc(rs.getString("description"));
+            	
+            	
             	optValueStandard.setValue(rs.getString("value"));
             	optValueStandard.setPrice(rs.getInt("price"));
+            	
+            	
             	opt.setPossibleValue(getOptionValue(opt.getId()));
+            	
+            	System.out.println("valoreeeeeeeee: "+optValueStandard.getId());
             	opt.setValue(optValueStandard);
+            	
             	results.add(opt);
             }
             
@@ -388,7 +397,7 @@ public class ServiceDB {
         try {
             Statement st = connessione.createStatement();
             //TO-DO
-            String sql = "SELECT value, price FROM OPTION_LIST"
+            String sql = "SELECT * FROM OPTION_LIST"
             			+ " WHERE idOption = "+ idOption;
 
             ResultSet rs = st.executeQuery(sql);
@@ -434,27 +443,38 @@ public class ServiceDB {
             stIt.executeUpdate( "INSERT INTO itinerario (creatoruser, startloc, endloc, durata, itname, itdesc, categoria, stato, prezzo) "
             		+ "VALUES ('"+it.getUser()+"','"+it.getStartLoc()+"','"+ it.getEndLoc()+"',"+ it.getDurata()+",'"+ it.getNome()+"','" 
             		+it.getDesc()+"','"+ it.getCategoria()+"','"+ it.getStato()+"',"+ it.getPrice()+")" );
-            rsIt = stIt.executeQuery("select * from itinerario");
+            rsIt = stIt.executeQuery("select iditinerario from itinerario");
+         	int idItinerario = 0;
+            while (rsIt.next())
+            	idItinerario = rsIt.getInt("iditinerario");
+            System.out.println("idItinerario: " + idItinerario);
             int i = 0;
             int size = it.getSize();
             int j = 0;
             while(size > 0) {
+            	System.out.println("staytemplid:"+it.getStayTemplate(i).getId());
             	stStay.executeUpdate("INSERT INTO stay (iditinerario, idstaytemplate, timeoffset, prezzo) VALUES "
-            			+ "("+rsIt.getInt("iditinerario")+","+it.getStayTemplate(i).getId()+","+ it.getStayTemplate(i).getTimeOffset()
+            			+ "("+idItinerario+","+it.getStayTemplate(i).getId()+","+ it.getStayTemplate(i).getTimeOffset()
             			+","+ it.getStayTemplate(i).getPrice()+")");
             	ResultSet rsStay = stStay.executeQuery("Select * from stay");
+            	int idStay = 0;
+                while (rsStay.next())
+                	idStay = rsStay.getInt("idStay");
             	for (int z = 0; z < it.getStayTemplate(i).getActivityList().size(); z++)
             		stActivity.executeUpdate("INSERT INTO attivita_stay (idstay, idattivita, timeoffset) VALUES "
-            				+ "("+ rsStay.getInt("idStay") +","+ it.getStayTemplate(i).getActivityList().get(z).getIdActivity()+")");
+            				+ "("+ idStay +","+ it.getStayTemplate(i).getActivityList().get(z).getIdActivity()+","+ it.getStayTemplate(i).getActivityList().get(z).getTimeOffset() + ")");
             	int sizeLeaf = it.getStayTemplate(i).getSize();
-            	while(sizeLeaf > 0) 
+            	while(sizeLeaf > 0) {
+            		System.out.println("j: "+j);
             		for (int x = 0; x < it.getStayTemplate(i).getStayTemplate(j).getOptionListSize(); x++) {
             			stOpzioni_pers.executeUpdate("INSERT INTO opzioni_pers (idoptstandard, idstay, idoptionlist) VALUES "
             					+ "("+it.getStayTemplate(i).getStayTemplate(j).getOption(x).getId()+","
-            					+ rsStay.getInt("idstay") +","+ it.getStayTemplate(i).getStayTemplate(j).getOption(x).getValue().getId() +")");
+            					+ idStay +","+ it.getStayTemplate(i).getStayTemplate(j).getOption(x).getValue().getId() +")");
+            		}
             		sizeLeaf--;
                 	j++;
             	}
+            	j=0;
             	size--;
             	i++;
             }
