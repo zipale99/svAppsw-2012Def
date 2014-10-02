@@ -34,6 +34,8 @@ public abstract class AbstractUserComponent {
 	public void addStay() {}
 	public void deleteStay(int idStay) {}
 	public void modificaTappa(int idStay) {}
+	public void deleteItinerary(int indexIt) {}
+	public void modificaItinerario(int indexIt) {}
 	
 	public Itinerary getItinerary() {
 		return null;

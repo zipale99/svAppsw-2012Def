@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "decorator.*"%>
+    pageEncoding="UTF-8" import = "decorator.*, controller.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,11 +45,13 @@ Nome:
 <% } //Altrimenti visualizziamo al posto del modulo per il login la scritto di benvenuto con il nome
 	//recuperato da sessione utente
 	else {
+		ManagementController mc = (ManagementController)session.getAttribute("managementController");	
 		String user = p.getUsername();
-		String ruolo = p.getRuolo();
+		String ruolo = mc.getCurrentUser().getRuolo();;
 %>
 
 <h4> Benvenuto/a <%=user%> (<a href="Controller?operazione=logout">Logout</a>)</h4>
+<br> Ruolo: <%=ruolo%>
 
 
 <% } %>

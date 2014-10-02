@@ -29,6 +29,11 @@ public class ManagementController {
 		return currentUser;
 	}
 	
+	public void logout() {
+		System.out.println("utente: " + currentUser.getUsername());
+		currentUser.invalida();
+	}
+	
 	public void createItinerary(String nome, String descrizione, String categoria) {
 		System.out.println("metodo create itinerary di management controller");
 		currentUser.provideBasicInfo(nome, descrizione, categoria);
@@ -40,9 +45,9 @@ public class ManagementController {
 		
 	}
 	
-	public void getMyItinerary(AbstractUserComponent user) {
+	public void getMyItinerary() {
 		System.out.println("metodo getMyItinerary di managementController");
-		user.myItinerary();
+		currentUser.myItinerary();
 	}
 	
 	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {
@@ -76,8 +81,18 @@ public class ManagementController {
 		return true;
 	}
 	
+	public void modificaItinerario(int indexIt) {
+		currentUser.modificaItinerario(indexIt);
+	}
+		
+	public void deleteItinerary(int indexIt) {
+		currentUser.deleteItinerary(indexIt);
+	}
+	
 	public void saveItinerary() {
-		ServiceDB.saveItinerary(currentUser.getItinerary());
+		if (currentUser.getItineraryList().contains(currentUser.getItinerary()))
+			ServiceDB.modificaItinerary(currentUser.getItinerary());
+		else ServiceDB.saveItinerary(currentUser.getItinerary());
 	}
 	
 	

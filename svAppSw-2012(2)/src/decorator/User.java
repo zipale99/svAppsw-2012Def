@@ -53,7 +53,11 @@ public class User extends AbstractUser{
 	 */
 	@Override
 	public void myItinerary() {
-		this.itineraryList = ServiceDB.myItinerary(this);
+		this.itineraryList = ServiceDB.myItinerary(this).getElencoItinerari();
+	}
+	
+	public void deleteItinerary(int indexIt) {
+		this.itineraryList.remove(indexIt);
 	}
 
 	public String getUsername() {

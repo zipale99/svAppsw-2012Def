@@ -97,6 +97,22 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 	public void sort() {
 		Collections.sort(this.tree, this);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		System.out.println("metodo equals");
+		Itinerary it = (Itinerary)obj;
+		if (this.id == it.id) {
+			System.out.println("metodo equals return true");
+			return true;
+		}
+		else {
+			System.out.println("metodo equals return false");
+			return false;
+		}
+	}
+	
+	
 
 	
 	@Override

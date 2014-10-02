@@ -42,6 +42,7 @@ AbstractUserComponent auc = mc.getCurrentUser();
 					</td>
 					<td>  
 						<button onclick="location.href='Controller?operazione=modificaItinerario&idItinerario=<%= i %>'">Modifica</button> 
+						<button onclick="location.href='Controller?operazione=eliminaItinerario&idItinerario=<%= i %>'">Elimina</button>
 					</td>
 				</tr>
 <%

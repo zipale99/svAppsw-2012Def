@@ -16,6 +16,7 @@ import resources.Option;
 public abstract class StayTemplate implements Cloneable{
 	
 	int id;
+	int idStay;
 	String startLoc;
 	String endLoc;
 	int durata;
@@ -39,6 +40,7 @@ public abstract class StayTemplate implements Cloneable{
 		this.price = price;
 		this.timeOffset = timeOffset;
 	}
+
 
 	
 	@Override
@@ -164,6 +166,14 @@ public abstract class StayTemplate implements Cloneable{
 	}
 	
 	public void setOption(int index, Option option) {}
+
+	public int getIdStay() {
+		return idStay;
+	}
+
+	public void setIdStay(int idStay) {
+		this.idStay = idStay;
+	}
 	
 	 
 	

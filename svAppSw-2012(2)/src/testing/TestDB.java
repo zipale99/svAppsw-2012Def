@@ -36,14 +36,12 @@ public class TestDB {
 		System.out.println(optList.getElencoOptions().get(1).getPossibleValue().toString());
 		*/
 		
-		Itinerary it = new Itinerary();
-		it.setUser("ale");
-		it.setStartLoc("torino");
-		it.setEndLoc("Roma");
-		it.setNome("prova");
 		
 		ItinerarySearchResults sir = ServiceDB.searchItinerary(null, null, 0, "", "");
-		System.out.println("attivita: " + sir.getElencoItinerari().get(0).getStayTemplate(0).getStayTemplate(1).getOption(0).toString());
+			Itinerary it = sir.getElencoItinerari().get(0);
+			ServiceDB.deleteItinerary(it);
+		
+		
 		
 	}
 

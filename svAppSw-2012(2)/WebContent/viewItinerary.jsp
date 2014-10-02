@@ -48,11 +48,26 @@ if (size != 0) {
 
 	int i = 0;
 	while(size > 0) {
+		System.out.println("i: "+i);
 %>
 	
 				<tr>
 					<td> <%= it.getStayTemplate(i) %> </td>
-					<td> <%= it.getStayTemplate(i).print()%> </td>
+					<td> <%= it.getStayTemplate(i).print()%>
+<%
+int j = 0;
+int sizeLeaf = it.getStayTemplate(i).getSize();
+while(sizeLeaf > 0) {
+%>						
+						<br>
+						 <%= it.getStayTemplate(i).getStayTemplate(j).getOptionList().toString() %>
+<%
+sizeLeaf--;
+j++;
+}
+%>						 
+						
+					</td>
 					<td> <%= it.getStayTemplate(i).getActivityList().toString()%> </td>
 				</tr>
 <%

@@ -68,95 +68,11 @@ public class ServiceDB {
         return results;
     }
     
-
-	/**
-	 * @param user utente per il quale cercare gli itinerari
-	 * @return ArrayList che rappresenta un elenco di itinerari dell'utente
-	 * 
-	 * TO-DO: Recuperare in maniera completa l'itinerario!! 
-	 * 1) Stay
-	 * 2) Leaf associati a ciascuna stay
-	 * 3) Opzioni + possibili valori associate a ciascun Leaf
-	 * 4) Attività di ciascuna Stay
-	 */    
-    public static ArrayList<Itinerary> myItinerary(User user) {
-        
-    	Connection connessione = DBconnection.getConnection();
-    	
-    	ArrayList <Itinerary> listaIt = new ArrayList<Itinerary>();
-    	
-    	//se la connessione è andata a buon fine   	
-        try {
-            Statement st = connessione.createStatement();
-
-            String sql = "SELECT * FROM itinerario where creatoruser='"+user.getUsername()+"'";
-
-            ResultSet rs = st.executeQuery(sql);
-           
-            while (rs.next()) {
-            	Itinerary it = new Itinerary(rs.getString("creatoruser"),
-            	rs.getString("startLoc"),rs.getString("endloc"),rs.getInt("durata"),
-            	rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
-            	rs.getDouble("prezzo"));
-            	it.setId(rs.getInt("iditinerario"));
-            	listaIt.add(it);
-            }
-            
-            st.close();
-            connessione.close();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        return listaIt;
-    }
     
-    
-    /**
-     * ricerca gli itinerari presenti nel DB aventi iparametri specificati(in and i primi 2 parametri)
-     * @param sl
-     * @param el
-     * @param d
-     * @param nome
-     * @param cat
-     * @return
-        
-    public static ItinerarySearchResults searchItinerary(String sl,String el,int d,String nome,String cat) {
-        
-    	Connection connessione = DBconnection.getConnection();
-    	
-    	ItinerarySearchResults results = new ItinerarySearchResults();
-    	
-    	//se la connessione è andata a buon fine   	
-        try {
-            Statement st = connessione.createStatement();
-
-            String sql = "SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
-            		" or itname='"+nome+"' or categoria='"+cat+"'";
-
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-            	Itinerary it = new Itinerary(rs.getString("creatoruser"),
-            			rs.getString("startloc"),rs.getString("endloc"),rs.getInt("durata"),
-            			rs.getString("itname"),rs.getString("itdesc"),rs.getString("categoria"),rs.getString("stato"),
-            			rs.getDouble("prezzo"));
-            	it.setId(rs.getInt("iditinerario"));
-            	results.add(it);
-            }
-            
-            st.close();
-            connessione.close();
-        }
-        catch (SQLException ex) {
-        	ex.printStackTrace();
-        }
-        return results;
-    }
-    */
-    
-    
-    
-  public static ItinerarySearchResults searchItinerary(String sl,String el,int d,String nome,String cat) {
+	/*
+	 * Restituisce una lista di ititnerari associati al nome utente passato come parametro
+	 */
+	public static ItinerarySearchResults myItinerary(User user) {    	
     	Connection connessione = DBconnection.getConnection();
     	ItinerarySearchResults results = new ItinerarySearchResults();   	
         try {
@@ -164,25 +80,27 @@ public class ServiceDB {
             Statement stActivity = connessione.createStatement();
             Statement stStay = connessione.createStatement();
             
-            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
-            													" or itname='"+nome+"' or categoria='"+cat+"'");
+            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where creatoruser ='"+user.getUsername()+"'");
             while(rsIt.next()) {   
                 int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));
-                ResultSet rsStay = stStay.executeQuery("SELECT * from STAY where idItinerario ="+idItinerario);
             	Itinerary it = new Itinerary(rsIt.getString("creatoruser"),
             			rsIt.getString("startloc"),rsIt.getString("endloc"),rsIt.getInt("durata"),
             			rsIt.getString("itname"),rsIt.getString("itdesc"),rsIt.getString("categoria"),rsIt.getString("stato"),
             			rsIt.getDouble("prezzo"));
             	it.setId(idItinerario);
+            	ResultSet rsStay = stStay.executeQuery("SELECT * from STAY where idItinerario ="+idItinerario);
             	while (rsStay.next()) {
             		StayTemplate stay = new StayTemplateComposite();
             		int idStayTemplate = rsStay.getInt("idStayTemplate");
             		int idStay = rsStay.getInt("idStay");
+            		System.out.println("idStay: "+idStay);
             		stay.setId(rsStay.getInt("idStay"));
+            		stay.setIdStay(idStayTemplate);
             		stay.setTimeOffset(rsStay.getInt("timeOffset"));
             		stay.setPrice(rsStay.getInt("prezzo"));
             		stay.setActivityList(searchActivityStayTemplate(idStayTemplate).getElencoAttivita());//TO-DO:recupero attivita personalizzate!!
-            		ResultSet rsActivity = stActivity.executeQuery("SELECT * FROM attivita_stay, attivita where idstay="+idStay);
+            		ResultSet rsActivity = stActivity.executeQuery("SELECT * FROM attivita_stay, attivita where idstay="+idStay+
+            																"and attivita_stay.idattivita = attivita.idattivita");
             		List<Activity> activityPers = new ArrayList<Activity>();
             		while (rsActivity.next()) {
             			Activity activity = new Activity();
@@ -195,12 +113,91 @@ public class ServiceDB {
             			//eventualmente aggiungere il timeoffset nel db e settarlo
             			activityPers.add(activity);
             		}
-            		stay.getActivityList().addAll(activityPers);
+            		/*
+            		 * Dal momento che quando salviamo una tappa, ricopiamo cmq tutte le attività nella tabella attività personalizzate
+            		 * non è necessario andare a recuperare pure quelle standard. Per tanto l'istruzione seguente non è più necessaria.
+            		 * stay.getActivityList().addAll(activityPers);
+            		 * ma è sufficiente:
+            		 */
+            			stay.setActivityList(activityPers);
             		for (StayTemplate leaf :  searchLeafStayTemplate(idStayTemplate).getElencoStayTemplate()) {          			
-                		leaf.setOptionList(getOptionLeafPers(idStay ,leaf.getId()).getElencoOptions());
+                		leaf.setOptionList(getOptionLeafPers(idStay, leaf.getId()).getElencoOptions());
                 		stay.add(leaf);
-                		it.addStay(stay);
             		}
+            		it.addStay(stay);
+            	}
+            	results.add(it);
+            }
+            
+            stIt.close();
+            stStay.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+        return results;
+    }
+    
+
+    
+    /*
+     * Restituisce una lista di itinerari sulla base dei parametri di ricerca.
+     */
+	public static ItinerarySearchResults searchItinerary(String sl,String el,int d,String nome,String cat) {
+		Connection connessione = DBconnection.getConnection();
+    	ItinerarySearchResults results = new ItinerarySearchResults();   	
+        try {
+            Statement stIt = connessione.createStatement(); 
+            Statement stActivity = connessione.createStatement();
+            Statement stStay = connessione.createStatement();
+            
+            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
+            													" or itname='"+nome+"' or categoria='"+cat+"'");
+            while(rsIt.next()) {   
+                int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));
+            	Itinerary it = new Itinerary(rsIt.getString("creatoruser"),
+            			rsIt.getString("startloc"),rsIt.getString("endloc"),rsIt.getInt("durata"),
+            			rsIt.getString("itname"),rsIt.getString("itdesc"),rsIt.getString("categoria"),rsIt.getString("stato"),
+            			rsIt.getDouble("prezzo"));
+            	it.setId(idItinerario);
+            	ResultSet rsStay = stStay.executeQuery("SELECT * from STAY where idItinerario ="+idItinerario);
+            	while (rsStay.next()) {
+            		StayTemplate stay = new StayTemplateComposite();
+            		int idStayTemplate = rsStay.getInt("idStayTemplate");
+            		int idStay = rsStay.getInt("idStay");
+            		System.out.println("idStay: "+idStay);
+            		stay.setId(rsStay.getInt("idStay"));
+            		stay.setIdStay(idStayTemplate);
+            		stay.setTimeOffset(rsStay.getInt("timeOffset"));
+            		stay.setPrice(rsStay.getInt("prezzo"));
+            		stay.setActivityList(searchActivityStayTemplate(idStayTemplate).getElencoAttivita());//TO-DO:recupero attivita personalizzate!!
+            		ResultSet rsActivity = stActivity.executeQuery("SELECT * FROM attivita_stay, attivita where idstay="+idStay+
+            																"and attivita_stay.idattivita = attivita.idattivita");
+            		List<Activity> activityPers = new ArrayList<Activity>();
+            		while (rsActivity.next()) {
+            			Activity activity = new Activity();
+            			activity.setIdActivity(rsActivity.getInt("id"));
+            			activity.setType(rsActivity.getString("tipo"));
+            			activity.setLocation(rsActivity.getString("citta"));
+            			activity.setDesc(rsActivity.getString("descrizione"));
+            			activity.setDurata(rsActivity.getInt("durata"));
+            			activity.setPrice(rsActivity.getDouble("prezzo"));
+            			//eventualmente aggiungere il timeoffset nel db e settarlo
+            			activityPers.add(activity);
+            		}
+            		/*
+            		 * Dal momento che quando salviamo una tappa, ricopiamo cmq tutte le attività nella tabella attività personalizzate
+            		 * non è necessario andare a recuperare pure quelle standard. Per tanto l'istruzione seguente non è più necessaria.
+            		 * stay.getActivityList().addAll(activityPers);
+            		 * ma è sufficiente:
+            		 */
+            			stay.setActivityList(activityPers);
+            		for (StayTemplate leaf :  searchLeafStayTemplate(idStayTemplate).getElencoStayTemplate()) {          			
+                		leaf.setOptionList(getOptionLeafPers(idStay, leaf.getId()).getElencoOptions());
+                		stay.add(leaf);
+            		}
+            		it.addStay(stay);
             	}
             	results.add(it);
             }
@@ -442,7 +439,8 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
             Statement st = connessione.createStatement();
             //TO-DO
             String sql = "SELECT * FROM OPZIONI_PERS, OPZIONI_STANDARD, OPTION_LIST"
-            			+ " WHERE OPZIONI_PERS.idstay = "+idStay+" AND OPZIONI_STANDARD.idstleaf="+idLeaf+" AND OPZIONI_PERS.idoptionlist=OPTION_LIST.id";
+            			+ " WHERE OPZIONI_PERS.idstay = "+idStay+" AND OPZIONI_STANDARD.idstleaf="+idLeaf+""
+            					+ " AND OPZIONI_PERS.idoptionlist=OPTION_LIST.id AND OPZIONI_PERS.idoptstandard = OPZIONI_STANDARD.idoption";
 
             ResultSet rs = st.executeQuery(sql);
            
@@ -483,7 +481,6 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
      * Settare i valori delle opzioni.
      * Con questo metodo si conclude lo scenario principale di successo.
      */
-    
     public static void saveItinerary(Itinerary it) {
     	Connection connessione = DBconnection.getConnection();
     	try {
@@ -542,6 +539,108 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
         	ex.printStackTrace();
         }  	
     }
+    
+    
+    public static void deleteItinerary(Itinerary it) {
+    	Connection connessione = DBconnection.getConnection();    	  	
+        try {
+            Statement st = connessione.createStatement();
+            String deleteOptPers = "delete from opzioni_pers where idstay=";
+            String deleteAttPers = "delete from attivita_stay where idstay=";
+            String deleteStay = "delete from stay where iditinerario="+it.getId();
+            String deleteIt = "delete from itinerario where iditinerario="+it.getId();
+            int i = 0;
+            int size = it.getSize();
+            while (size > 0) {
+            	st.executeUpdate(deleteOptPers+it.getStayTemplate(i).getId());
+            	st.executeUpdate(deleteAttPers+it.getStayTemplate(i).getId());
+            	i++;
+            	size--;
+            }
+            st.executeUpdate(deleteStay);
+            st.executeUpdate(deleteIt);
+                      
+            st.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+    }
+    
+    public static void modificaItinerary(Itinerary it) {
+    	Connection connessione = DBconnection.getConnection();    	  	
+        try {
+        	Statement st = connessione.createStatement();
+        	/*
+            String deleteOptPers = "delete from opzioni_pers where idstay=";
+            String deleteAttPers = "delete from attivita_stay where idstay=";
+            String deleteStay = "delete from stay where iditinerario="+it.getId();
+            int y = 0;
+            int sizeIt = it.getSize();
+            while (sizeIt > 0) {
+            	st.executeUpdate(deleteOptPers+it.getStayTemplate(y).getId());
+            	st.executeUpdate(deleteAttPers+it.getStayTemplate(y).getId());
+            	y++;
+            	sizeIt--;
+            }
+            st.executeUpdate(deleteStay);
+             */
+            Statement stIt = connessione.createStatement();
+            Statement stLeaf = connessione.createStatement();
+            Statement stStay = connessione.createStatement();
+            Statement stActivity = connessione.createStatement();
+            Statement stOpzioni_pers = connessione.createStatement();
+    
+           	int idItinerario = it.getId();
+            System.out.println("idItinerario: " + idItinerario);
+            int i = 0;
+            int size = it.getSize();
+            int j = 0;
+            while(size > 0) {
+            	System.out.println("staytemplid:"+it.getStayTemplate(i).getId());
+            	System.out.println("stayid:"+it.getStayTemplate(i).getIdStay());
+            	stStay.executeUpdate("INSERT INTO stay (iditinerario, idstaytemplate, timeoffset, prezzo) VALUES "
+            			+ "("+idItinerario+","+it.getStayTemplate(i).getIdStay()+","+ it.getStayTemplate(i).getTimeOffset()
+            			+","+ it.getStayTemplate(i).getPrice()+")");
+            	ResultSet rsStay = stStay.executeQuery("Select * from stay");
+            	int idStay = 0;
+                while (rsStay.next())
+                	idStay = rsStay.getInt("idStay");
+            	for (int z = 0; z < it.getStayTemplate(i).getActivityList().size(); z++)
+            		stActivity.executeUpdate("INSERT INTO attivita_stay (idstay, idattivita, timeoffset) VALUES "
+            				+ "("+ idStay +","+ it.getStayTemplate(i).getActivityList().get(z).getIdActivity()+","+ it.getStayTemplate(i).getActivityList().get(z).getTimeOffset() + ")");
+            	int sizeLeaf = it.getStayTemplate(i).getSize();
+            	while(sizeLeaf > 0) {
+            		System.out.println("j: "+j);
+            		for (int x = 0; x < it.getStayTemplate(i).getStayTemplate(j).getOptionListSize(); x++) {
+            			System.out.println("idoptstandard: "+it.getStayTemplate(i).getStayTemplate(j).getOption(x).getId());
+            			System.out.println("idstay: "+idStay);
+            			System.out.println("idoptionlist: "+it.getStayTemplate(i).getStayTemplate(j).getOption(x).getValue().getId());
+            			stOpzioni_pers.executeUpdate("INSERT INTO opzioni_pers (idoptstandard, idstay, idoptionlist) VALUES "
+            					+ "("+it.getStayTemplate(i).getStayTemplate(j).getOption(x).getId()+","
+            					+ idStay +","+ it.getStayTemplate(i).getStayTemplate(j).getOption(x).getValue().getId() +")");
+            		}
+            		sizeLeaf--;
+                	j++;
+            	}
+            	j=0;
+            	size--;
+            	i++;
+            }
+            stIt.close();
+            stLeaf.close();
+            stStay.close();
+            stOpzioni_pers.close();
+            st.close();
+            connessione.close();
+        }
+        catch (SQLException ex) {
+        	ex.printStackTrace();
+        }
+    }
+    	
+    
     
     
 	

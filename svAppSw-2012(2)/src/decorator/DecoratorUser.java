@@ -81,6 +81,12 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		this.itinerary.add(this.stay);
 	}
 	
+	@Override
+	public void deleteItinerary(int indexIt) {
+		ServiceDB.deleteItinerary(user.getItineraryList().get(indexIt));
+		user.deleteItinerary(indexIt);
+	}
+	
 	public String getRuolo() {
 		return user.getRuolo();
 	}
@@ -124,6 +130,11 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	public void modificaTappa(int idStay) {
 		this.stay = itinerary.getStayTemplate(idStay);
+	}
+	
+	@Override
+	public void modificaItinerario(int indexIt) {
+		this.itinerary = this.user.getItineraryList().get(indexIt);
 	}
 	
 	public void setUsername(String username) {

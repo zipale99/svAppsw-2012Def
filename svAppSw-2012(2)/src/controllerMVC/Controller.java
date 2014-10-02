@@ -106,6 +106,9 @@ public class Controller extends HttpServlet {
         	proxy = new ProxyUser();
         	if(proxy.login(request.getParameter("user"), request.getParameter("password"))) {
         		session.setAttribute("proxy", proxy);
+        		utenteDecorato = proxy.getUser();
+        	 	managementController = new ManagementController(utenteDecorato);
+        	 	session.setAttribute("managementController", managementController);
                 forward(request, response, "/Index.jsp");
         	}
             else {
@@ -116,7 +119,7 @@ public class Controller extends HttpServlet {
         
 		if(operazione.equals("logout")){
 			request.getSession().invalidate();
-			utenteDecorato.invalida();
+			managementController.logout();
 			forward(request, response, "/Index.jsp");
 		}
         
@@ -124,10 +127,9 @@ public class Controller extends HttpServlet {
         //Mostra itinerari dell'utente
         if(operazione.equals("searchMyItinerary")) {
         	System.out.println("utente: " + proxy.getUser().getUsername());
-        	if (managementController == null)
-                utenteDecorato = DecoratorUser.decora(proxy.getUser());
+            utenteDecorato = DecoratorUser.decora(proxy.getUser());
         	managementController = new ManagementController(utenteDecorato);
-        	managementController.getMyItinerary(utenteDecorato);
+        	managementController.getMyItinerary();
         	session.setAttribute("managementController", managementController);
         	forward(request, response, "/viewMyItinerarySearchResults.jsp");
         }
@@ -268,6 +270,12 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/configureStayParameter.jsp");
         }
         
+        if (operazione.equals("eliminaItinerario")) {
+        	int indexIt = Integer.parseInt(request.getParameter("idItinerario"));
+        	managementController.deleteItinerary(indexIt);
+        	forward(request, response, "/viewMyItinerarySearchResults.jsp");
+        }
+        
         /*
          * to-do: calcolare stato itinerario 
          * 		completare modifica tappa
@@ -278,6 +286,15 @@ public class Controller extends HttpServlet {
         
         if (operazione.equals("saveItinerary")) {
         	managementController.saveItinerary();
+        	managementController.getMyItinerary();
+        	forward(request, response, "/viewMyItinerarySearchResults.jsp");
+        }
+        
+        
+        if (operazione.equals("modificaItinerario")) {
+        	int indexIt = Integer.parseInt(request.getParameter("idItinerario"));
+        	managementController.modificaItinerario(indexIt);
+        	forward(request, response, "/creaItinerario.jsp");
         }
         
 		
