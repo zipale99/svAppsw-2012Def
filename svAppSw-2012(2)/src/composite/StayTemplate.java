@@ -165,6 +165,7 @@ public abstract class StayTemplate implements Cloneable{
 	
 	public void setOption(int index, Option option) {}
 	
+	public void setState() {}
 	 
 	
 		

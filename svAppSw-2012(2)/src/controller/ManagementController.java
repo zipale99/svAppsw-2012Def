@@ -80,7 +80,9 @@ public class ManagementController {
 		ServiceDB.saveItinerary(currentUser.getItinerary());
 	}
 	
-	
+	public void setState() {
+		currentUser.setState();
+	}
 	
 
 }

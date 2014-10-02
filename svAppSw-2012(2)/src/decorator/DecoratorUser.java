@@ -155,4 +155,10 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	 * dell'istanza ed eventualmente restituire l'istanza vecchia.
     */
 
+	public void setState() {
+		System.out.println("utente:"+user.getUsername());
+		itinerary.setState();
+	}
+	
+	
 }

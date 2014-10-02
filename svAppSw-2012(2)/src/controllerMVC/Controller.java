@@ -277,13 +277,13 @@ public class Controller extends HttpServlet {
          */
         
         if (operazione.equals("saveItinerary")) {
+        	System.out.println("ciaoooooooooooooo");
+        	managementController.setState();
         	managementController.saveItinerary();
+        	forward(request, response, "/viewItinerary.jsp");
         }
         
-		
         
-        
-
         
         
         

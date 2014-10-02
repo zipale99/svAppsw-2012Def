@@ -111,6 +111,11 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 	}
 
 
+	@Override
+	public void setState() {
+		System.out.println("metodo setState di Itinerary");
+		System.out.println(this.activityList.get(0));
+	}
 
 	
 
