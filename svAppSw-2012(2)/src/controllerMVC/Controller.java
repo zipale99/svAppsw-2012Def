@@ -280,7 +280,7 @@ public class Controller extends HttpServlet {
         	System.out.println("ciaoooooooooooooo");
         	managementController.setState();
         	managementController.saveItinerary();
-        	forward(request, response, "/viewItinerary.jsp");
+        	forward(request, response, "/viewMyItinerarySearchResults.jsp");
         }
         
         
