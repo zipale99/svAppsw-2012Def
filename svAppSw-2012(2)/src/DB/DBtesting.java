@@ -1,43 +1,18 @@
 package DB;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-
-public class InserimentoTuple {
+public class DBtesting {
 
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		
 		Connection conn = DBconnection.getConnection();
 		PreparedStatement pst=null;
 		String insert=null;
 	    try {
-	    	    	
-	    	
-	    	/*
-	    	 * Per la rimozione di tuple utilizzare il delete e non il truncate,
-	    	 * stando attenti a cancellare per prime le tabelle che non sono referenziate da nulla
-	    	 */
-	    	/*Statement st = conn.createStatement();
-	    	insert = "truncate table opzioni_pers";
-	    	st.execute(insert);
-	    	
-	    	
-	    	st = conn.createStatement();
-	    	insert = "truncate table attivita_stay";
-	    	st.execute(insert);
-	    	
-	    	
-	    	st = conn.createStatement();
-	    	insert = "delete from stay";
-	    	st.executeUpdate(insert);
-	    	
-	    	insert = "delete from viaggio";
-	    	st.executeUpdate(insert);
-	    	
-	    	
-	    	insert = "delete from itinerario";
-	    	st.executeUpdate(insert);*/
-	    	
 	    	
 	    	insert = "INSERT INTO attivita (tipo,citta,descrizione,durata,prezzo)VALUES (?,?,?,?,?)";
 	    	pst = conn.prepareStatement(insert);            
@@ -628,14 +603,10 @@ public class InserimentoTuple {
 	    	
 	    	pst.close();
 			conn.close();
- 			
 	    }
-	    
-	    
-	    catch (SQLException ex) {
-		  	ex.printStackTrace();
+		catch(SQLException ex) {
+			ex.printStackTrace();
 		}
-	    	
 		
 		
 
