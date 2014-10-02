@@ -541,8 +541,7 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
         catch (SQLException ex) {
         	ex.printStackTrace();
         }  	
-    }
-    
+    }    
     
 	
 }
