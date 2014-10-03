@@ -83,9 +83,17 @@ i++;
 				
 <%
 System.out.println(request.getHeader("Referer"));
+boolean modifica = (Boolean)session.getAttribute("modifica");
+if(!modifica) {
 %>				
 			<a href="Controller?operazione=addStay">Conferma e aggiungi la tappa all'itinerario</a>
-			
+<%
+} else {
+%>
+			<a href="creaItinerario.jsp">Conferma modifiche</a>
+<%
+}
+%>
 				
 		</div>
 		

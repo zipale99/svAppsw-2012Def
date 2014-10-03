@@ -50,14 +50,17 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	}
 	
 	@Override
-	public void createItinerary(){
+	public void createItinerary(String nome, String descrizione, String categoria){
 		 itinerary = new Itinerary();
 		 itinerary.setUser(this.getUsername());
+		 itinerary.setUser(this.getUsername());
+		 itinerary.setNome(nome);
+		 itinerary.setDesc(descrizione);
+		 itinerary.setCategoria(categoria);
 	}
 	
 	@Override
 	public void provideBasicInfo(String nome, String descrizione, String categoria){
-		 itinerary = new Itinerary();
 		 itinerary.setUser(this.getUsername());
 		 itinerary.setNome(nome);
 		 itinerary.setDesc(descrizione);
@@ -149,6 +152,18 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	}
 	
 	@Override
+	public boolean verificaCompatibilita(String location) {
+		return this.stay.verificaCompatibilita(location);
+	}
+	
+	@Override
+	public void addHMS(String startLoc, String endLoc, String nome) {
+		StayTemplate hms = new HandMadeStay(startLoc, endLoc, nome);
+		ServiceDB.createHMS(hms);
+		this.itinerary.add(hms);
+	}
+	
+	@Override
 	public void myItinerary() {
 		user.myItinerary();
 	}
@@ -160,13 +175,16 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	@Override
 	public void saveItinerary() {
-		this.itinerary.setStartLoc(this.itinerary.getStayTemplate(0).getStartLoc());
-		int sizeLast = this.itinerary.getSize() -1;
-		this.itinerary.setEndLoc(this.itinerary.getStayTemplate(sizeLast).getEndLoc());
+		if (this.itinerary.getSize() > 0) {
+			int sizeLast = this.itinerary.getSize() -1;
+			this.itinerary.setStartLoc(this.itinerary.getStayTemplate(0).getStartLoc());
+			this.itinerary.setEndLoc(this.itinerary.getStayTemplate(sizeLast).getEndLoc());
+		}
 		if (user.getItineraryList().contains(user.getItinerary()))
 			ServiceDB.modificaItinerary(this.getItinerary());
 		else ServiceDB.saveItinerary(this.getItinerary());
 	}
+	
 	
 	
 	/*Prima volta che lo chiama decUser smista l'operazione e ritorna il decorator appropriato

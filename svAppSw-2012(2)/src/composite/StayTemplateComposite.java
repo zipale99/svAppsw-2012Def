@@ -75,6 +75,16 @@ public class StayTemplateComposite extends StayTemplate {
 		return tree.toString();
 	}
 	
+	@Override
+	public boolean verificaCompatibilita(String location) {
+		List<String> locationLeaf = new ArrayList<String>();
+		for (StayTemplate st : this.tree) {
+			locationLeaf.add(st.getStartLoc());
+			locationLeaf.add(st.getEndLoc());
+		}
+		return locationLeaf.contains(location);
+	}
+	
 	
 	
 }

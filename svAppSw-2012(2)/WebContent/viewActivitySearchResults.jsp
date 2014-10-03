@@ -43,7 +43,7 @@ ManagementController mc = (ManagementController)session.getAttribute("management
 int size = activityResults.size();
 int i = 0;
 while(size > 0) {
-	System.out.println("attività: " + activityResults.get(i).toString());
+	System.out.println("attività: " + activityResults.get(i).getLocation());
 %>
 	
 				<tr>

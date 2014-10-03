@@ -38,7 +38,7 @@ if(p != null) {
 	<hr>
 	<ul id="menu">
 	<li><a href="Index.jsp">Home</a></li>
-	<li><a href="Controller?operazione=manageItinerary.jsp">SearchItineraryOrJourney</a></li>
+	<li><a href="searchItineraryOrJourney.jsp">SearchItineraryOrJourney</a></li>
    	</ul>
 	
 <%

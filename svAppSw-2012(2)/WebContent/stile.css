@@ -29,6 +29,19 @@ body {
 	height: 65%%;
 }
 
+.infoBase {
+	width:100%;
+}
+
+.desc {
+	float: left;
+}
+
+.editInfo {
+	float: right;
+	border-left:10%;
+}
+
 .content {
 	
 	background: white;

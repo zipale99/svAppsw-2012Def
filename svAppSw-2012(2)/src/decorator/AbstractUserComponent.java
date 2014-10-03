@@ -23,7 +23,7 @@ public abstract class AbstractUserComponent {
 	public abstract void setPwd(String pwd);
 	public abstract void setRuolo(String ruolo);
 	public void myItinerary() {}
-	public void createItinerary() {}
+	public void createItinerary(String nome, String descrizione, String categoria) {}
 	public void invalida() {}
 	public void provideBasicInfo(String nome, String descrizione, String categoria) {}
 	public void setStay(StayTemplate stay) {}
@@ -37,6 +37,10 @@ public abstract class AbstractUserComponent {
 	public void deleteItinerary(int indexIt) {}
 	public void modificaItinerario(int indexIt) {}
 	public void saveItinerary() {}
+	public void addHMS(String startLoc, String endLoc, String nome) {}
+	public boolean verificaCompatibilita(String location) {
+		return false;
+	} 
 	
 	public Itinerary getItinerary() {
 		return null;

@@ -67,6 +67,28 @@ public class ServiceDB {
         }
         return results;
     }
+	
+	public static void createHMS(StayTemplate st) {
+		Connection connessione = DBconnection.getConnection();    	
+	    try {
+	    	Statement stStayTemplate = connessione.createStatement();
+	    	Statement stLeaf = connessione.createStatement();
+	        stStayTemplate.executeUpdate("INSERT INTO staytemplate (nomest, startloc, endloc, durata, transport, prezzo) VALUES ('"+st.getNome()+"','"+st.getStartLoc()+"','"+st.getEndLoc()+"',"+0+","+false+","+0+")");
+	           
+	        ResultSet rsStayTemplate = stStayTemplate.executeQuery("SELECT * from staytemplate");
+	        int idStayTemplate = 0;
+	        while (rsStayTemplate.next())
+	        	idStayTemplate = rsStayTemplate.getInt("idStayTempl");
+	        
+	        stLeaf.executeUpdate("INSERT INTO staytemplate_leaf (idstaytemplate, startloc, endloc, typeleaf) VALUES ("+idStayTemplate+",'"+st.getStartLoc()+"','"+st.getEndLoc()+"','"+st.getTypeLeaf()+"')");
+	           
+	        stStayTemplate.close();
+	        connessione.close();                        
+	       	}
+	       	catch (SQLException ex) {
+	       		ex.printStackTrace();
+	       	}
+    }
     
     
 	/*
@@ -152,7 +174,7 @@ public class ServiceDB {
             Statement stActivity = connessione.createStatement();
             Statement stStay = connessione.createStatement();
             
-            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"' and endloc='"+el+"' or durata="+d+
+            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
             													" or itname='"+nome+"' or categoria='"+cat+"'");
             while(rsIt.next()) {   
                 int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));

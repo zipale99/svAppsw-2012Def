@@ -47,7 +47,7 @@ Nome:
 	else {
 		ManagementController mc = (ManagementController)session.getAttribute("managementController");	
 		String user = p.getUsername();
-		String ruolo = mc.getCurrentUser().getRuolo();;
+		String ruolo = mc.getCurrentUser().getRuolo();
 %>
 
 <h4> Benvenuto/a <%=user%> (<a href="Controller?operazione=logout">Logout</a>)</h4>

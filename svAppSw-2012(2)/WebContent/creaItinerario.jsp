@@ -24,11 +24,29 @@ AbstractUserComponent auc = mc.getCurrentUser();
 Itinerary myIt = auc.getItinerary();
 //myIt.sort();
 %>			
+
+		<div class = "infoBase">
+			<div class = "desc">
+				<b>Creatore:</b> <%= myIt.getUser() %><br>
+				<b>Nome:</b> <%= myIt.getNome() %><br>
+				<b>Descrizione:</b> <%= myIt.getDesc() %><br>
+				<b>Categoria:</b> <%= myIt.getCategoria() %> 
+			</div>
 			
-			<p><b>Creatore:</b> <%= myIt.getUser() %> </p>
-			<p><b>Nome:</b> <%= myIt.getNome() %> </p>
-			<p><b>Descrizione:</b> <%= myIt.getDesc() %> </p>
-			<p><b>Categoria:</b> <%= myIt.getCategoria() %> </p>
+			
+			<div class = "editInfo">
+				<form action="Controller" method="POST" >
+								<input type="hidden" name="operazione" value="modificaInfoBase">
+								<input type="submit" value="
+Modifica Info Base
+
+"/>
+				</form> 
+			</div>
+		</div>
+		<div style="clear:both;"></div>
+			
+<hr>			
 
 <%
 int size = myIt.getSize();
@@ -83,6 +101,17 @@ if (size != 0) {
 				</form>
 				
 				<br>
+		
+<%
+if (mc.getCurrentUser().getRuolo().equals("CreatorTA")) {
+%>				
+				<form action="Controller" method="POST" >
+					<input type="hidden" name="operazione" value="addHMS">
+					<input type="submit" value="Aggiungi HMS"/>
+				</form>			
+<%
+}
+%>				
 		
 				<form action="Controller" method="POST" >
 					<input type="hidden" name="operazione" value="saveItinerary">

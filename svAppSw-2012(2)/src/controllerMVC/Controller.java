@@ -165,6 +165,7 @@ public class Controller extends HttpServlet {
                 utenteDecorato = DecoratorUser.decora(proxy.getUser());
         	managementController = new ManagementController(utenteDecorato);
         	session.setAttribute("managementController", managementController);
+        	session.setAttribute("modifica", false);
         	forward(request, response, "/manageItinerary.jsp");
         }
         
@@ -186,6 +187,7 @@ public class Controller extends HttpServlet {
         	StaySearchResults results = SearchController.searchStayTemplate();
         	System.out.println("ssss: "+results.get(0).toString());
         	session.setAttribute("stayResults", results);
+        	session.setAttribute("modifica", false);
         	forward(request, response, "/selectStayTemplate.jsp");
         }
         
@@ -267,6 +269,7 @@ public class Controller extends HttpServlet {
         if (operazione.equals("modificaTappa")) {
         	int idStay = Integer.parseInt(request.getParameter("idTappa"));
         	managementController.modificaTappa(idStay);
+        	session.setAttribute("modifica", true);
         	forward(request, response, "/configureStayParameter.jsp");
         }
         
@@ -294,6 +297,31 @@ public class Controller extends HttpServlet {
         if (operazione.equals("modificaItinerario")) {
         	int indexIt = Integer.parseInt(request.getParameter("idItinerario"));
         	managementController.modificaItinerario(indexIt);
+        	forward(request, response, "/creaItinerario.jsp");
+        }
+        
+        if (operazione.equals("modificaInfoBase")) {
+        	forward(request, response, "/modificaInfoBase.jsp");
+        }
+        
+        if(operazione.equals("confermaModificheInfoBase")) {
+        	String nome = request.getParameter("nome");
+        	String descrizione = request.getParameter("descrizione");
+        	String categoria = request.getParameter("categoria");
+        	System.out.println("Utente itinerario: "+managementController.getCurrentUser().getUsername());
+        	managementController.provideBasicInfo(nome, descrizione, categoria);
+        	forward(request, response, "/creaItinerario.jsp");
+        }
+        		
+        if(operazione.equals("addHMS")) {
+        	forward(request, response, "/createHMS.jsp");
+        }
+        
+        if(operazione.equals("createHMS")) {
+        	String startLoc = request.getParameter("startLoc");
+        	String endLoc = request.getParameter("endLoc");
+        	String nome = request.getParameter("nome");
+        	managementController.addHMS(startLoc, endLoc, nome);
         	forward(request, response, "/creaItinerario.jsp");
         }
         

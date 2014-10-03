@@ -175,6 +175,10 @@ public abstract class StayTemplate implements Cloneable{
 		this.idStay = idStay;
 	}
 	
+	public boolean verificaCompatibilita(String location) {
+		return false;
+	}
+	
 	 
 	
 		

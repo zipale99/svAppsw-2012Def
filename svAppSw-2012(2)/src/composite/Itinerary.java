@@ -112,7 +112,6 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 		}
 	}
 	
-	
 
 	
 	@Override
@@ -121,11 +120,13 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 				"; PARTENZA: " + startLoc + 
 				"; ARRIVO: " + endLoc +
 				"; DURATA(giorni): " + durata + 
+				"; CATEGORIA: " + categoria +
+				"; ARRIVO: " + endLoc +
 				"; DESCRIZIONE: " + desc +
 				"; PREZZO(euro): " + price +
+				"; STATO: " + stato +
 				super.toString();
 	}
-
 
 
 	

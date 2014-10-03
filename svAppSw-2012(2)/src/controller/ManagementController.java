@@ -36,7 +36,7 @@ public class ManagementController {
 	
 	public void createItinerary(String nome, String descrizione, String categoria) {
 		System.out.println("metodo create itinerary di management controller");
-		currentUser.provideBasicInfo(nome, descrizione, categoria);
+		currentUser.createItinerary(nome, descrizione, categoria);
 	}
 	
 	public void setStay(StayTemplate st) {
@@ -78,7 +78,7 @@ public class ManagementController {
 	}
 	
 	public boolean verificaCompatibilita(String location) {
-		return true;
+		return currentUser.verificaCompatibilita(location);
 	}
 	
 	public void modificaItinerario(int indexIt) {
@@ -91,6 +91,14 @@ public class ManagementController {
 	
 	public void saveItinerary() {
 		currentUser.saveItinerary();
+	}
+	
+	public void provideBasicInfo(String nome, String desc, String cat) {
+		currentUser.provideBasicInfo(nome, desc, cat);
+	}
+	
+	public void addHMS(String startLoc, String endLoc, String nome) {
+		currentUser.addHMS(startLoc, endLoc, nome);
 	}
 	
 	
