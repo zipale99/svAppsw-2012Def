@@ -210,6 +210,8 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/configureStayParameter.jsp");
         }
         
+        
+        
         /**
          * condizione chiamata dalla view configureStayParameter,
          * recupera dal form il campo id di un certo leaf e metto esso stesso
@@ -308,6 +310,19 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/creaItinerario.jsp");
         }
    
+        
+        /**
+         * gestione caso di configurazione tappa di trasferimento
+         */
+        if(operazione.equals("configureTransferParameter")) {
+        	int id = Integer.parseInt(request.getParameter("idTr"));
+        	StaySearchResults ssr = (StaySearchResults)(session.getAttribute("stayResults"));
+        	StayTemplate st = ssr.get(id);
+        	managementController.setStay(st);
+        	forward(request,response, "/configureTransferParameter.jsp");
+        }
+        
+        
         if (operazione.equals("deleteStay")) {
         	int idStay = Integer.parseInt(request.getParameter("idTappa"));
         	managementController.deleteStay(idStay);

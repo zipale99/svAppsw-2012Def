@@ -38,8 +38,13 @@ while(size > 0) {
 						<form action="Controller" method="POST" >
 							<input type="hidden" name="operazione" value="addTransfer">
 							<input type="hidden" name="id" value='<%= i %>'>
-							<input type="submit" value="Add Transfer"/>
+							<input type="submit" value="Add Transfer"/>													
 						</form> 
+						<form action="Controller" method="POST">
+							<input type="hidden" name="operazione" value="configureTransferParameter">
+							<input type="hidden" name="idTr" value='<%= i %>'>
+							<input type="submit" value="Configura tappa di trasferimento"/>
+						</form>
 					</td>
 				</tr>
 <%
