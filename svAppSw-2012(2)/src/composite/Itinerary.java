@@ -114,7 +114,29 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 	@Override
 	public void setState() {
 		System.out.println("metodo setState di Itinerary");
-		System.out.println(this.activityList.get(0));
+		System.out.println("stato itinerario : "+this.getStato());
+		
+		List <StayTemplate> tree = this.tree;
+		
+		System.out.println("citta finale primo leaf itinerario utente : "+tree.get(0).getEndLoc());
+		System.out.println("stato attuale dell'itinerario : "+stato);
+		int size = tree.size();
+		System.out.println("hai inserito : " + size+" tappe");
+		int i = 1;
+		if(size > 2)
+		  while(size > i) {
+			if(!(tree.get(i-1).getEndLoc()).equals(tree.get(i).getStartLoc())) {
+				System.out.println("entro nella condizione if");
+				System.out.println("citta finale primo leaf itinerario utente : "+tree.get(1).getStartLoc());
+				this.stato = "parziale non contiguo";
+				System.out.println("asdfghjklò");
+				System.out.println("stato attuale dell'itinerario : "+stato);
+				return;
+			}
+			i++;
+		  }
+		this.stato = "completo contiguo";
+		System.out.println("stato attuale dell'itinerario : "+stato);
 	}
 
 	
