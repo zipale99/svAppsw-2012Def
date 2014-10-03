@@ -35,11 +35,7 @@ while(size > 0) {
 				<tr>
 					<td> <%= stayResults.get(i).toString() %> </td>
 					<td>  
-						<form action="Controller" method="POST" >
-							<input type="hidden" name="operazione" value="addTransfer">
-							<input type="hidden" name="id" value='<%= i %>'>
-							<input type="submit" value="Add Transfer"/>													
-						</form> 
+						 
 						<form action="Controller" method="POST">
 							<input type="hidden" name="operazione" value="configureTransferParameter">
 							<input type="hidden" name="idTr" value='<%= i %>'>

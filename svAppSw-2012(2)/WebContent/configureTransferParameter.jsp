@@ -37,7 +37,10 @@ StayTemplate selezionato:
 			<tr>
 				<td> <%= stay.toString() %> </td>
 				<td> 
-					 <%= stay.getActivityList().toString() %> 
+					 <%
+					 if(stay.getActivityList() != null) 
+					 	stay.getActivityList().toString();
+					 %>
 					<form action="Controller" method="POST" >
 						<input type="hidden" name="operazione" value="searchActivity">
 						<input type="hidden" name="id" value='<%= stay.getId() %>'>
@@ -81,7 +84,11 @@ i++;
 %>	
 			</table>	
 				
-			<a href="Controller?operazione=addStay">Conferma e aggiungi la tappa all'itinerario</a>
+			<form action="Controller" method="POST" >
+							<input type="hidden" name="operazione" value="addTransfer">
+							<input type="hidden" name="id" value='<%= i %>'>
+							<input type="submit" value="Add Transfer"/>													
+			</form>
 
 				
 		</div>
