@@ -105,7 +105,7 @@ public class ServiceDB {
             		while (rsActivity.next()) {
             			Activity activity = new Activity();
             			activity.setIdActivity(rsActivity.getInt("id"));
-            			activity.setType(rsActivity.getString("tipo"));
+              			activity.setType(rsActivity.getString("tipo"));
             			activity.setLocation(rsActivity.getString("citta"));
             			activity.setDesc(rsActivity.getString("descrizione"));
             			activity.setDurata(rsActivity.getInt("durata"));
@@ -152,7 +152,7 @@ public class ServiceDB {
             Statement stActivity = connessione.createStatement();
             Statement stStay = connessione.createStatement();
             
-            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
+            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"' and endloc='"+el+"' or durata="+d+
             													" or itname='"+nome+"' or categoria='"+cat+"'");
             while(rsIt.next()) {   
                 int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));
@@ -572,7 +572,7 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
     	Connection connessione = DBconnection.getConnection();    	  	
         try {
         	Statement st = connessione.createStatement();
-        	/*
+        	
             String deleteOptPers = "delete from opzioni_pers where idstay=";
             String deleteAttPers = "delete from attivita_stay where idstay=";
             String deleteStay = "delete from stay where iditinerario="+it.getId();
@@ -585,7 +585,7 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
             	sizeIt--;
             }
             st.executeUpdate(deleteStay);
-             */
+            
             Statement stIt = connessione.createStatement();
             Statement stLeaf = connessione.createStatement();
             Statement stStay = connessione.createStatement();
@@ -607,9 +607,12 @@ public static OptionSearchResults getOptionLeafPers(int idStay, int idLeaf) {
             	int idStay = 0;
                 while (rsStay.next())
                 	idStay = rsStay.getInt("idStay");
-            	for (int z = 0; z < it.getStayTemplate(i).getActivityList().size(); z++)
+                System.out.println("idStayActivity: "+idStay);
+            	for (int z = 0; z < it.getStayTemplate(i).getActivityList().size(); z++) {
+            		 System.out.println("idActivity: "+ it.getStayTemplate(i).getActivityList().get(z).getIdActivity());
             		stActivity.executeUpdate("INSERT INTO attivita_stay (idstay, idattivita, timeoffset) VALUES "
             				+ "("+ idStay +","+ it.getStayTemplate(i).getActivityList().get(z).getIdActivity()+","+ it.getStayTemplate(i).getActivityList().get(z).getTimeOffset() + ")");
+            	}
             	int sizeLeaf = it.getStayTemplate(i).getSize();
             	while(sizeLeaf > 0) {
             		System.out.println("j: "+j);

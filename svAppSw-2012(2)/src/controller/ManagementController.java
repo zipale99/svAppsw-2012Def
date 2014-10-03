@@ -90,9 +90,7 @@ public class ManagementController {
 	}
 	
 	public void saveItinerary() {
-		if (currentUser.getItineraryList().contains(currentUser.getItinerary()))
-			ServiceDB.modificaItinerary(currentUser.getItinerary());
-		else ServiceDB.saveItinerary(currentUser.getItinerary());
+		currentUser.saveItinerary();
 	}
 	
 	

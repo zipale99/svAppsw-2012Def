@@ -66,7 +66,6 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	@Override
 	public void setOptionValue(int idOption, int idOptionValue, int idLeaf) {
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa"+idOption);
 		stay.getStayTemplate(idLeaf).getOptionList().get(idOption).setValue(stay.getStayTemplate(idLeaf).getOptionList().get(idOption).getPossibleValue().get(idOptionValue));
 	}
 	
@@ -157,6 +156,16 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	@Override
 	public List<Itinerary> getItineraryList() {
 		return user.getItineraryList();
+	}
+	
+	@Override
+	public void saveItinerary() {
+		this.itinerary.setStartLoc(this.itinerary.getStayTemplate(0).getStartLoc());
+		int sizeLast = this.itinerary.getSize() -1;
+		this.itinerary.setEndLoc(this.itinerary.getStayTemplate(sizeLast).getEndLoc());
+		if (user.getItineraryList().contains(user.getItinerary()))
+			ServiceDB.modificaItinerary(this.getItinerary());
+		else ServiceDB.saveItinerary(this.getItinerary());
 	}
 	
 	
