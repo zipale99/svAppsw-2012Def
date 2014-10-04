@@ -69,16 +69,34 @@ body {
 
 .content table
 {
+	width: 100%;
 	border-collapse: separate;
 	border-spacing: 1,5px;
 	font-size: 13px;
 	text-align: left;
 }
 
+td.tdViewTappa {
+	width: 250px;
+}
+
 .content th, td {
 	border: solid 1px black;
 	vertical-align: inherit;
 	padding: 5px;
+}
+
+td.tdLeftCreaIt {
+	width: 100%;
+}
+
+td.tdIt {
+	width: 200px;
+}
+
+
+td.tdLeftConfigure {
+	width: 35%;
 }
 
 .content th {

@@ -66,8 +66,8 @@ if (size != 0) {
 %>
 	
 				<tr>
-					<td> <%= i %>
-					<td> <%= myIt.getStayTemplate(i) %> </td>
+					<td> <%= i %> </td>
+					<td class = "tdLeftCreaIt"> <%= myIt.getStayTemplate(i) %> </td>
 					<td>  
 							<button onclick="location.href='Controller?operazione=modificaTappa&idTappa=<%= i %>'">Modifica Tappa</button> 
 							

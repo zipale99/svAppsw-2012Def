@@ -1,7 +1,7 @@
 /**
  * Semplice test per il package Decorator
  */
-package testing;
+package main;
 
 
 import java.sql.SQLException;

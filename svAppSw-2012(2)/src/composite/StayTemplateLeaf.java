@@ -65,8 +65,16 @@ public class StayTemplateLeaf extends StayTemplate {
 	
 	@Override
 	public String toString() {
-		return super.toString() +
-				"\nTypeLeaf: " + typeLeaf;
+		return  "<b>PARTENZA:</b> " + startLoc +
+				"<br>"+
+				"<b>ARRIVO:</b> " + endLoc +
+				"<br>"+
+				"<b>DURATA:</b> " + durata +
+				"<br>"+
+				"<b>PREZZO:</b> " + price +
+				"<br>"+
+				"<b>TIPOLOGIA:</b> " + typeLeaf+
+				"<br>";
 	}
 		
 }

@@ -21,63 +21,79 @@
 <%
 Itinerary it = (Itinerary)request.getAttribute("itinerario");
 %>			
-			<table>
-				<tr>
-					<th>Itinerario</th>
-				</tr>
-				
-				<tr>
-					<td> <%= it.toString() %> </td>
-				</tr>
-			
-			</table>
-			
 
+			
+				<ul>
+				
+				<li><b>NOME:</b> <%= it.getNome() %></li>
+				
+				<li><b>PARTENZA:</b> <%= it.getStartLoc() %></li>
+				
+				<li><b>ARRIVO:</b> <%= it.getEndLoc() %></li>
+				
+				<li><b>DURATA:</b> <%= it.getDurata() %></li>
+				
+				<li><b>PREZZO:</b> <%= it.getPrice() %></li>
+				
+				<li><b>CATEGORIA:</b> <%= it.getCategoria() %></li>
+				
+				<li><b>DESCRIZIONE:</b> <%= it.getDesc() %></li>
+				
+				<li><b>STATO:</b> <%= it.getStato() %></li>
+			
+				</ul>		
+				
+			
+			
 <%
 int size = it.getSize();
-if (size != 0) {
-%>			
+for (int i = 0; i < size; i++) {
+%>					
 			
 			<table>
 				<tr>
-					<th>Tappe</th>
-					<th>Leaf</th>
+					<th>Tappa</th>
 					<th>Lista Attività</th>
 				</tr>
-<%
-
-	int i = 0;
-	while(size > 0) {
-		System.out.println("i: "+i);
-%>
 	
 				<tr>
-					<td> <%= it.getStayTemplate(i) %> </td>
-					<td> <%= it.getStayTemplate(i).print()%>
+					<td class="tdViewTappa"> <%= it.getStayTemplate(i) %> </td>
+					<td> <%= it.getStayTemplate(i).getActivityList().toString()%> </td>
+				</tr>
+			</table>
+			
+		
+			<table>
+				<tr>
+					<th>Leaf</th>
+					<th>Lista Opzioni</th>
+				</tr>
+				
+				
+							
+				
 <%
 int j = 0;
 int sizeLeaf = it.getStayTemplate(i).getSize();
 while(sizeLeaf > 0) {
 %>						
-						<br>
-						 <%= it.getStayTemplate(i).getStayTemplate(j).getOptionList().toString() %>
+						<tr>
+						 <td class="tdViewTappa"><%= it.getStayTemplate(i).getStayTemplate(j).toString() %></td>
+						 <td><%= it.getStayTemplate(i).getStayTemplate(j).getOptionList().toString() %></td>
+						</tr>
 <%
 sizeLeaf--;
 j++;
 }
 %>						 
 						
-					</td>
-					<td> <%= it.getStayTemplate(i).getActivityList().toString()%> </td>
-				</tr>
+					
+					
+					</table>	
+<hr size="3" color="red">			
 <%
-	size--;
-	i++;
-	}
-
 }
-%>	
-			</table>
+%>			
 			
 			
 		</div>

@@ -34,7 +34,7 @@ while(size > 0) {
 %>
 	
 				<tr>
-					<td> <%= stayResults.get(i).toString() %> </td>
+					<td class = "tdLeftCreaIt"> <%= stayResults.get(i).toString() %> </td>
 					<td>  
 						<form action="Controller" method="POST" >
 							<input type="hidden" name="operazione" value="configureStayParameter">

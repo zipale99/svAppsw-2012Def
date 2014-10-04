@@ -116,16 +116,12 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 	
 	@Override
 	public String toString() {
-		return 	"NOME: " + nome +
-				"; PARTENZA: " + startLoc + 
-				"; ARRIVO: " + endLoc +
-				"; DURATA(giorni): " + durata + 
-				"; CATEGORIA: " + categoria +
-				"; ARRIVO: " + endLoc +
-				"; DESCRIZIONE: " + desc +
-				"; PREZZO(euro): " + price +
-				"; STATO: " + stato +
-				super.toString();
+		return 	super.toString() + "<br>"
+				+ "<b>CATEGORIA:</b> " + categoria
+				+ "<br>"
+				+ "<b>DESCRIZIONE:</b> " + desc
+				+ "<br>"
+				+ "<b>STATO:</b> " + stato;
 	}
 
 

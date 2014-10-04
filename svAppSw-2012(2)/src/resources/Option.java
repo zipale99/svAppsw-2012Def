@@ -85,7 +85,7 @@ public class Option {
 	}
 	
 	public String toString() {
-		return "Name: " + name + " Desc: " + desc + " Value: " + value.getValue()+"[+"+value.getPrice()+" euro]";
+		return "Name: " + name + "; Desc: " + desc + "; Value: " + value.getValue()+"[+"+value.getPrice()+" euro]"+"";
 	}
 
 	public void setPossibleValue(List<OptionValue> possibleValue) {

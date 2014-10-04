@@ -31,7 +31,7 @@ while(size > 0) {
 	Itinerary it = itineraryResults.getElencoItinerari().get(i);
 %>
 				<tr>
-					<td> 
+					<td class = "tdLeftCreaIt"> 
 						<%= it.toString() %>					
 					</td>
 					<td>  

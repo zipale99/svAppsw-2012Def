@@ -45,11 +45,15 @@ public abstract class StayTemplate implements Cloneable{
 	
 	@Override
 	public String toString() {
-		return  "; startLoc: " + startLoc +
-				"; endLoc: " + endLoc +
-				"; durata: " + durata +
-				"; nnome: " + nome + 
-				"; prezzo: " + price;
+		return  "<b>NOME:</b> " + nome +
+				"<br>"+
+				"<b>PARTENZA:</b> " + startLoc +
+				"<br>"+
+				"<b>ARRIVO:</b> " + endLoc +
+				"<br>"+
+				"<b>DURATA:</b> " + durata +
+				"<br>"+
+				"<b>PREZZO:</b> " + price;
 	}
 
 	public int getId() {

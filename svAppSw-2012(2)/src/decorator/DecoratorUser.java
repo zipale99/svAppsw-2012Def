@@ -23,7 +23,7 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	
 	protected AbstractUserComponent user; //Riferimento al user
-	private Itinerary itinerary;
+	Itinerary itinerary;
 	private StayTemplate stay;
 	
 	private static DecoratorUser instance = null; //Riferimento a un istanza di se stessa
@@ -156,12 +156,6 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 		return this.stay.verificaCompatibilita(location);
 	}
 	
-	@Override
-	public void addHMS(String startLoc, String endLoc, String nome) {
-		StayTemplate hms = new HandMadeStay(startLoc, endLoc, nome);
-		ServiceDB.createHMS(hms);
-		this.itinerary.add(hms);
-	}
 	
 	@Override
 	public void myItinerary() {

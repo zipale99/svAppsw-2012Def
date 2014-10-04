@@ -63,7 +63,7 @@ while(sizeListLeaf > 0) {
 %>
 
 				<tr>
-					<td> <%= stayLeaf.toString() %> </td>
+					<td class = tdLeftConfigure> <%= stayLeaf.toString() %> </td>
 					<td> 
 						 <%= stayLeaf.getOptionList().toString() %> 
 						<form action="Controller" method="POST" >

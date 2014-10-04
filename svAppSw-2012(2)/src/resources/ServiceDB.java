@@ -173,9 +173,27 @@ public class ServiceDB {
             Statement stIt = connessione.createStatement(); 
             Statement stActivity = connessione.createStatement();
             Statement stStay = connessione.createStatement();
+            ResultSet rsIt = null;
+                            
+            if( (!sl.equals("") || !el.equals("")) && (d!=0 || nome != "" || cat != "") ) {
+            	if (d!=0) rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' OR endloc='"+el+"') AND (durata="+d+")");
+               	if (nome!="") rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' OR endloc='"+el+"') AND (itname='"+nome+"')");
+            	if(cat!="") rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' OR endloc='"+el+"') AND (categoria='"+cat+"')");
+            }
             
-            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
-            													" or itname='"+nome+"' or categoria='"+cat+"'");
+            else if( ( sl!="" || el!="") && (d == 0 || nome == "" || cat == ""))
+            	rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' OR endloc='"+el+"')");
+            
+            else if( (sl == "" && el=="") && (d!=0||nome != "" || cat != "") ) {
+            	if (d!=0) rsIt = stIt.executeQuery("SELECT * FROM itinerario where durata="+d);
+            	if (nome != "") rsIt = stIt.executeQuery("SELECT * FROM itinerario where itname='"+nome+"'");
+            	if(cat != "") rsIt = stIt.executeQuery("SELECT * FROM itinerario where categoria='"+cat+"'");
+            }
+            
+            else rsIt = stIt.executeQuery("select * from itinerario");
+            
+            
+            //ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where ((startloc='"+sl+"') OR (endloc='"+el+"')) AND (((durata="+d+") OR (categoria='"+cat+"')) OR (itname='"+nome+"'))");
             while(rsIt.next()) {   
                 int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));
             	Itinerary it = new Itinerary(rsIt.getString("creatoruser"),
