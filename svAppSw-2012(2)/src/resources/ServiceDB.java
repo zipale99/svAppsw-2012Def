@@ -174,9 +174,54 @@ public class ServiceDB {
             Statement stActivity = connessione.createStatement();
             Statement stStay = connessione.createStatement();
             
-            ResultSet rsIt = stIt.executeQuery("SELECT * FROM itinerario where (startloc='"+sl+"' and endloc='"+el+"') or durata="+d+
-            													" or itname='"+nome+"' or categoria='"+cat+"'");
-            while(rsIt.next()) {   
+            ResultSet rsIt = null;
+
+          if(sl != "" || el != ""  || nome != "" || cat != "") {
+        	  
+        	  System.out.println("entra nell'iffffff");
+            
+            if(sl != "" && el != "") {
+            	rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"' and endloc='"+el+"'");
+            }
+            
+            else if((sl != "" && el == "") && (d != 0 || nome != "" || cat != "")) {
+            	if(d != 0)
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"' and durata ="+d);
+            	else if(nome != "")
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"' and itname ='"+nome+"'");
+            	else if(cat != "")
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"' and categoria ='"+cat+"'");
+            	else
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where startloc='"+sl+"'");
+            }
+            
+            else if((sl == ""  && el != "") && (d != 0 || nome != "" || cat != "")) {
+            	if(d != 0)
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where endloc='"+el+"' and durata ="+d);
+            	else if(nome != "")
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where endloc='"+el+"' and itname ='"+nome+"'");
+            	else if(cat != "")
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where endloc='"+el+"' and categoria ='"+cat+"'");
+            	else
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where endloc='"+el+"'");
+            }
+            
+            else if(d != 0 || nome != "" || cat != "") {
+            	if(d != 0)
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where durata ="+d);
+            	else if(nome != "")
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where itname ='"+nome+"'");
+            	else if(cat != "")
+            		rsIt = stIt.executeQuery("SELECT * FROM itinerario where categoria ='"+cat+"'");            	
+            }
+          }
+            
+          else {
+        	  	System.out.println("entra nell'else");
+            	rsIt = stIt.executeQuery("select * from itinerario");
+          }
+            
+            while(rsIt.next()) {
                 int idItinerario = Integer.parseInt(rsIt.getString("idItinerario"));
             	Itinerary it = new Itinerary(rsIt.getString("creatoruser"),
             			rsIt.getString("startloc"),rsIt.getString("endloc"),rsIt.getInt("durata"),

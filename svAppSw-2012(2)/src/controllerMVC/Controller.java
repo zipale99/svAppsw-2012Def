@@ -142,9 +142,7 @@ public class Controller extends HttpServlet {
         	if (request.getParameter("durata") != "") 
         		durata = Integer.parseInt(request.getParameter("durata"));
         	String nome = request.getParameter("nome");
-        	String cat = null;
-        	if (request.getParameter("categoria") != "") 
-        		cat = request.getParameter("categoria");
+        	String cat = request.getParameter("categoria");
         	ItinerarySearchResults results = SearchController.searchItinerary(startLoc, endLoc, durata, nome, cat);
         	session.setAttribute("itineraryResults", results);
         	//session.setAttribute("proxy", proxy);
