@@ -30,7 +30,20 @@ Itinerary myIt = auc.getItinerary();
 				<b>Creatore:</b> <%= myIt.getUser() %><br>
 				<b>Nome:</b> <%= myIt.getNome() %><br>
 				<b>Descrizione:</b> <%= myIt.getDesc() %><br>
-				<b>Categoria:</b> <%= myIt.getCategoria() %> 
+				<b>Categoria:</b> <%= myIt.getCategoria() %><br>
+<%
+if(myIt.getStato() != null) {
+if (myIt.getStato().equals("completo")) {
+%>				 
+				<b>Stato: </b><img src="img/Bollino_verde.png" title="Itinerario COMPLETO - Tappe contigue" width="20" height="20"/>
+<%
+} else {
+%>		
+				<b>Stato: </b><img src="img/Bollino_rosso.png" title="Itinerario PARZIALE - Tappe non contigue" width="20" height="20"/>
+<%
+}
+}
+%>				
 			</div>
 			
 			

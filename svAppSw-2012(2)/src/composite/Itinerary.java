@@ -74,10 +74,18 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 		position++;
 		st.setTimeOffset(position);
 		super.add(st);
+		setState();
+	}
+	
+	@Override
+	public void remove (int index) {
+		super.remove(index);
+		setState();
 	}
 	
 	public void addStay(StayTemplate st) {
 		super.add(st);
+		setState();
 	}
 	
 	
@@ -100,6 +108,26 @@ public class Itinerary extends StayTemplateComposite implements Comparator<StayT
 		for(int i = 0; i < position; i++) {
 			System.out.println("offset dopo di sort:"+super.tree.get(i).getTimeOffset());
 		}
+	}
+	
+	
+	
+	@Override
+	public void setState() {
+		List <StayTemplate> tree = this.tree;
+		int size = tree.size();
+		int i = 1;
+		if(size >= 2) {
+		  while(size > i) {
+			if(!(tree.get(i-1).getEndLoc()).equals(tree.get(i).getStartLoc())) {
+				this.stato = "parziale";
+				return;
+			}
+			i++;
+		  }
+		}
+		System.out.print("secondo ifffffffffffffffffffffffffffff "+size+" "+this.tree.size());
+		this.stato = "completo";
 	}
 	
 	
