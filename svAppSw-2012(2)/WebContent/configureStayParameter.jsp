@@ -58,8 +58,12 @@ Il Template è composto dalle seguenti parti:
 <%
 int sizeListLeaf = stay.getSize();
 int i = 0;
+boolean transfer = true;
+if (sizeListLeaf == 0) transfer = false;
 while(sizeListLeaf > 0) {
 	StayTemplate stayLeaf = stay.getStayTemplate(i); //recupero il leaf del composite
+	if( stayLeaf.getTypeLeaf().equals("transport") == false)
+		transfer = false;	
 %>
 
 				<tr>
@@ -82,13 +86,21 @@ i++;
 			</table>	
 				
 <%
-System.out.println(request.getHeader("Referer"));
 boolean modifica = (Boolean)session.getAttribute("modifica");
 if(!modifica) {
+	if (transfer) {
+
 %>				
+			<a href="Controller?operazione=addTransfer">Aggiungi il Transfer all'itinerario</a>
+<%
+	}
+	else {
+%>
 			<a href="Controller?operazione=addStay">Conferma e aggiungi la tappa all'itinerario</a>
 <%
-} else {
+	}
+}
+else {
 %>
 			<a href="creaItinerario.jsp">Conferma modifiche</a>
 <%

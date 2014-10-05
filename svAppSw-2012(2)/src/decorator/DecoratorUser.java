@@ -24,7 +24,7 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	
 	protected AbstractUserComponent user; //Riferimento al user
 	Itinerary itinerary;
-	private StayTemplate stay;
+	StayTemplate stay;
 	
 	private static DecoratorUser instance = null; //Riferimento a un istanza di se stessa
 	
@@ -165,6 +165,11 @@ public abstract class DecoratorUser extends AbstractUserComponent {
 	@Override
 	public List<Itinerary> getItineraryList() {
 		return user.getItineraryList();
+	}
+	
+	@Override
+	public void addTransferStay(int offset) {
+		this.itinerary.addTransferStay(stay, offset);
 	}
 	
 	@Override

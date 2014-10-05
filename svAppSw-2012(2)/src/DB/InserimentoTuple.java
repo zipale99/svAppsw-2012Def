@@ -11,12 +11,25 @@ public class InserimentoTuple {
 		PreparedStatement pst=null;
 		String insert=null;
 	    try {
-	    	    	
+	    	    
+	    	
+	    	insert = "INSERT INTO staytemplate_leaf(idstaytemplate,startloc,endloc,typeleaf,durata,transport,accomodation)VALUES (?,?,?,?,?,?,?)";
+	    	pst = conn.prepareStatement(insert);            
+	    	pst.setInt(1, 15);
+	    	pst.setString(2, "roma");
+	    	pst.setString(3, "napoli");
+	    	pst.setString(4, "transport");
+	    	pst.setInt(5, 2);
+	    	pst.setString(6, null);
+	    	pst.setString(7, "treno");
+ 			pst.executeUpdate();
+ 			
+ 			
 	    	
 	    	/*
 	    	 * Per la rimozione di tuple utilizzare il delete e non il truncate,
 	    	 * stando attenti a cancellare per prime le tabelle che non sono referenziate da nulla
-	    	 */
+	    	 
 	    	Statement st = conn.createStatement();
 	    	insert = "truncate table opzioni_pers";
 	    	st.execute(insert);

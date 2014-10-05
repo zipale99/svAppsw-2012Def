@@ -4,6 +4,7 @@ import resources.ServiceDB;
 
 import composite.HandMadeStay;
 import composite.StayTemplate;
+import composite.*;
 
 public class CreatorTADecorator extends DecoratorUser {
 
@@ -25,9 +26,12 @@ public class CreatorTADecorator extends DecoratorUser {
 	
 	@Override
 	public void addHMS(String startLoc, String endLoc, String nome) {
+		StayTemplateComposite stc = new StayTemplateComposite();
 		StayTemplate hms = new HandMadeStay(startLoc, endLoc, nome);
+		stc.add(hms);
 		ServiceDB.createHMS(hms);
-		this.itinerary.add(hms);
+		this.stay = stc;
+		this.itinerary.add(stc);
 	}
 	
 }

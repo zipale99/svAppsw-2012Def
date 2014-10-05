@@ -183,11 +183,21 @@ public class Controller extends HttpServlet {
          */
         if(operazione.equals("searchtStayTemplate")) {
         	StaySearchResults results = SearchController.searchStayTemplate();
-        	System.out.println("ssss: "+results.get(0).toString());
         	session.setAttribute("stayResults", results);
         	session.setAttribute("modifica", false);
         	forward(request, response, "/selectStayTemplate.jsp");
         }
+        
+        if(operazione.equals("addTransferStay")) {
+        	int idStay = Integer.parseInt(request.getParameter("idTappa"));
+        	String startLoc = request.getParameter("startLoc");
+        	String endLoc = request.getParameter("endLoc");
+        	session.setAttribute("stayResults", SearchController.transferList(startLoc, endLoc));       	
+        	session.setAttribute("idTappa", idStay);
+        	session.setAttribute("modifica", false);
+        	forward(request, response, "/selectStayTemplate.jsp");
+        }
+        
         
         
         if(operazione.equals("configureStayParameter")) {
@@ -235,13 +245,6 @@ public class Controller extends HttpServlet {
         	ActivitySearchResults results = (ActivitySearchResults)session.getAttribute("activityResults");
         	managementController.addActivity(results.get(idActivity));
         	forward(request, response, "/configureStayParameter.jsp");
-        	/*
-        	 * Decidere come proseguire per il controllo di un attività compatibile
-        	 * fare un metodo boolean in managementcontroller che ritorna true o false
-        	 * in caso di false come segnali l'errore? bisognerebbe chiamare una jsp di errore->pessima soluzione
-        	 * meglio: controllo js che in chiama il metodo del managementocntroller sull onclick e 
-        	 * visualizza un popup seganalndo l'errora senza dare la possibilità di proseguire.
-        	 */
         }
         
         if (operazione.equals("addStay")) {
@@ -249,13 +252,15 @@ public class Controller extends HttpServlet {
         	managementController.addStay();
         	forward(request, response, "/creaItinerario.jsp");
         }
-
         
-        //TO-DO!!
-        if(operazione.equals("addTransferStay")) {
-        	int idStay = Integer.parseInt(request.getParameter("idTappa"));
-        	request.setAttribute("idTappa", idStay);
+        
+        if(operazione.equals("addTransfer")) {
+        	managementController.addTransferStay((int)session.getAttribute("idTappa"));
+        	forward(request, response, "/creaItinerario.jsp");
         }
+   
+        
+        
    
         if (operazione.equals("deleteStay")) {
         	int idStay = Integer.parseInt(request.getParameter("idTappa"));
@@ -263,7 +268,7 @@ public class Controller extends HttpServlet {
         	forward(request, response, "/creaItinerario.jsp");
         }
    
-        //TO-DO!!
+        
         if (operazione.equals("modificaTappa")) {
         	int idStay = Integer.parseInt(request.getParameter("idTappa"));
         	managementController.modificaTappa(idStay);

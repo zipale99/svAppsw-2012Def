@@ -165,6 +165,8 @@ public abstract class StayTemplate implements Cloneable{
 
 	public void setTypeLeaf(String typeLeaf) {}
 	
+	public void addTransferStay(int offset) {}
+	
 	public Option getOption(int index) {
 		return null;
 	}

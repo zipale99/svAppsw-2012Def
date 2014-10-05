@@ -38,6 +38,7 @@ public abstract class AbstractUserComponent {
 	public void modificaItinerario(int indexIt) {}
 	public void saveItinerary() {}
 	public void addHMS(String startLoc, String endLoc, String nome) {}
+	public void addTransferStay(int offset) {}
 	public boolean verificaCompatibilita(String location) {
 		return false;
 	} 

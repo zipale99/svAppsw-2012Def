@@ -101,6 +101,10 @@ public class ManagementController {
 		currentUser.addHMS(startLoc, endLoc, nome);
 	}
 	
+	public void addTransferStay(int offset) {
+		currentUser.addTransferStay(offset);
+	}
+	
 	
 	
 

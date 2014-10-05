@@ -48,6 +48,10 @@ public class SearchController {
 		return ServiceDB.searchActivity();
 	}
 	
+	public static StaySearchResults transferList(String startLoc, String endLoc) {
+		return ServiceDB.transferList(startLoc, endLoc);
+	}
+	
 	
 	
 }

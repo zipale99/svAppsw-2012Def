@@ -50,6 +50,7 @@ Modifica Info Base
 
 <%
 int size = myIt.getSize();
+int size1 = myIt.getSize()-1;
 if (size != 0) {
 %>			
 			
@@ -76,15 +77,24 @@ if (size != 0) {
 								<input type="hidden" name="idTappa" value='<%= i %>'>
 								<input type="submit" value="Elimina Tappa" onClick="return(confirm('Sei sicuro di voler procedere?'))"/>
 							</form>
+
+<% 
+	if(i < size1)
+		if(!(myIt.getStayTemplate(i).getEndLoc().equals(myIt.getStayTemplate(i+1).getStartLoc()))) {
+%>	
+
 							
 							<form action="Controller" method="POST" >
 								<input type="hidden" name="operazione" value="addTransferStay">
 								<input type="hidden" name="idTappa" value='<%= i %>'>
+								<input type="hidden" name="startLoc" value='<%= myIt.getStayTemplate(i).getEndLoc() %>'>
+								<input type="hidden" name="endLoc" value='<%= myIt.getStayTemplate(i+1).getStartLoc() %>'>
 								<input type="submit" value="Add Transfer Stay"/>
 							</form>
 					</td>
 				</tr>
 <%
+		}
 	size--;
 	i++;
 	}

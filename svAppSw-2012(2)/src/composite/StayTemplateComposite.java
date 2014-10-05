@@ -33,6 +33,7 @@ public class StayTemplateComposite extends StayTemplate {
 
 	public StayTemplateComposite() {
 		tree = new ArrayList<StayTemplate>();
+		activityList = new ArrayList<Activity>();
 	}
 	
 	@Override
